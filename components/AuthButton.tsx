@@ -1,28 +1,38 @@
-import { createClient } from '@/utils/supabase/server'
-import Link from 'next/link'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { createClient } from "@/utils/supabase/server";
+import { createClientSsr } from "@/utils/supabase/client";
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function AuthButton() {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
-
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getUser();
+
+  const supabaseSsr = createClientSsr();
+  const public_user = await supabaseSsr
+    .from("users")
+    .select()
+    .match({ user_id: user.id })
+    .single();
+  console.log(public_user);
 
   const signOut = async () => {
-    'use server'
+    "use server";
 
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-    await supabase.auth.signOut()
-    return redirect('/login')
-  }
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+    await supabase.auth.signOut();
+    return redirect("/login");
+  };
 
   return user ? (
     <div className="flex items-center gap-4">
-      Hey, {user.email}!
+      <a href={`/${public_user.lw_username}`}>
+        {public_user.display_name} profile
+      </a>
       <form action={signOut}>
         <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
           Logout
@@ -36,5 +46,5 @@ export default async function AuthButton() {
     >
       Login
     </Link>
-  )
+  );
 }
