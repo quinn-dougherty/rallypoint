@@ -15,7 +15,7 @@ type PostProps = {
 
 function Post(post: PostProps) {
   const { title, owner_user_id, description, status, post_type, amount } =
-    post.data;
+    post.post;
   return (
     <div className="border">
       <h2>{title}</h2>

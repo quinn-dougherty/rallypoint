@@ -4,20 +4,31 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+type PublicUser = {
+  lw_username: string;
+  display_name: string;
+};
+
 export default async function AuthButton() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: authData } = await supabase.auth.getUser();
 
+  if (!authData.user) {
+    // Handle the case where user is null
+    console.error("User is not logged in");
+    return;
+  }
+
+  const user = authData.user;
   const supabaseSsr = createClientSsr();
-  const public_user = await supabaseSsr
-    .from("users")
-    .select()
-    .match({ user_id: user.id })
-    .single();
-  console.log(public_user);
+  const public_user: PublicUser = (
+    await supabaseSsr
+      .from("users")
+      .select()
+      .match({ user_id: user.id })
+      .single()
+  ).data;
 
   const signOut = async () => {
     "use server";

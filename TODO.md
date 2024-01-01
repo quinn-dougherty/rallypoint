@@ -17,6 +17,7 @@
 - [ ] post card
   - [x] post card in list form for homepage and profile
   - [ ] post card in solo form for solo page
+- [ ] eslint config
 - [ ] route up posts (stretch) 
 
 # Views

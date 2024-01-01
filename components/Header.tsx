@@ -1,8 +1,9 @@
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 import NextLogo from "./NextLogo";
 import SupabaseLogo from "./SupabaseLogo";
 import AuthButton from "./AuthButton";
 import ConnectSupabaseSteps from "./ConnectSupabaseSteps";
-import { cookies } from "next/headers";
 
 export default function Header() {
   const cookieStore = cookies();
