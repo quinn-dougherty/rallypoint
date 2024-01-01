@@ -17,7 +17,14 @@ export default async function AuthButton() {
   if (!authData.user) {
     // Handle the case where user is null
     console.error("User is not logged in");
-    return;
+    return (
+      <Link
+        href="/login"
+        className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+      >
+        Login
+      </Link>
+    );
   }
 
   const user = authData.user;

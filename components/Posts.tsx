@@ -4,18 +4,16 @@ import { createClientSsr } from "@/utils/supabase/client";
 import Post from "@/components/Post";
 
 type Post = {
-  post: {
-    post_id: string;
-    owner_user_id: string;
-    title: string;
-    description: string | null;
-    post_type: "bounty" | "dac";
-    amount: number;
-    status: "unclaimed" | "claimed" | "finished";
-    deadline: string | null;
-    created_at: string;
-    updated_at: string;
-  };
+  post_id: string;
+  owner_user_id: string;
+  title: string;
+  description: string | null;
+  post_type: "bounty" | "dac";
+  amount: number;
+  status: "unclaimed" | "claimed" | "finished";
+  deadline: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
 function Posts() {
@@ -30,6 +28,7 @@ function Posts() {
       .then(({ data, error }) => {
         if (error) {
           console.error("Error fetching posts:", error);
+          setLoading(false);
         } else {
           setPosts(data as Post[]);
           setLoading(false);
@@ -47,7 +46,7 @@ function Posts() {
   return (
     <div>
       {posts.map((post) => (
-        <Post key={post.post.post_id} post={post.post} />
+        <Post key={post.post_id} post={post} />
       ))}
     </div>
   );
