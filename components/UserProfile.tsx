@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { createClientSsr } from "@/utils/supabase/client";
 import Header from "@/components/Header";
 import Posts from "@/components/Posts";
 
@@ -13,15 +10,20 @@ export type UserProfileProps = {
   };
 };
 
-const UserProfile: React.FC<UserProfileProps> = ({ profile }) => {
+const UserProfile: React.FC<UserProfileProps> = ({
+  profile,
+}: UserProfileProps) => {
   return (
     <div>
       <Header />
-      <h1>{profile.display_name}'s Profile</h1>
+      <h1>{`${profile.display_name}'s Profile`}</h1>
       <p>Email: {profile.email}</p>
       <p>LW Username: {profile.lw_username}</p>
       <p>Bio: {profile.bio}</p>
-      <Posts />
+      <div>
+        <h2>Posts authored:</h2>
+        <Posts />
+      </div>
     </div>
   );
 };

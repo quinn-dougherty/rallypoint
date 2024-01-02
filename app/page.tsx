@@ -1,10 +1,5 @@
-import DeployButton from "../components/DeployButton";
-import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/SignUpUserSteps";
 import Header from "@/components/Header";
 import Posts from "@/components/Posts";
-import { cookies } from "next/headers";
 
 export default async function Index() {
   return (

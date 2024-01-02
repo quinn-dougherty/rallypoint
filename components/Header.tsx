@@ -1,23 +1,20 @@
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import NextLogo from "./NextLogo";
-import SupabaseLogo from "./SupabaseLogo";
+// import { createClient } from "@/utils/supabase/server";
+// import { cookies } from "next/headers";
 import AuthButton from "./AuthButton";
-import ConnectSupabaseSteps from "./ConnectSupabaseSteps";
 
 export default function Header() {
-  const cookieStore = cookies();
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient(cookieStore);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-  const isSupabaseConnected = canInitSupabaseClient();
+  // const cookieStore = cookies();
+  // const canInitSupabaseClient = () => {
+  //   // This function is just for the interactive tutorial.
+  //   // Feel free to remove it once you have Supabase connected.
+  //   try {
+  //     createClient(cookieStore);
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // };
+  // const isSupabaseConnected = canInitSupabaseClient();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">

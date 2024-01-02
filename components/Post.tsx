@@ -22,7 +22,7 @@ function Post(post: PostProps) {
       <p>{`Filed by: ${owner_user_id}`}</p>
       <p>{description}</p>
       <p>{`${status} ${post_type}`}</p>
-      <p>{`\$${amount} available`}</p>
+      <p>{`$${amount} available`}</p>
     </div>
   );
 }
