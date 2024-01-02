@@ -1,29 +1,28 @@
 import { createClientSsr } from "@/utils/supabase/client";
-import UserProfile from "@/components/UserProfile";
+import Post from "@/components/Post";
 
 export default async function Page({
   params,
 }: {
-  params: { lw_username: string };
+  params: { lw_username: string; post_id: string };
 }) {
-  const { lw_username } = params;
+  const { lw_username, post_id } = params;
   const supabase = createClientSsr();
   const { data, error } = await supabase
-    .from("users")
+    .from("posts")
     .select()
-    .match({ lw_username })
+    .match({ post_id })
     .single();
 
   if (error) {
-    return <div>{`No profile. Probably dropped or couldn't load somehow`}</div>;
+    return <div>{`No post. Probably dropped or couldn't load somehow`}</div>;
   }
   if (!data) {
     return <div>Loading... (forever probably)</div>;
   }
-
   return (
     <div>
-      <UserProfile profile={data} />
+      <Post post={data} lw_username={lw_username} />
     </div>
   );
 }
