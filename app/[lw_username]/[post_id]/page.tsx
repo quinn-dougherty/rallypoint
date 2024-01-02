@@ -4,9 +4,9 @@ import Post from "@/components/Post";
 export default async function Page({
   params,
 }: {
-  params: { post_id: string };
+  params: { lw_username: string; post_id: string };
 }) {
-  const { post_id } = params;
+  const { lw_username, post_id } = params;
   const supabase = createClientSsr();
   const { data, error } = await supabase
     .from("posts")
@@ -20,10 +20,9 @@ export default async function Page({
   if (!data) {
     return <div>Loading... (forever probably)</div>;
   }
-
   return (
     <div>
-      <Post post={data} lw_username={"quinn-dougherty"} />
+      <Post post={data} lw_username={lw_username} />
     </div>
   );
 }
