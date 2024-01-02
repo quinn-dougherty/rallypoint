@@ -18,6 +18,7 @@ function Posts({ lw_username }: PostsProps) {
     if (lw_username !== null) {
       const supabase = createClientSsr();
       supabase
+          .schema('auth')
         .from("users")
         .select()
         .match({ lw_username })
@@ -36,6 +37,7 @@ function Posts({ lw_username }: PostsProps) {
     if (user) {
       const supabase = createClientSsr();
       supabase
+          .schema('auth')
         .from("posts")
         .select()
         .match({ owner_user_id: user.user_id })
@@ -50,6 +52,7 @@ function Posts({ lw_username }: PostsProps) {
     } else {
       const supabase = createClientSsr();
       supabase
+          .schema('auth')
         .from("posts")
         .select()
         .then(({ data, error }) => {
