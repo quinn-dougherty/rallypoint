@@ -69,7 +69,6 @@ function Posts({ lw_username }: PostsProps) {
   if (!posts) {
     return <div>Posts not found</div>;
   }
-  console.log(posts);
   return (
     <div>
       {posts.map((post) => (
