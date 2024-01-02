@@ -1,6 +1,6 @@
 ## When you modify table schema in supabase
 
-``` bash
+```bash
 $ ./node_modules/.bin/supabase login # token in browser
 $ npm run gen-types
 ```
