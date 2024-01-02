@@ -1,5 +1,5 @@
 import { createClientSsr } from "@/utils/supabase/client";
-import Post from "@/components/Post";
+import Post from "@/components/posts/Post";
 
 export default async function Page({
   params,

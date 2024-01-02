@@ -6,3 +6,5 @@ $ npm run gen-types
 ```
 
 this will write `types/supabase.ts` with the table schema interface, it's problematic if it gets too outdated. Do not manually edit `types/supabase.ts`
+
+## Other files (besides `supabase.ts`) need manual update when supabase schema is modified.

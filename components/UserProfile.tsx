@@ -1,5 +1,4 @@
-import Header from "@/components/Header";
-import Posts from "@/components/Posts";
+import Posts from "@/components/posts/Posts";
 
 export type UserProfileProps = {
   profile: {
@@ -15,7 +14,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
 }: UserProfileProps) => {
   return (
     <div>
-      <Header />
       <h1>{`${profile.display_name}'s Profile`}</h1>
       <p>Email: {profile.email}</p>
       <p>LW Username: {profile.lw_username}</p>
