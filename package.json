@@ -5,7 +5,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "format": "eslint --fix"
+    "format": "eslint --fix",
+    "typewatch": "tsc --watch",
+    "gen-types": "supabase gen types typescript --project-id \"jshunewngntslipmyhub\" --schema public > types/supabase.ts"
   },
   "dependencies": {
     "@supabase/ssr": "0.0.10",
@@ -29,6 +31,7 @@
     "@typescript-eslint/parser": "^6.17.0",
     "encoding": "^0.1.13",
     "eslint": "^8.56.0",
-    "eslint-plugin-react": "^7.33.2"
+    "eslint-plugin-react": "^7.33.2",
+    "supabase": "^1.127.4"
   }
 }
