@@ -8,7 +8,7 @@ export type UserProfileProps = {
     lw_username: string;
     bio: string;
   };
-};
+}; // TODO: centralize models/ dir, issue #5
 
 const UserProfile: React.FC<UserProfileProps> = ({
   profile,
@@ -22,7 +22,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <p>Bio: {profile.bio}</p>
       <div>
         <h2>Posts authored:</h2>
-        <Posts />
+        <Posts lw_username={profile.lw_username} />
       </div>
     </div>
   );

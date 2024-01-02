@@ -5,7 +5,7 @@
 - [x] make a way to display them 
 - [x] log way more data in (manually in supabase)
 - [ ] add tags to posts
-- [x] clickable navigable top bar as header 
+- [ ] clickable navigable top bar as header 
   - [ ] make horizontal (and nice looking) 
   - [ ] get `public_user` query to actually run. 
 - [ ] supabase functions or webhooks to listen for new signups and sync to custom users table
@@ -17,6 +17,7 @@
 - [ ] post card
   - [x] post card in list form for homepage and profile
   - [ ] post card in solo form for solo page
+    - [ ] url creation in Post component
 - [ ] eslint config
 - [ ] route up posts (stretch) 
 
