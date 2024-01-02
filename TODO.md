@@ -25,7 +25,8 @@
   - [x] list of bounties
 - [ ] profile
   - [x] base profile with bio
-  - [ ] profile with list of posts
+  - [x] profile with list of posts
+    - [ ] allow a username argument in `Posts.tsx` component that returns all posts if `null`.
   - [ ] profile with list of claims
 
 # Routes
