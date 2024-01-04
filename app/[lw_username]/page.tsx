@@ -9,7 +9,7 @@ export default async function Page({
   const { lw_username } = params;
   const supabase = createClientSsr();
   const { data, error } = await supabase
-    .from("users")
+    .from("profiles")
     .select()
     .match({ lw_username })
     .single();
