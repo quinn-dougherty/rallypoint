@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 // import PostsModel from "@/types/Posts";
 import { createClientSsr } from "@/utils/supabase/client";
 
@@ -15,8 +16,6 @@ type CreatePostProps = {
 };
 
 async function getUser() {
-  // const cookieStore = cookies();
-  // const supabase = createClient(cookieStore);
   const supabase = createClientSsr();
   const { data, error } = await supabase.auth.getUser();
 
@@ -34,6 +33,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
   amountOnChange,
 }: CreatePostProps) => {
   const { title, description, amount } = createPost;
+  let failed = false;
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -60,13 +60,27 @@ const CreatePost: React.FC<CreatePostProps> = ({
       if (response.status == 200) {
         console.log("success");
       }
-      // Handle success (maybe redirect or show a success message)
+
+      const supabase = createClientSsr();
+      const { lw_username } = (
+        await supabase.from("profiles").select().match({ user_id: id }).single()
+      ).data;
+      const dbItems = await response.json();
+      failed = false;
+      if (lw_username) {
+        const newUrl = `/${lw_username}/${dbItems[0].post_id}`;
+        console.log(newUrl);
+        redirect(newUrl);
+      } else {
+        console.log("Failed to redirect, but successfully made new post");
+      }
     } catch (error) {
-      console.error("Failed to create post:", error);
-      // Handle error (show error message)
+      console.error("Failed somewhere:", error);
     }
   };
-  return (
+  return failed ? (
+    <div>Failed</div>
+  ) : (
     <form onSubmit={handleSubmit}>
       <label>
         Title:
