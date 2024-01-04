@@ -18,7 +18,7 @@ function Posts({ lw_username }: PostsProps) {
     if (lw_username !== null) {
       const supabase = createClientSsr();
       supabase
-        .from("users")
+        .from("profiles")
         .select()
         .match({ lw_username })
         .single()

@@ -1,5 +1,3 @@
-// import { cookies } from "next/headers";
-// import { createClient } from "@/utils/supabase/server";
 // import PostsModel from "@/types/Posts";
 import { createClientSsr } from "@/utils/supabase/client";
 
@@ -41,7 +39,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
 
     try {
       const { id } = await getUser();
-      const response = await fetch("/api/createPost", {
+      const response = await fetch("/api/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,17 +53,12 @@ const CreatePost: React.FC<CreatePostProps> = ({
       });
 
       if (!response.ok) {
+        console.log(response);
         throw new Error("Error creating post");
       }
 
-      const text = await response.text();
-      console.log(text);
-      // const result = JSON.stringify(await response);
-      // console.log(result);
-      // const result = await response.json();
-      // console.log(result);
       if (response.status == 200) {
-        console.log("success (currently not in fact writing in spite, tho)");
+        console.log("success");
       }
       // Handle success (maybe redirect or show a success message)
     } catch (error) {

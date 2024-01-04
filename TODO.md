@@ -15,12 +15,12 @@
 
 ## in advance of jan 1st sync:
 
-- [ ] post card
+- [x] post card (MVP)
   - [x] post card in list form for homepage and profile
-  - [ ] post card in solo form for solo page
-    - [ ] url creation in Post component
-- [ ] eslint config
-- [ ] route up posts (stretch)
+  - [x] post card in solo form for solo page
+    - [x] url creation in Post component
+- [x] eslint config
+- [x] route up posts (stretch)
 
 # Views
 

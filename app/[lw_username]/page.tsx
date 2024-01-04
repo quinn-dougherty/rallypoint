@@ -15,7 +15,11 @@ export default async function Page({
     .single();
 
   if (error) {
-    return <div>{`No profile. Probably dropped or couldn't load somehow`}</div>;
+    return (
+      <div>
+        {`No profile. Probably dropped or couldn't load somehow: ${error.message}`}
+      </div>
+    );
   }
   if (!data) {
     return <div>Loading... (forever probably)</div>;
