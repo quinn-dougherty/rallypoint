@@ -6,10 +6,7 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
-  // const [handleSubmit, setHandleSubmit] = useState(null);
-  useEffect(() => {
-    // setHandleSubmit(CreatePost({ createPost: { title, description, amount } }));
-  }, [title, description, amount]);
+  useEffect(() => {}, [title, description, amount]);
   function titleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTitle(e.target.value);
   }
