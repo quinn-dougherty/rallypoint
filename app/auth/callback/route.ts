@@ -24,15 +24,3 @@ export async function GET(request: Request) {
   // URL to redirect to after sign in process completes
   return NextResponse.redirect(requestUrl.origin);
 }
-
-async function handleSignInWithGoogle(response) {
-  console.log("AUTH WITH GOOGLE");
-  console.log(response)
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-  const { data, error } = await supabase.auth.signInWithIdToken({
-    provider: 'google',
-    token: response.credential,
-    nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
-  })
-}
