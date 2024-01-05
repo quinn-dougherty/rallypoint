@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { createClientSsr } from "@/utils/supabase/client";
-import Post from "@/components/Post";
-import PostsModel from "@/models/Posts";
-import UsersModel from "@/models/Users";
+import Post from "./Post";
+import PostsModel from "@/types/Posts";
+import UsersModel from "@/types/Users";
 
 type PostsProps = {
   lw_username: string | null;
@@ -18,7 +18,7 @@ function Posts({ lw_username }: PostsProps) {
     if (lw_username !== null) {
       const supabase = createClientSsr();
       supabase
-        .from("users")
+        .from("profiles")
         .select()
         .match({ lw_username })
         .single()

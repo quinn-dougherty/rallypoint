@@ -1,4 +1,4 @@
-import PostsModel from "@/models/Posts";
+import PostsModel from "@/types/Posts";
 
 type PostProps = {
   post: PostsModel;

@@ -22,7 +22,7 @@ export default async function AuthButton() {
         href="/login"
         className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
       >
-        Login
+        Login or Sign Up
       </Link>
     );
   }
@@ -31,7 +31,7 @@ export default async function AuthButton() {
   const supabaseSsr = createClientSsr();
   const public_user: PublicUser = (
     await supabaseSsr
-      .from("users")
+      .from("profiles")
       .select()
       .match({ user_id: user.id })
       .single()
