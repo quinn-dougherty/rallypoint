@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 // import PostsModel from "@/types/Posts";
 import { createClientSsr } from "@/utils/supabase/client";
 
@@ -34,6 +34,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
 }: CreatePostProps) => {
   const { title, description, amount } = createPost;
   let failed = false;
+  const router = useRouter();
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -70,7 +71,8 @@ const CreatePost: React.FC<CreatePostProps> = ({
       if (lw_username) {
         const newUrl = `/${lw_username}/${dbItems[0].post_id}`;
         console.log(newUrl);
-        redirect(newUrl);
+        // redirect(newUrl);
+        router.push(newUrl);
       } else {
         console.log("Failed to redirect, but successfully made new post");
       }
