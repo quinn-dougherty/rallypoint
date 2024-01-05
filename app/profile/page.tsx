@@ -27,7 +27,7 @@ export default async function Page({
 
   return (
     <div>
-      <UserProfile profile={data} privateView={false} />
+      <UserProfile profile={data} privateView={true} />
     </div>
   );
 }
