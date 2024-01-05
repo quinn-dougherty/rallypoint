@@ -2,6 +2,7 @@ import Link from "next/link";
 import { headers, cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import {signInGoogle} from '../auth/connections/google'
 
 export default function Login({
   searchParams,
@@ -76,7 +77,7 @@ export default function Login({
       </Link>
 
       <form
-        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground signup-form"
         action={signIn}
       >
         <label className="text-md" htmlFor="email">
@@ -113,6 +114,12 @@ export default function Login({
           </p>
         )}
       </form>
+      <hr/>
+      <button
+          onClick={signInGoogle}
+          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2">
+        Sign In with Google
+      </button>
     </div>
   );
 }
