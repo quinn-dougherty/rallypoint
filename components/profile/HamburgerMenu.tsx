@@ -65,7 +65,7 @@ function toggler({ isOpen, toggleMenu, user, profile }: ToggleProps) {
     <div>
       <button onClick={toggleMenu} className="hamburger-button">
         <svg
-          style={{ filter: "invert(100%);" }}
+          style={{ filter: "invert(100%)" }}
           width="30"
           height="30"
           viewBox="0 0 30 30"

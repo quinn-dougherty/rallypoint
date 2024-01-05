@@ -21,6 +21,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       {privateView && (
         <div>
           <Link href="/profile/edit">Edit your profile</Link>
+          <Link href={`/${profile.lw_username}`}>Sharelink</Link>
         </div>
       )}
       <p>Email: {profile.email}</p>
