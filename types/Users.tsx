@@ -9,3 +9,9 @@ export default interface UsersModel {
   bio?: string; // 'character varying null' suggests this is optional
   lw_username: string;
 }
+export interface UserProfileForm{
+  user_id: string;
+  displayName: string;
+  lwUsername?: string;
+  bio?: string;
+}
