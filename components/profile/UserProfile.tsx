@@ -17,7 +17,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 }: UserProfileProps) => {
   return (
     <div>
-      <h1>{`${profile.display_name}'s Profile`}</h1>
+      <h1>{`${profile?.display_name || profile.email}'s Profile`}</h1>
       {privateView && (
         <div>
           <Link href="/profile/edit">Edit your profile</Link>

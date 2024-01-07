@@ -1,24 +1,10 @@
-import { cookies } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
 import { createClientSsr } from "@/utils/supabase/client";
 import UserProfile from "@/components/profile/UserProfile";
-
-async function getUser() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-  const { data }: { data: { user: { id: string } } } =
-    await supabase.auth.getUser();
-  if (!data) {
-    console.error(`Failed to get authenticated user`);
-  } else {
-    const user = data.user;
-    console.log(user);
-    return user;
-  }
-}
+import {GetUser} from "@/utils/userData";
 
 export default async function Page() {
-  const user = getUser();
+  const user = await GetUser();
+  console.log("User data: ", user)
   const supabase = createClientSsr();
   const { data, error } = await supabase
     .from("profiles")
