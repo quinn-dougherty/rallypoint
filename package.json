@@ -5,7 +5,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "format": "eslint --fix",
+    "lintfix": "eslint --fix",
+    "prettier": "prettier --write .",
+    "format": "npm run lintfix && npm run prettier",
     "typewatch": "tsc --watch",
     "gen-types": "supabase gen types typescript --project-id \"jshunewngntslipmyhub\" --schema public > types/supabase.ts"
   },
@@ -31,7 +33,9 @@
     "@typescript-eslint/parser": "^6.17.0",
     "encoding": "^0.1.13",
     "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
+    "prettier-eslint": "^16.2.0",
     "supabase": "^1.127.4"
   }
 }

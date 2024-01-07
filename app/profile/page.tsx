@@ -1,10 +1,10 @@
 import { createClientSsr } from "@/utils/supabase/client";
 import UserProfile from "@/components/profile/UserProfile";
-import {GetUser} from "@/utils/userData";
+import { GetUser } from "@/utils/userData";
 
 export default async function Page() {
   const user = await GetUser();
-  console.log("User data: ", user)
+  console.log("User data: ", user);
   const supabase = createClientSsr();
   const { data, error } = await supabase
     .from("profiles")
