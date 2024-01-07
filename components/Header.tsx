@@ -1,29 +1,50 @@
-// import { createClient } from "@/utils/supabase/server";
-// import { cookies } from "next/headers";
-import AuthButton from "./AuthButton";
+import { createClient } from "@/utils/supabase/server";
+import { createClientSsr } from "@/utils/supabase/client";
+import Link from "next/link";
+import { cookies } from "next/headers";
+import HamburgerMenu from "./profile/HamburgerMenu";
+import AuthButton from "./profile/AuthButton";
 
-export default function Header() {
-  // const cookieStore = cookies();
-  // const canInitSupabaseClient = () => {
-  //   // This function is just for the interactive tutorial.
-  //   // Feel free to remove it once you have Supabase connected.
-  //   try {
-  //     createClient(cookieStore);
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // };
-  // const isSupabaseConnected = canInitSupabaseClient();
+interface Profile {
+  lw_username: string;
+  display_name: string;
+}
+
+interface User {
+  id: string;
+}
+
+async function renderHamburger(user: User) {
+  const supabaseSsr = createClientSsr();
+  const profile: Profile = (
+    await supabaseSsr
+      .from("profiles")
+      .select()
+      .match({ user_id: user.id })
+      .single()
+  ).data;
+  return <HamburgerMenu user={user} profile={profile} />;
+}
+
+export default async function Header() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { data: authData } = await supabase.auth.getUser();
+  const user = authData.user;
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <ul>
           <li>
-            <a href="/">Home</a>
-            <a href="/create">Create</a>
-            <AuthButton />
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/create">Create</Link>
+          </li>
+          <li>{user ? renderHamburger(user) : <div />}</li>
+          <li>
+            <AuthButton user={user} />
           </li>
         </ul>
       </nav>
