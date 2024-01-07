@@ -2,14 +2,17 @@ import {cookies} from "next/headers";
 import {createClient} from "@/utils/supabase/server";
 import {UserProfileForm} from "@/types/Users";
 import {supabase} from "@/utils/supabase/client";
+import {UserResponse} from "@supabase/gotrue-js";
+
 
 export async function GetUser() {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
-    const { data }: { data: { user: { id: string } } } =
+    const { data }: UserResponse =
         await supabase.auth.getUser();
-    if (!data) {
+    if (!data || !data.user) {
         console.error(`Failed to get authenticated user`);
+        throw "error fetching data";
     } else {
         const user = data.user;
         console.log(user);
