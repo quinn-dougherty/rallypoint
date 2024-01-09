@@ -81,6 +81,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
   return failed ? (
     <div>Failed</div>
   ) : (
+      <div>
     <form onSubmit={handleSubmit}>
       <label>
         Title:
@@ -95,6 +96,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
       </label>
       <button type="submit">Create Post</button>
     </form>
+      </div>
   );
 };
 export default CreatePost;

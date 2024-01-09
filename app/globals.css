@@ -43,3 +43,20 @@
 .signup-form {
   flex: 0;
 }
+
+.top-bar{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.hamburger_menu_items{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: space-around;
+
+}

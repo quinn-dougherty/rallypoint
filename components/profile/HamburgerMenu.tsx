@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import signOut from "@/utils/signOut";
 
 interface Profile {
   lw_username: string;
   display_name: string;
+  email:string;
 }
 
 interface User {
@@ -25,6 +27,7 @@ interface ToggleMenuProps {
 }
 
 interface RenderMenuItemsProps {
+  toggleMenu: React.MouseEventHandler<HTMLButtonElement>;
   user: User;
   profile: Profile;
 }
@@ -39,20 +42,32 @@ function ToggleMenu({ user, profile, children }: ToggleMenuProps) {
   return children({ isOpen, toggleMenu, user, profile });
 }
 
-function RenderMenuItems({ user, profile }: RenderMenuItemsProps) {
+
+function RenderMenuItems({ user, profile,toggleMenu }: RenderMenuItemsProps) {
   if (user) {
     return (
       <React.Fragment>
+        <div>
         <ul>
           <li>
-            <Link href={`/${profile.lw_username}`}>
-              View {profile.display_name} Profile
+            <Link onClick={(e)=>toggleMenu} href={"/profile"}>
+              My Profile
             </Link>
           </li>
           <li>
-            <Link href="/profile/edit">Edit Profile</Link>
+            <Link  onClick={(e)=>toggleMenu} href={"/profile/edit"}>Edit Profile</Link>
+          </li>
+          <li>
+          <div className="flex items-center gap-4">
+            <form action={signOut} onClick={(e)=>toggleMenu}>
+              <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
+                Logout
+              </button>
+            </form>
+          </div>
           </li>
         </ul>
+        </div>
       </React.Fragment>
     );
   } else {
@@ -77,10 +92,10 @@ function toggler({ isOpen, toggleMenu, user, profile }: ToggleProps) {
         </svg>
       </button>
 
-      <span>
+      <span className={"hamburger_menu_items"}>
         {isOpen && (
           <div className="hamburger-menu">
-            <RenderMenuItems profile={profile} user={user} />
+            <RenderMenuItems profile={profile} user={user}  toggleMenu={toggleMenu}/>
           </div>
         )}
       </span>

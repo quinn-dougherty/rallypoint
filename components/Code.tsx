@@ -45,6 +45,7 @@ export default function Code({ code }: { code: string }) {
   };
 
   return (
+      <div>
     <pre className="bg-foreground/5 rounded-md p-8 my-8 relative">
       <button
         onClick={copy}
@@ -54,5 +55,6 @@ export default function Code({ code }: { code: string }) {
       </button>
       <code>{code}</code>
     </pre>
+      </div>
   );
 }
