@@ -48,18 +48,20 @@ function RenderMenuItems({ user, profile,toggleMenu }: RenderMenuItemsProps) {
     return (
       <React.Fragment>
         <div>
+          <h2>{profile.display_name}</h2>
+          <hr/>
         <ul>
           <li>
-            <Link onClick={(e)=>toggleMenu} href={"/profile"}>
+            <Link onClick={()=>toggleMenu} href={"/profile"}>
               My Profile
             </Link>
           </li>
           <li>
-            <Link  onClick={(e)=>toggleMenu} href={"/profile/edit"}>Edit Profile</Link>
+            <Link  onClick={()=>toggleMenu} href={"/profile/edit"}>Edit Profile</Link>
           </li>
           <li>
           <div className="flex items-center gap-4">
-            <form action={signOut} onClick={(e)=>toggleMenu}>
+            <form action={signOut} onClick={()=>toggleMenu}>
               <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
                 Logout
               </button>
