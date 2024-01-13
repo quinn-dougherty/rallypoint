@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 // import PostsModel from "@/types/Posts";
 import { createClientSsr } from "@/utils/supabase/client";
+import { Dispatch, SetStateAction } from "react";
 
 type CreatePostProps = {
   createPost: {
@@ -8,6 +9,8 @@ type CreatePostProps = {
     description: string;
     amount: number;
   };
+  disabledSubmit: boolean;
+  setDisableSubmit: Dispatch<SetStateAction<boolean>>;
   titleOnChange: (newValue: React.ChangeEvent<HTMLInputElement>) => void;
   descriptionOnChange: (
     newValue: React.ChangeEvent<HTMLTextAreaElement>,
@@ -31,13 +34,15 @@ const CreatePost: React.FC<CreatePostProps> = ({
   titleOnChange,
   descriptionOnChange,
   amountOnChange,
+  disabledSubmit,
+  setDisableSubmit,
 }: CreatePostProps) => {
   const { title, description, amount } = createPost;
   let failed = false;
   const router = useRouter();
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    setDisableSubmit(true);
     try {
       const { id } = await getUser();
       const response = await fetch("/api/create", {
@@ -81,22 +86,25 @@ const CreatePost: React.FC<CreatePostProps> = ({
   return failed ? (
     <div>Failed</div>
   ) : (
-      <div>
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input type="text" value={title} onChange={titleOnChange} />
-      </label>
-      <label>
-        Description:
-        <textarea value={description} onChange={descriptionOnChange} />
-      </label>
-      <label>
-        Amount: <input type="number" value={amount} onChange={amountOnChange} />
-      </label>
-      <button type="submit">Create Post</button>
-    </form>
-      </div>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Title:
+          <input type="text" value={title} onChange={titleOnChange} />
+        </label>
+        <label>
+          Description:
+          <textarea value={description} onChange={descriptionOnChange} />
+        </label>
+        <label>
+          Amount:{" "}
+          <input type="number" value={amount} onChange={amountOnChange} />
+        </label>
+        <button type="submit" disabled={disabledSubmit}>
+          Create Post
+        </button>
+      </form>
+    </div>
   );
 };
 export default CreatePost;

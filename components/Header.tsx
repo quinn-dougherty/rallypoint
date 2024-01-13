@@ -7,7 +7,7 @@ import AuthButton from "./profile/AuthButton";
 
 interface Profile {
   lw_username: string;
-  email:string;
+  email: string;
   display_name: string;
 }
 
@@ -43,14 +43,16 @@ export default async function Header() {
           <li>
             <Link href="/create">Create</Link>
           </li>
-          {user ?
-         ( <li> {renderHamburger(user)}  <div />
-          </li>)
-              :(
-          <li>
-            <AuthButton user={user} />
-          </li>
-              )          }
+          {user ? (
+            <li>
+              {" "}
+              {await renderHamburger(user)} <div />
+            </li>
+          ) : (
+            <li>
+              <AuthButton user={user} />
+            </li>
+          )}
         </ul>
       </nav>
     </div>

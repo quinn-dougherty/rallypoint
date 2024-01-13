@@ -22,6 +22,4 @@ export default async function AuthButton({ user }: AuthButtonProps) {
       </Link>
     );
   }
-
-
 }
