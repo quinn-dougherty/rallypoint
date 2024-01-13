@@ -6,6 +6,7 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   useEffect(() => {}, [title, description, amount]);
   function titleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTitle(e.target.value);
@@ -23,6 +24,8 @@ export default function Create() {
         titleOnChange={titleOnChange}
         descriptionOnChange={descriptionOnChange}
         amountOnChange={amountOnChange}
+        disabledSubmit={disableSubmit}
+        setDisableSubmit={setDisableSubmit}
       />
     </div>
   );

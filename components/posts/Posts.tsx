@@ -10,13 +10,14 @@ type PostsProps = {
 };
 
 function Posts({ lw_username }: PostsProps) {
+  const supabase = createClientSsr();
   const [posts, setPosts] = useState<PostsModel[]>([]);
   const [user, setUser] = useState<UsersModel | null>(null);
+  const [checkedUser, setCheckStatus] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (lw_username !== null) {
-      const supabase = createClientSsr();
       supabase
         .from("profiles")
         .select()
@@ -27,14 +28,19 @@ function Posts({ lw_username }: PostsProps) {
             console.error("Error fetching user:", error);
           } else {
             setUser(data as UsersModel);
+            setCheckStatus(true);
           }
         });
+    } else {
+      setCheckStatus(true);
     }
   }, [lw_username]);
 
   useEffect(() => {
+    if (!checkedUser) {
+      return;
+    }
     if (user) {
-      const supabase = createClientSsr();
       supabase
         .from("posts")
         .select()
@@ -48,7 +54,6 @@ function Posts({ lw_username }: PostsProps) {
           setLoading(false);
         });
     } else {
-      const supabase = createClientSsr();
       supabase
         .from("posts")
         .select()
@@ -61,7 +66,7 @@ function Posts({ lw_username }: PostsProps) {
           setLoading(false);
         });
     }
-  }, [user]);
+  }, [checkedUser]);
 
   if (loading) {
     return <div>Loading...</div>;

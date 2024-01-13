@@ -43,43 +43,43 @@ export default async function Page() {
       >
         Back
       </Link>
-
-      <form
-        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground profile-form"
-        action={saveProfile}
-      >
-        <label className="text-md" htmlFor="displayName">
-          Display Name
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="displayName"
-          placeholder="Display Name"
-          defaultValue={data?.display_name}
-        />
-        <label className="text-md" htmlFor="lwUsername">
-          LessWrong Username
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="lwUsername"
-          placeholder="LessWrong Username"
-          defaultValue={data?.lw_username}
-        />
-
-        <label className="text-md" htmlFor="bio">
-          Bio
-        </label>
-        <textarea
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="bio"
+      <div key={"form-profile"}>
+        <form
+          className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground profile-form"
+          action={saveProfile}
         >
-          {data?.bio}
-        </textarea>
-        <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
-          Save
-        </button>
-      </form>
+          <label className="text-md" htmlFor="displayName">
+            Display Name
+          </label>
+          <input
+            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            name="displayName"
+            placeholder="Display Name"
+            defaultValue={data?.display_name}
+          />
+          <label className="text-md" htmlFor="lwUsername">
+            LessWrong Username
+          </label>
+          <input
+            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            name="lwUsername"
+            placeholder="LessWrong Username"
+            defaultValue={data?.lw_username}
+          />
+
+          <label className="text-md" htmlFor="bio">
+            Bio
+          </label>
+          <textarea
+            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            name="bio"
+            defaultValue={data?.bio}
+          ></textarea>
+          <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+            Save
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
