@@ -1,5 +1,4 @@
 import Link from "next/link";
-import signOut from "@/utils/signOut";
 
 interface User {
   id: string;
