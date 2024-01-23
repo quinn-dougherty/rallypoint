@@ -7,8 +7,8 @@ export default async function Page({
   params: { lw_username: string; post_id: string };
 }) {
   const { lw_username, post_id } = params;
-  const supabase = createClientSsr();
-  const { data, error } = await supabase
+  const supabase_post = createClientSsr();
+  const { data, error } = await supabase_post
     .from("posts")
     .select()
     .match({ post_id })
@@ -20,9 +20,23 @@ export default async function Page({
   if (!data) {
     return <div>Loading... (forever probably)</div>;
   }
+
+  const supabase_claim = createClientSsr();
+  const { data: claims, error: claims_error } = await supabase_claim
+    .from("claims")
+    .select()
+    .match({ post_id });
+
+  if (claims_error) {
+    return <div>{`No claims. ${claims_error.message}`}</div>;
+  }
+  if (!claims) {
+    return <div>Loading... (forever probably)</div>;
+  }
+
   return (
     <div>
-      <Post post={data} lw_username={lw_username} />
+      <Post post={data} lw_username={lw_username} claims={claims} />
     </div>
   );
 }
