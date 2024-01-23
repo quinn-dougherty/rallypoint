@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Posts from "@/components/posts/Posts";
+import PostsList from "@/components/posts/PostsList";
 
 export type UserProfileProps = {
   profile: {
@@ -29,7 +29,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <p>Bio: {profile.bio}</p>
       <div>
         <h2>Posts authored:</h2>
-        <Posts lw_username={profile.lw_username} />
+        <PostsList lw_username={profile.lw_username} />
       </div>
     </div>
   );
