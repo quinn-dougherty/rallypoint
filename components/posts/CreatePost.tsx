@@ -74,7 +74,8 @@ const CreatePost: React.FC<CreatePostProps> = ({
       const dbItems = await response.json();
       failed = false;
       if (lw_username) {
-        const newUrl = `/${lw_username}/${dbItems[0].post_id}`;
+        const { post_id } = dbItems[0];
+        const newUrl = `/${lw_username}/${post_id}`;
         router.push(newUrl);
       } else {
         console.log("Failed to redirect, but successfully made new post");

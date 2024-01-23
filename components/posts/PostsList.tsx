@@ -9,7 +9,7 @@ type PostsProps = {
   lw_username: string | null;
 };
 
-function Posts({ lw_username }: PostsProps) {
+function PostsList({ lw_username }: PostsProps) {
   const supabase = createClientSsr();
   const [posts, setPosts] = useState<PostsModel[]>([]);
   const [user, setUser] = useState<UsersModel | null>(null);
@@ -87,4 +87,4 @@ function Posts({ lw_username }: PostsProps) {
   );
 }
 
-export default Posts;
+export default PostsList;
