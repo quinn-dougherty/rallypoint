@@ -4,13 +4,13 @@ Lean and quick funding by crowds or individuals for well-scoped items. Some domi
 
 # Development
 
-```bash
+```console
 $ cat .env
 # Update these with your Supabase details from your project settings > API
 # https://app.supabase.com/project/_/settings/api
 NEXT_PUBLIC_SUPABASE_URL=<ask quinn>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<ask quinn>
-$ npm run dev
+$ pnpm dev
 ```
 
 Test data (currently) is logged in supabase console.
@@ -23,9 +23,9 @@ All you need to do is kill `npm run dev` and restart it.
 
 ## When you modify table schema in supabase
 
-```bash
+```console
 $ ./node_modules/.bin/supabase login # token in browser
-$ npm run gen-types
+$ pnpm gen-types
 ```
 
 this will write `types/supabase.ts` with the table schema interface, it's problematic if it gets too outdated.
