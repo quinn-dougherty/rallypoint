@@ -6,7 +6,7 @@ export default async function Page({
 }: {
   params: { lw_username: string; post_id: string };
 }) {
-  const { lw_username, post_id } = params;
+  const { post_id } = params;
   const supabase_post = createClientSsr();
   const { data, error } = await supabase_post
     .from("posts")

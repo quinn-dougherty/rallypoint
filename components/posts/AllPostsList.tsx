@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { createClientSsr } from "@/utils/supabase/client";
 import Post from "./Post";
-import PostsModel from "@/types/Posts";
-import UsersModel from "@/types/Users";
+import PostsModel from "@/types/Posts"; // TODO: `@/types/Models.ts`
 
 function AllPostsList() {
   const supabase = createClientSsr();
