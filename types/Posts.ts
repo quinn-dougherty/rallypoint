@@ -1,3 +1,5 @@
+/// TODO: refactor everywhere to use `Models.ts`
+
 export default interface PostsModel {
   post_id: string;
   owner_user_id: string;

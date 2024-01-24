@@ -15,6 +15,7 @@ export interface Database {
           claimant_user_id: string | null;
           claimed_at: string | null;
           deadline: string | null;
+          description: string;
           is_resolved: boolean | null;
           post_id: string | null;
           resolved_at: string | null;
@@ -26,6 +27,7 @@ export interface Database {
           claimant_user_id?: string | null;
           claimed_at?: string | null;
           deadline?: string | null;
+          description: string;
           is_resolved?: boolean | null;
           post_id?: string | null;
           resolved_at?: string | null;
@@ -37,6 +39,7 @@ export interface Database {
           claimant_user_id?: string | null;
           claimed_at?: string | null;
           deadline?: string | null;
+          description?: string;
           is_resolved?: boolean | null;
           post_id?: string | null;
           resolved_at?: string | null;
@@ -114,7 +117,6 @@ export interface Database {
           amount: number;
           created_at: string | null;
           post_id: string | null;
-          status: Database["public"]["Enums"]["status_type"] | null;
           user_id: string | null;
         };
         Insert: {
@@ -122,7 +124,6 @@ export interface Database {
           amount: number;
           created_at?: string | null;
           post_id?: string | null;
-          status?: Database["public"]["Enums"]["status_type"] | null;
           user_id?: string | null;
         };
         Update: {
@@ -130,7 +131,6 @@ export interface Database {
           amount?: number;
           created_at?: string | null;
           post_id?: string | null;
-          status?: Database["public"]["Enums"]["status_type"] | null;
           user_id?: string | null;
         };
         Relationships: [
@@ -145,7 +145,7 @@ export interface Database {
             foreignKeyName: "payments_allocation_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
-            referencedRelation: "users";
+            referencedRelation: "profiles";
             referencedColumns: ["user_id"];
           },
         ];
@@ -272,37 +272,43 @@ export interface Database {
       profiles: {
         Row: {
           balance: number | null;
+          balance_gained: number;
+          balance_offered: number;
+          balance_paid: number;
           bio: string | null;
           created_at: string;
           display_name: string | null;
           email: string | null;
           lw_username: string | null;
           profile_image_url: string | null;
-          profit: number;
           update_at: string | null;
           user_id: string;
         };
         Insert: {
           balance?: number | null;
+          balance_gained?: number;
+          balance_offered?: number;
+          balance_paid?: number;
           bio?: string | null;
           created_at?: string;
           display_name?: string | null;
           email?: string | null;
           lw_username?: string | null;
           profile_image_url?: string | null;
-          profit?: number;
           update_at?: string | null;
           user_id: string;
         };
         Update: {
           balance?: number | null;
+          balance_gained?: number;
+          balance_offered?: number;
+          balance_paid?: number;
           bio?: string | null;
           created_at?: string;
           display_name?: string | null;
           email?: string | null;
           lw_username?: string | null;
           profile_image_url?: string | null;
-          profit?: number;
           update_at?: string | null;
           user_id?: string;
         };

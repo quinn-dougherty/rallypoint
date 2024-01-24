@@ -1,3 +1,5 @@
+/// TODO: refactor everywhere to use `Models.ts`
+
 export default interface UsersModel {
   user_id: string;
   email: string;
