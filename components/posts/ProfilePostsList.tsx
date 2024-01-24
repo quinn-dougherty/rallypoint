@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { createClientSsr } from "@/utils/supabase/client";
-import Post from "./Post";
+import PostCard from "./PostCard";
 import PostsModel from "@/types/Posts";
 import UsersModel from "@/types/Users";
 
@@ -73,7 +73,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   return (
     <div>
       {posts.map((post) => (
-        <Post key={post.post_id} post={post} />
+        <PostCard key={post.post_id} post={post} />
       ))}
     </div>
   );

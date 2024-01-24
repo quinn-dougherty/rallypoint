@@ -1,5 +1,5 @@
 import { createClientSsr } from "@/utils/supabase/client";
-import Post from "@/components/posts/Post";
+import PostPage from "@/components/posts/PostPage";
 
 export default async function Page({
   params,
@@ -36,7 +36,7 @@ export default async function Page({
 
   return (
     <div>
-      <Post post={data} claims={claims} />
+      <PostPage post={data} claims={claims} />
     </div>
   );
 }
