@@ -31,7 +31,7 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
     return <div>Loading...</div>;
   }
 
-  const { claim_id, post_id, description, status, is_resolved } = claim;
+  const { claim_id, post_id, description, is_resolved } = claim;
   return (
     <div>
       <h1>
@@ -41,8 +41,7 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
       </h1>
       <p>Claimant: {claimant_lw_username}</p>
       <p>Description: {description}</p>
-      <p>Status: {status}</p>
-      <p>Resolved: {is_resolved}</p>
+      <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
     </div>
   );
 }

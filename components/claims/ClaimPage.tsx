@@ -9,18 +9,11 @@ interface ClaimsProps {
 }
 
 async function Claim({ claim, poster_lw_username }: ClaimsProps) {
-  const {
-    claim_id,
-    post_id,
-    description,
-    status,
-    is_resolved,
-    claimant_user_id,
-  } = claim;
+  const { claim_id, post_id, description, is_resolved, claimant_user_id } =
+    claim;
   let isPoster;
   try {
     const user = await GetUser();
-    console.log(user.id);
     const supabasePosts = createClientSsr();
     const { data, error } = await supabasePosts
       .from("posts")
@@ -53,9 +46,16 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
         <a href={`/${poster_lw_username}/${post_id}`}>claim of post</a>
       </p>
       <p>Description: {description}</p>
-      <p>Status: {status}</p>
-      <p>Resolved: {is_resolved}</p>
-      {isPoster ? <ClaimResolution award={1} /> : ""}
+      <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
+      {isPoster && !is_resolved ? (
+        <ClaimResolution
+          claim_id={claim_id}
+          post_id={post_id}
+          lw_username={poster_lw_username}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
