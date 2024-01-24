@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import PostsModel from "@/types/Posts";
 import { ProfilesModel } from "@/types/Models";
-import { ClaimsModel } from "@/types/Models";
 import { createClientSsr } from "@/utils/supabase/client";
 
 type PostCardProps = {
@@ -12,7 +11,7 @@ type PostCardProps = {
 function PostCard({ post }: PostCardProps) {
   const [profile, setProfile] = useState<ProfilesModel["Row"] | null>(null);
   const [lwUsername, setLwUsername] = useState<string | null>(null);
-  const { post_id, title, description, status, post_type, amount } = post;
+  const { post_id, title, status, post_type, amount } = post;
   const supabase = createClientSsr();
   useEffect(() => {
     const { owner_user_id } = post;
