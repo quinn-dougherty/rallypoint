@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import PostsModel from "@/types/Posts";
 import { ProfilesModel } from "@/types/Models";
-import Claim from "@/components/claims/Claim";
+import ClaimCard from "@/components/claims/ClaimCard";
 import { ClaimsModel } from "@/types/Models";
 import { createClientSsr } from "@/utils/supabase/client";
 
 type PostPageProps = {
   post: PostsModel;
-  claims?: ClaimsModel["Row"][];
+  claims: ClaimsModel["Row"][];
 };
 
 function PostPage({ post, claims }: PostPageProps) {
@@ -52,15 +52,16 @@ function PostPage({ post, claims }: PostPageProps) {
         <p>
           <a href={`/${lw_username}/${post_id}/claim`}>Make claim</a>
         </p>
-        {claims
-          ? claims.map((claim: ClaimsModel["Row"]) => (
-              <Claim
-                key={claim.claim_id}
-                claim={claim}
-                poster_lw_username={lw_username}
-              />
-            ))
-          : ""}
+        Standing claims:
+        {claims.map((claim: ClaimsModel["Row"]) => {
+          return (
+            <ClaimCard
+              key={claim.claim_id}
+              claim={claim}
+              poster_lw_username={lw_username}
+            />
+          );
+        })}
       </div>
     );
   }

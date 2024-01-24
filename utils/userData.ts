@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import { createClientSsr, supabase } from "@/utils/supabase/client";
 import { UserProfileForm } from "@/types/Users";
-import { supabase } from "@/utils/supabase/client";
 import { UserResponse } from "@supabase/gotrue-js";
 
+/* The cookies version-- rename to getUserWithCookies later? See #32 */
 export async function GetUser() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -17,6 +18,18 @@ export async function GetUser() {
     return user;
   }
 }
+
+export async function getUser() {
+  const supabase = createClientSsr();
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("Not authenticated:", error);
+    throw error;
+  }
+  return data.user;
+}
+
 export async function UpdateUser(user: UserProfileForm) {
   console.log(`updateUser data`, user);
   const error = await supabase()
