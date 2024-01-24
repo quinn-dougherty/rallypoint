@@ -19,6 +19,9 @@ function Post({ post, lw_username, claims }: PostProps) {
       <p>{description}</p>
       <p>{`${status} ${post_type}`}</p>
       <p>{`$${amount} available`}</p>
+      <p>
+        <a href={`/${lw_username}/${post_id}/claim`}>Make claim</a>
+      </p>
       {claims
         ? claims.map((claim: ClaimsModel["Row"]) => (
             <Claim

@@ -22,20 +22,6 @@ export default async function Page({
     return <div>Loading... (forever probably)</div>;
   }
 
-  // const supabase_profiles = createClientSsr();
-  // const { data: claimant_data, error: claimant_error } = await supabase_profiles
-  //   .from("profiles")
-  //   .select()
-  //   .match({ user_id: data.claimant_user_id })
-  //   .single();
-  // if (claimant_error) {
-  //   return <div>{`No claimant user info: ${claimant_error.message}`}</div>;
-  // }
-  // if (!claimant_data) {
-  //   return <div>Loading... (forever probably)</div>;
-  // }
-  // const claimant_lw_username = claimant_data.lw_username;
-
   return (
     <div>
       <Claim claim={data} poster_lw_username={lw_username} />
