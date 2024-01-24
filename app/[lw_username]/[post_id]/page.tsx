@@ -36,7 +36,7 @@ export default async function Page({
 
   return (
     <div>
-      <Post post={data} lw_username={lw_username} claims={claims} />
+      <Post post={data} claims={claims} />
     </div>
   );
 }

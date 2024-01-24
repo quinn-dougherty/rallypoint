@@ -5,11 +5,11 @@ import Post from "./Post";
 import PostsModel from "@/types/Posts";
 import UsersModel from "@/types/Users";
 
-type PostsProps = {
-  lw_username: string | null;
-};
+interface ProfilePostsProps {
+  lw_username: string;
+}
 
-function PostsList({ lw_username }: PostsProps) {
+function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   const supabase = createClientSsr();
   const [posts, setPosts] = useState<PostsModel[]>([]);
   const [user, setUser] = useState<UsersModel | null>(null);
@@ -17,23 +17,19 @@ function PostsList({ lw_username }: PostsProps) {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (lw_username !== null) {
-      supabase
-        .from("profiles")
-        .select()
-        .match({ lw_username })
-        .single()
-        .then(({ data, error }) => {
-          if (error) {
-            console.error("Error fetching user:", error);
-          } else {
-            setUser(data as UsersModel);
-            setCheckStatus(true);
-          }
-        });
-    } else {
-      setCheckStatus(true);
-    }
+    supabase
+      .from("profiles")
+      .select()
+      .match({ lw_username })
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching user:", error);
+        } else {
+          setUser(data as UsersModel);
+          setCheckStatus(true);
+        }
+      });
   }, [lw_username]);
 
   useEffect(() => {
@@ -77,14 +73,10 @@ function PostsList({ lw_username }: PostsProps) {
   return (
     <div>
       {posts.map((post) => (
-        <Post
-          key={post.post_id}
-          post={post}
-          lw_username={lw_username || "quinn-dougherty"}
-        />
+        <Post key={post.post_id} post={post} />
       ))}
     </div>
   );
 }
 
-export default PostsList;
+export default ProfilePostsList;
