@@ -1,20 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { createClientSsr } from "@/utils/supabase/client";
 import PercentageInput from "@/components/PercentageInput";
 
 interface ClaimResolutionProps {
   claim_id: string;
   post_id: string;
-  lw_username: string;
 }
 
-function ClaimResolution({
-  claim_id,
-  post_id,
-  lw_username,
-}: ClaimResolutionProps) {
+function ClaimResolution({ claim_id, post_id }: ClaimResolutionProps) {
   const [claimantUserId, setClaimantUserId] = useState<string>("");
   const [posterUserId, setPosterUserId] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(100);
