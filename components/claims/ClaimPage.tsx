@@ -48,11 +48,7 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       <p>Description: {description}</p>
       <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
       {isPoster && !is_resolved ? (
-        <ClaimResolution
-          claim_id={claim_id}
-          post_id={post_id}
-          lw_username={poster_lw_username}
-        />
+        <ClaimResolution claim_id={claim_id} post_id={post_id} />
       ) : (
         ""
       )}
