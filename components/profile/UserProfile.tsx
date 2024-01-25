@@ -22,6 +22,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
         <div>
           <Link href="/profile/edit">Edit your profile</Link>
           <Link href={`/${profile.lw_username}`}>Sharelink</Link>
+          <Link href="/profile/deposit">Deposit balance</Link>
         </div>
       )}
       <p>Email: {profile.email}</p>

@@ -1,5 +1,5 @@
 import { createClientSsr } from "@/utils/supabase/client";
-import UserProfile from "@/components/profile/UserProfile";
+import DepositBalance from "@/components/profile/DepositBalance";
 import { GetUser } from "@/utils/userData";
 
 export default async function Page() {
@@ -20,7 +20,7 @@ export default async function Page() {
 
   return (
     <div>
-      <UserProfile profile={data} privateView={true} />
+      <DepositBalance profile={data} amount={100} />
     </div>
   );
 }
