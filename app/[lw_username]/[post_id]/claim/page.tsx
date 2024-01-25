@@ -17,7 +17,7 @@ export default function Create({
   return (
     <div>
       <CreateClaim
-        claim={{ description }}
+        claim={{ description, post_id }}
         post_id={post_id}
         descriptionOnChange={descriptionOnChange}
         disabledSubmit={disableSubmit}

@@ -1,5 +1,5 @@
 import { createClientSsr } from "@/utils/supabase/client";
-import Claim from "@/components/claims/Claim";
+import ClaimPage from "@/components/claims/ClaimPage";
 
 export default async function Page({
   params,
@@ -24,7 +24,7 @@ export default async function Page({
 
   return (
     <div>
-      <Claim claim={data} poster_lw_username={lw_username} />
+      <ClaimPage claim={data} poster_lw_username={lw_username} />
     </div>
   );
 }

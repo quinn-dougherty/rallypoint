@@ -1,5 +1,4 @@
 import { useRouter } from "next/navigation";
-// import PostsModel from "@/types/Posts";
 import { createClientSsr } from "@/utils/supabase/client";
 import { Dispatch, SetStateAction } from "react";
 

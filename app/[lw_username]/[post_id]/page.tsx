@@ -1,12 +1,12 @@
 import { createClientSsr } from "@/utils/supabase/client";
-import Post from "@/components/posts/Post";
+import PostPage from "@/components/posts/PostPage";
 
 export default async function Page({
   params,
 }: {
   params: { lw_username: string; post_id: string };
 }) {
-  const { lw_username, post_id } = params;
+  const { post_id } = params;
   const supabase_post = createClientSsr();
   const { data, error } = await supabase_post
     .from("posts")
@@ -36,7 +36,7 @@ export default async function Page({
 
   return (
     <div>
-      <Post post={data} lw_username={lw_username} claims={claims} />
+      <PostPage post={data} claims={claims} />
     </div>
   );
 }
