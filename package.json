@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lintfix": "eslint --fix",
     "prettier": "prettier --write .",
-    "format": "npm run lintfix && npm run prettier",
+    "format": "pnpm lintfix && pnpm prettier",
     "typewatch": "tsc --watch",
     "gen-types": "supabase gen types typescript --project-id \"jshunewngntslipmyhub\" --schema public > types/supabase.ts"
   },
