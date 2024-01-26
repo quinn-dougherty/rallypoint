@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import PostsModel from "@/types/Posts";
-import { ProfilesModel } from "@/types/Models";
+import { ProfilesModel, PostsModel } from "@/types/Models";
 import ClaimCard from "@/components/claims/ClaimCard";
 import { ClaimsModel } from "@/types/Models";
 import { createClientSsr } from "@/utils/supabase/client";
 
 type PostPageProps = {
-  post: PostsModel;
+  post: PostsModel["Row"];
   claims: ClaimsModel["Row"][];
 };
 

@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { createClientSsr, supabase } from "@/utils/supabase/client";
-import { UserProfileForm } from "@/types/Users";
 import { UserResponse } from "@supabase/gotrue-js";
 
 /* The cookies version-- rename to getUserWithCookies later? See #32 */
@@ -30,14 +29,20 @@ export async function getUser() {
   return data.user;
 }
 
-export async function UpdateUser(user: UserProfileForm) {
+export async function UpdateUser(user: {
+  user_id: string;
+  lw_username: string;
+  display_name: string;
+  bio: string;
+}) {
   console.log(`updateUser data`, user);
+  const { lw_username, display_name, bio } = user;
   const error = await supabase()
     .from("profiles")
     .update({
-      display_name: user.displayName,
-      lw_username: user.lwUsername,
-      bio: user.bio,
+      display_name,
+      lw_username,
+      bio,
     })
     .eq(`user_id`, user.user_id);
   if (error) {

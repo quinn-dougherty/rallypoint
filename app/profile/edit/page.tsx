@@ -18,17 +18,18 @@ export default async function Page() {
 
   const saveProfile = async (formData: FormData) => {
     "use server";
-    const displayName =
+    const display_name: string =
       (formData.get("displayName") as string) || data?.display_name;
-    const lwUsername =
+    const lw_username: string =
       (formData.get("lwUsername") as string) || data?.lw_username;
-    const bio = (formData.get("bio") as string) || data?.bio;
+    const bio: string = (formData.get("bio") as string) || data?.bio;
 
     // check formData.lw_username validity
-    if (lwUsername !== null && lwUsername !== data?.lw_username) {
+    if (lw_username !== null && lw_username !== data?.lw_username) {
       // add lessWrong check
     }
-    await UpdateUser({ user_id: user.id, displayName, lwUsername, bio })
+    const { id: user_id } = user;
+    await UpdateUser({ user_id, display_name, lw_username, bio })
       .then(redirect("/profile"))
       .catch((error) => {
         console.error(`update profile error`, error);

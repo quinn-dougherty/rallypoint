@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import PostsModel from "@/types/Posts";
-import { ProfilesModel } from "@/types/Models";
+import { PostsModel, ProfilesModel } from "@/types/Models";
 import { createClientSsr } from "@/utils/supabase/client";
 
 type PostCardProps = {
-  post: PostsModel;
+  post: PostsModel["Row"];
 };
 
 function PostCard({ post }: PostCardProps) {
