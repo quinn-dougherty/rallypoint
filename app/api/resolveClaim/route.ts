@@ -42,6 +42,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to fetch post" });
   }
 
+  // add stripe logic
+
   const award = post.amount * (percentageAward / 100);
 
   const { data, error } = await supabase
@@ -58,5 +60,5 @@ export async function POST(req: NextRequest) {
       error: `DB transaction failed: ${error.message}`,
     });
   }
-  return NextResponse.json(data);
+  return NextResponse.json({ data, award });
 }

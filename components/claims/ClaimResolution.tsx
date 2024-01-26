@@ -58,7 +58,18 @@ function ClaimResolution({ claim_id, post_id }: ClaimResolutionProps) {
           post_id,
         }),
       });
-      const data = await response.json();
+      const { data, award } = await response.json();
+      const stripeResponse = await fetch("/api/stripe/resolveClaim", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          claimantStripeAccountId,
+          posterStripeAccountId,
+          award,
+          claim_id,
+          post_id,
+        }),
+      });
       if (response.ok) {
         console.log("success:", data);
         window.location.reload();
