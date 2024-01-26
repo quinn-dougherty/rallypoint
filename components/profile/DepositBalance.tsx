@@ -5,6 +5,8 @@ interface DepositBalanceProps {
   amount: number;
 }
 
+/// TODO: implement this
+// This makes sense in escrow version, not so much otherwise
 function DepositBalance({ profile, amount }: DepositBalanceProps) {
   return (
     <div>

@@ -2,6 +2,7 @@ import { createClientSsr } from "@/utils/supabase/client";
 import DepositBalance from "@/components/profile/DepositBalance";
 import { GetUser } from "@/utils/userData";
 
+/// This makes sense in the escrow version, not so much otherwise
 export default async function Page() {
   const user = await GetUser();
   const supabase = createClientSsr();
