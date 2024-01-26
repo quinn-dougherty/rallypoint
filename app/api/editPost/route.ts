@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 
-export async function POST(req) {
-  const cookieStore = cookies(req);
+export async function POST(req: NextRequest) {
+  const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
   const { post_id, title, description } = await req.json();
