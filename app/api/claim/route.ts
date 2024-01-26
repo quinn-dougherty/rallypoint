@@ -23,9 +23,18 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     return NextResponse.json({
-      error: `DB transaction failed: ${error.message}`,
+      error: `DB transaction on claims failed: ${error.message}`,
+    });
+  }
+  const { data: postData, error: postError } = await supabase
+    .from("posts")
+    .update({ status: "claimed" })
+    .match({ post_id });
+  if (postError) {
+    return NextResponse.json({
+      error: `DB transaction on posts failed: ${postError.message}`,
     });
   }
 
-  return NextResponse.json(data);
+  return NextResponse.json({ claimData: data, postData });
 }

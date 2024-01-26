@@ -38,7 +38,7 @@ function ClaimResolution({ claim_id, post_id }: ClaimResolutionProps) {
       .single()
       .then(({ data, error }) => {
         if (error) {
-          console.error("Error fetching poster user id");
+          console.error("Error fetching poster user id: ${error.message}");
         } else {
           setPosterUserId(data.owner_user_id);
         }
