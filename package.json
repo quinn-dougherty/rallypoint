@@ -9,6 +9,9 @@
     "prettier": "prettier --write .",
     "format": "pnpm lintfix && pnpm prettier",
     "typewatch": "tsc --watch",
+    "ty": "pnpm typewatch",
+    "d": "pnpm dev",
+    "b": "pnpm build",
     "gen-types": "supabase gen types typescript --project-id \"jshunewngntslipmyhub\" --schema public > types/supabase.ts"
   },
   "dependencies": {
