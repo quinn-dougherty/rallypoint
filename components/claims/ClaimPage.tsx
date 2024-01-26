@@ -1,6 +1,7 @@
 import { ClaimsModel } from "@/types/Models";
 import { createClientSsr } from "@/utils/supabase/client";
 import ClaimResolution from "./ClaimResolution";
+import PostCard from "./../posts/PostCard";
 import { GetUser } from "@/utils/userData";
 
 interface ClaimsProps {
@@ -12,17 +13,20 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
   const { claim_id, post_id, description, is_resolved, claimant_user_id } =
     claim;
   let isPoster;
+  let post;
   try {
     const user = await GetUser();
     const supabasePosts = createClientSsr();
     const { data, error } = await supabasePosts
       .from("posts")
       .select()
-      .match({ owner_user_id: user.id });
+      .match({ post_id })
+      .single();
     if (error) {
       throw new Error(`couldn't retrieve user's posts: ${error.message}`);
     }
-    isPoster = data.map((post) => post.owner_user_id == user.id)[0];
+    isPoster = data.owner_user_id === user.id;
+    post = data;
   } catch {
     isPoster = false;
   }
@@ -43,7 +47,8 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       </h1>
       <p>Claimant: {claimant_lw_username}</p>
       <p>
-        <a href={`/${poster_lw_username}/${post_id}`}>claim of post</a>
+        <a href={`/${poster_lw_username}/${post_id}`}>claim of post:</a>
+        <PostCard post={post} />
       </p>
       <p>Description: {description}</p>
       <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
