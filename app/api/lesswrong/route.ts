@@ -61,8 +61,6 @@ const lesswrongAuth = async (
   username: string,
   password: string,
 ): Promise<{ token: string; userProfile: UserProfile }> => {
-  const fetch = (await import("node-fetch")).default;
-
   const query = `
     mutation {
       login(username: "${username}", password: "${password}") {
@@ -144,7 +142,8 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error in Lesswrong login", error);
-    return new Response(JSON.stringify({ error: error }), {
+
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: {
         "Content-Type": "application/json",
