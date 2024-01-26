@@ -15,11 +15,11 @@ $ pnpm dev
 
 Test data (currently) is logged in supabase console.
 
-The deploy is concerned about typescript things that `npm run dev` won't notice, so it's good to also have an `npm run typewatch` terminal open alongside dev server.
+The deploy is concerned about typescript things that `pnpm dev` won't notice, so it's good to also have an `pnpm typewatch` terminal open alongside dev server.
 
-#### Warning: running `npm run build` while an `npm run dev` is open will make weird things happen with bad error messages
+#### Warning: running `pnpm build` while an `pnpm dev` is open will make weird things happen with bad error messages
 
-All you need to do is kill `npm run dev` and restart it.
+All you need to do is kill `pnpm dev` and restart it.
 
 ## When you modify table schema in supabase
 
