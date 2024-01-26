@@ -33,7 +33,7 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
 
   const { claim_id, post_id, description, is_resolved } = claim;
   return (
-    <div>
+    <div className="card">
       <h1>
         <a href={`/${poster_lw_username}/${post_id}/${claim_id}`}>
           Claim details

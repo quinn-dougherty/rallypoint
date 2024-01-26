@@ -39,7 +39,7 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       .single()
   ).data.lw_username;
   return (
-    <div>
+    <div className="page">
       <h1>
         <a href={`/${poster_lw_username}/${post_id}/${claim_id}`}>
           Claim details
@@ -48,8 +48,8 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       <p>Claimant: {claimant_lw_username}</p>
       <p>
         <a href={`/${poster_lw_username}/${post_id}`}>claim of post:</a>
-        <PostCard post={post} />
       </p>
+      <PostCard post={post} />
       <p>Description: {description}</p>
       <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
       {isPoster && !is_resolved ? (

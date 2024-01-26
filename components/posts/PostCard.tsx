@@ -38,7 +38,7 @@ function PostCard({ post }: PostCardProps) {
   } else {
     const lw_username = lwUsername as string;
     return (
-      <div className="border">
+      <div className="border card">
         <h2>
           <a href={`/${lw_username}/${post_id}`}>{title}</a>
         </h2>
