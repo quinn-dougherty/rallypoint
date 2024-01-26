@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import { GetUser } from "@/utils/userData";
 
 const lesswrongEndpoint = "https://www.lesswrong.com/graphql";
 
@@ -34,7 +35,7 @@ const fetchProfile = async (token: string): Promise<UserProfile> => {
       }
     }
   `;
-  // change later 
+  // change later
   const headers = {
     Cookie: `loginToken=${token}`,
     "User-Agent":
@@ -52,7 +53,7 @@ const fetchProfile = async (token: string): Promise<UserProfile> => {
   });
 
   const result = await response.json();
-
+  console.log("userdata:", result);
   return result.data.currentUser;
 };
 
@@ -93,6 +94,7 @@ const lesswrongAuth = async (
     }
 
     const token = result.data?.login.token;
+    console.log(token);
 
     if (!token) {
       throw new Error("No token received.");
@@ -100,7 +102,7 @@ const lesswrongAuth = async (
 
     // Fetch the user's profile using the token
     const userProfile = await fetchProfile(token);
-
+    console.log("userprofile:", userProfile);
     return { token, userProfile };
   } catch (error) {
     console.error("Error in Lesswrong login", error);
@@ -112,36 +114,41 @@ export async function POST(req: NextRequest) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { username, password, userid } = await req.json();
-  const { token, userProfile } = await lesswrongAuth(username, password);
+  try {
+    const { username, password } = await req.json();
+    const { token, userProfile } = await lesswrongAuth(username, password);
 
-  if (!token || !userProfile) {
-    return new Response(JSON.stringify({ error: 'Authentication failed' }), {
-      status: 401,
+    if (!token || !userProfile) {
+      throw new Error("Authentication failed");
+    }
+
+    const user = await GetUser();
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ lw_username: userProfile.username })
+      .match({ user_id: user.id });
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+    return new Response(JSON.stringify({ userProfile }), {
+      status: 200,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
-  }
-
-  const { error } = await supabase
-    .from('profiles')
-    .update({ lw_username: userProfile.username })
-    .match({ user_id: userid })
-
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch (error) {
+    console.error("Error in Lesswrong login", error);
+    return new Response(JSON.stringify({ error: error }), {
       status: 500,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   }
-
-  return new Response(JSON.stringify({ userProfile }), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
 }
