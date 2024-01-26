@@ -10,7 +10,7 @@ function AllPostsList() {
   const supabase = createClientSsr();
   const [posts, setPosts] = useState<PostsModel["Row"][]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
+  const [selectedStatuses, setSelectedStatuses] = useState<(Status | null)[]>([
     "unclaimed",
     "claimed",
   ]);

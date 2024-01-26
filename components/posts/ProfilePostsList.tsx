@@ -15,7 +15,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   const [posts, setPosts] = useState<PostsModel["Row"][]>([]);
   const [user, setUser] = useState<ProfilesModel["Row"] | null>(null);
   const [checkedUser, setCheckStatus] = useState(false);
-  const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
+  const [selectedStatuses, setSelectedStatuses] = useState<(Status | null)[]>([
     "unclaimed",
     "claimed",
   ]);
