@@ -9,18 +9,18 @@ export async function POST(req: NextRequest) {
   const { post_id, title, description } = await req.json();
 
   const { data, error } = await supabase
-    .from('posts')
+    .from("posts")
     .update({
       title,
       description,
     })
-    .eq('post_id', post_id);
+    .eq("post_id", post_id);
 
   if (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   }
@@ -28,8 +28,7 @@ export async function POST(req: NextRequest) {
   return new Response(JSON.stringify(data), {
     status: 200,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 }
-

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import EditPost from '@/components/posts/EditPost';
-import { createClientSsr } from '@/utils/supabase/client';
+import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import EditPost from "@/components/posts/EditPost";
+import { createClientSsr } from "@/utils/supabase/client";
 
 export default function EditPage() {
   const pathname = usePathname();
@@ -11,7 +11,7 @@ export default function EditPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const pathSegments = pathname.split('/').filter(Boolean);
+    const pathSegments = pathname.split("/").filter(Boolean);
     const post_id = pathSegments[1];
 
     if (!post_id) {
@@ -24,13 +24,13 @@ export default function EditPage() {
       setLoading(true);
       const supabaseClient = createClientSsr();
       const { data, error } = await supabaseClient
-        .from('posts')
-        .select('*')
-        .eq('post_id', post_id)
+        .from("posts")
+        .select("*")
+        .eq("post_id", post_id)
         .single();
 
       if (error) {
-        console.error('Error fetching post:', error);
+        console.error("Error fetching post:", error);
       } else {
         setPost(data);
       }
@@ -43,7 +43,5 @@ export default function EditPage() {
   if (loading) return <div>Loading post...</div>;
   if (!post) return <div>Post not found or error loading post.</div>;
 
-  return (
-    <EditPost post={post} />
-  );
+  return <EditPost post={post} />;
 }
