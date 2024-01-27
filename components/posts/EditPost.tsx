@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import PostsModel from '@/types/Posts';
+import React, { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { PostsModel } from "@/types/Models";
 
 type EditPostProps = {
-  post: PostsModel;
+  post: PostsModel["Row"];
 };
 
 const EditPost: React.FC<EditPostProps> = ({ post }) => {
-  const [title, setTitle] = useState(post.title || '');
-  const [description, setDescription] = useState(post.description || '');
+  const [title, setTitle] = useState(post.title || "");
+  const [description, setDescription] = useState(post.description || "");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -17,10 +17,10 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/editPost', {
-        method: 'POST',
+      const response = await fetch("/api/editPost", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           post_id: post.post_id,
@@ -36,7 +36,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
       const result = await response.json();
       console.log("Post updated successfully:", result);
 
-      const newPath = pathname.replace(/\/edit$/, '');
+      const newPath = pathname.replace(/\/edit$/, "");
 
       router.push(newPath);
     } catch (error: unknown) {
