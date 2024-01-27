@@ -14,6 +14,8 @@ function PostPage({ post, claims }: PostPageProps) {
   const [profile, setProfile] = useState<ProfilesModel["Row"] | null>(null);
   const [lwUsername, setLwUsername] = useState<string | null>(null);
   const { post_id, title, description, status, post_type, amount } = post;
+  const [amountReactive, setAmount] = useState<number | null>(amount);
+
   const supabase = createClientSsr();
   useEffect(() => {
     const { owner_user_id } = post;
@@ -35,6 +37,22 @@ function PostPage({ post, claims }: PostPageProps) {
       setLwUsername(profile.lw_username);
     }
   }, [profile]);
+  useEffect(() => {
+    const supabase = createClientSsr();
+    supabase
+      .from("posts")
+      .select("amount")
+      .match({ post_id })
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Error fetching post to update amount");
+        } else {
+          setAmount(data.amount);
+        }
+      });
+  }, [amountReactive]);
+
   if (profile === null) {
     return <div>Loading...</div>;
   } else {

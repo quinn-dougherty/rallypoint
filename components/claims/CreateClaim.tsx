@@ -83,7 +83,7 @@ const CreateClaim: React.FC<CreateClaimProps> = ({
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Description:
+          Evidence:
           <textarea value={description} onChange={descriptionOnChange} />
         </label>
         <button type="submit" disabled={disabledSubmit}>

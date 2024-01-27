@@ -40,8 +40,8 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
         </a>
       </h1>
       <p>Claimant: {claimant_lw_username}</p>
-      <p>Description: {description}</p>
-      <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
+      <p>Evidence: {description}</p>
+      <p>{is_resolved ? "Resolved" : "Unresolved"}</p>
     </div>
   );
 }

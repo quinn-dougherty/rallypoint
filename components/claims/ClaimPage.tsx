@@ -50,8 +50,8 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
         <a href={`/${poster_lw_username}/${post_id}`}>claim of post:</a>
       </p>
       <PostCard post={post} />
-      <p>Description: {description}</p>
-      <p>Resolved: {is_resolved ? "YES" : "NO"}</p>
+      <p>Evidence: {description}</p>
+      <p>{is_resolved ? "Resolved" : "Unresolved"}</p>
       {isPoster && !is_resolved ? (
         <ClaimResolution claim_id={claim_id} post_id={post_id} />
       ) : (
