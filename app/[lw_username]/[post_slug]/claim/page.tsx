@@ -5,9 +5,10 @@ import CreateClaim from "@/components/claims/CreateClaim";
 export default function Create({
   params,
 }: {
-  params: { lw_username: string; post_id: string };
+  params: { lw_username: string; post_slug: string };
 }) {
-  const { post_id } = params;
+  const { post_slug } = params;
+  const post_id = post_slug.substring(post_slug.length - 36);
   const [description, setDescription] = useState("");
   const [disableSubmit, setDisableSubmit] = useState(false);
   useEffect(() => {}, [description]);

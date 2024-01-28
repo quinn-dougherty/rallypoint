@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     await req.json();
 
   // Data validation
-  if (!claimant_user_id || !description) {
+  if (!claimant_user_id || !description || !post_id) {
     return NextResponse.json({ error: "Missing required fields" });
   }
 

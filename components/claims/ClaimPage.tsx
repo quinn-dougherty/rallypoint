@@ -2,6 +2,7 @@ import { ClaimsModel } from "@/types/Models";
 import { createClientSsr } from "@/utils/supabase/client";
 import ClaimResolution from "./ClaimResolution";
 import PostCard from "./../posts/PostCard";
+import createSlug from "@/utils/slug";
 import { GetUser } from "@/utils/userData";
 
 interface ClaimsProps {
@@ -38,16 +39,17 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       .match({ user_id: claimant_user_id })
       .single()
   ).data.lw_username;
+  const postSlug = createSlug(post.title, post.post_id);
   return (
     <div className="page">
       <h1>
-        <a href={`/${poster_lw_username}/${post_id}/${claim_id}`}>
+        <a href={`/${poster_lw_username}/${postSlug}/${claim_id}`}>
           Claim details
         </a>
       </h1>
       <p>Claimant: {claimant_lw_username}</p>
       <p>
-        <a href={`/${poster_lw_username}/${post_id}`}>claim of post:</a>
+        <a href={`/${poster_lw_username}/${postSlug}`}>claim of post:</a>
       </p>
       <PostCard post={post} />
       <p>Evidence: {description}</p>

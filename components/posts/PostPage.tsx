@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ProfilesModel, PostsModel } from "@/types/Models";
 import ClaimCard from "@/components/claims/ClaimCard";
 import { ClaimsModel } from "@/types/Models";
+import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
 
 type PostPageProps = {
@@ -57,17 +58,18 @@ function PostPage({ post, claims }: PostPageProps) {
     return <div>Loading...</div>;
   } else {
     const lw_username = lwUsername as string;
+    const post_slug = createSlug(title, post_id);
     return (
       <div className="border">
         <h2>
-          <a href={`/${lw_username}/${post_id}`}>{title}</a>
+          <a href={`/${lw_username}/${post_slug}`}>{title}</a>
         </h2>
         <p>{`Filed by: ${lw_username}`}</p>
         <p>{description}</p>
         <p>{`${status} ${post_type}`}</p>
         <p>{`$${amount} available`}</p>
         <p>
-          <a href={`/${lw_username}/${post_id}/claim`}>Make claim</a>
+          <a href={`/${lw_username}/${post_slug}/claim`}>Make claim</a>
         </p>
         Standing claims:
         {claims.map((claim: ClaimsModel["Row"]) => {
