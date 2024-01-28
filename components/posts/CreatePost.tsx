@@ -1,6 +1,7 @@
-import { useRouter } from "next/navigation";
-import { createClientSsr } from "@/utils/supabase/client";
 import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
+import createSlug from "@/utils/slug";
+import { createClientSsr } from "@/utils/supabase/client";
 
 type CreatePostProps = {
   createPost: {
@@ -74,7 +75,8 @@ const CreatePost: React.FC<CreatePostProps> = ({
       failed = false;
       if (lw_username) {
         const { post_id } = dbItems[0];
-        const newUrl = `/${lw_username}/${post_id}`;
+        const post_slug = createSlug(title, post_id);
+        const newUrl = `/${lw_username}/${post_slug}`;
         router.push(newUrl);
       } else {
         console.log("Failed to redirect, but successfully made new post");
