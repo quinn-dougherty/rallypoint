@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { ProfilesModel, PostsModel } from "@/types/Models";
 import ClaimCard from "@/components/claims/ClaimCard";
 import { ClaimsModel } from "@/types/Models";
@@ -61,15 +62,20 @@ function PostPage({ post, claims }: PostPageProps) {
     const post_slug = createSlug(title, post_id);
     return (
       <div className="border">
-        <h2>
-          <a href={`/${lw_username}/${post_slug}`}>{title}</a>
+        <h2 className="title">
+          <Link href={`/${lw_username}/${post_slug}`}>{title}</Link>
         </h2>
         <p>{`Filed by: ${lw_username}`}</p>
         <p>{description}</p>
         <p>{`${status} ${post_type}`}</p>
         <p>{`$${amount} available`}</p>
         <p>
-          <a href={`/${lw_username}/${post_slug}/claim`}>Make claim</a>
+          <Link
+            className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+            href={`/${lw_username}/${post_slug}/claim`}
+          >
+            Make claim
+          </Link>
         </p>
         Standing claims:
         {claims.map((claim: ClaimsModel["Row"]) => {

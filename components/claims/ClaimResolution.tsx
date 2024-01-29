@@ -73,7 +73,12 @@ function ClaimResolution({ claim_id, post_id }: ClaimResolutionProps) {
   return (
     <div>
       <PercentageInput value={percentage} onChange={handlePercentageChange} />
-      <button onClick={handleSubmit}>Submit Resolution</button>
+      <button
+        className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+        onClick={handleSubmit}
+      >
+        Submit Resolution
+      </button>
     </div>
   );
 }

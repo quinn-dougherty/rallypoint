@@ -17,15 +17,30 @@ const UserProfile: React.FC<UserProfileProps> = ({
 }: UserProfileProps) => {
   return (
     <div>
-      <h1>{`${profile?.display_name || profile.email}'s Profile`}</h1>
+      <h1 className="title">{`${profile?.display_name || profile.email}'s Profile`}</h1>
       {privateView && (
         <div>
-          <Link href="/profile/edit">Edit your profile</Link>
-          <Link href={`/${profile.lw_username}`}>Sharelink</Link>
+          <Link
+            className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+            href="/profile/edit"
+          >
+            Edit your profile
+          </Link>
+          <Link
+            className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+            href={`/${profile.lw_username}`}
+          >
+            Sharelink
+          </Link>
         </div>
       )}
       <p>Email: {profile.email}</p>
-      <p>LW Username: {profile.lw_username}</p>
+      <p>
+        LW Username:{" "}
+        <a href={`https://lesswrong.com/users/${profile.lw_username}`}>
+          {profile.lw_username}
+        </a>
+      </p>
       <p>Bio: {profile.bio}</p>
       <div>
         <h2>Posts authored:</h2>

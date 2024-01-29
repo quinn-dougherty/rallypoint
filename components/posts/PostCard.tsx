@@ -40,12 +40,12 @@ function PostCard({ post }: PostCardProps) {
     const post_slug = createSlug(title, post_id);
     return (
       <div className="border card">
-        <h2>
+        <h2 className="title">
           <a href={`/${lw_username}/${post_slug}`}>{title}</a>
         </h2>
         <p>{`Filed by: ${lw_username}`}</p>
         <p>{`${status} ${post_type}`}</p>
-        <p>{`$${amount} available`}</p>
+        <p>{amount && amount > 0 ? `$${amount} still available` : ""}</p>
       </div>
     );
   }
