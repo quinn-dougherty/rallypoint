@@ -8,8 +8,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Bounties Platform",
-  description: "Outsource and fund things lean and quick",
+  title: "Rallypoint",
+  description: "Outsource AI safety tasks via bounties",
 };
 
 export default function RootLayout({
