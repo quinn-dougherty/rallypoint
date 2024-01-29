@@ -17,6 +17,7 @@ function PercentageInput({ value, onChange }: PercentageInputProps) {
 
   return (
     <input
+      className="rounded-md px-4 py-2 bg-inherit border mb-6"
       type="number"
       value={value}
       onChange={handleChange}
