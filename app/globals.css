@@ -61,6 +61,12 @@
   justify-content: space-around;
 }
 
+.hamburger_menu_item {
+  padding: 0.1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
 .page {
   display: flex;
   flex-direction: column;
@@ -81,4 +87,10 @@
   margin: 1rem;
   width: 100%;
   max-width: 20rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }

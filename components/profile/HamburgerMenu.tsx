@@ -55,13 +55,21 @@ function RenderMenuItems({ user, profile, toggleMenu }: RenderMenuItemsProps) {
           <h2>{profile.display_name}</h2>
           <hr />
           <ul>
-            <li>
-              <Link onClick={() => toggleMenu} href={"/profile"}>
+            <li className="hamburger_menu_item">
+              <Link
+                className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+                onClick={() => toggleMenu}
+                href={"/profile"}
+              >
                 My Profile
               </Link>
             </li>
-            <li>
-              <Link onClick={() => toggleMenu} href={"/profile/edit"}>
+            <li className="hamburger_menu_item">
+              <Link
+                className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+                onClick={() => toggleMenu}
+                href={"/profile/edit"}
+              >
                 Edit Profile
               </Link>
             </li>

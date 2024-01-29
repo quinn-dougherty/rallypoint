@@ -89,20 +89,47 @@ const CreatePost: React.FC<CreatePostProps> = ({
     <div>Failed</div>
   ) : (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Title:
-          <input type="text" value={title} onChange={titleOnChange} />
-        </label>
-        <label>
-          Description:
-          <textarea value={description} onChange={descriptionOnChange} />
-        </label>
-        <label>
-          Amount:{" "}
-          <input type="number" value={amount} onChange={amountOnChange} />
-        </label>
-        <button type="submit" disabled={disabledSubmit}>
+      <form
+        className="animate-in flex-1 flex-col w-full justify-center gap-2 text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
+        onSubmit={handleSubmit}
+      >
+        <p>
+          <label className="text-md">
+            <input
+              className="rounded-md px-4 py-2 bg-inherit border mb-6"
+              placeholder="Title"
+              type="text"
+              value={title}
+              onChange={titleOnChange}
+            />
+          </label>
+        </p>
+        <p>
+          <label className="text-md">
+            <textarea
+              className="rounded-md px-4 py-2 bg-inherit border mb-6"
+              placeholder="Description"
+              value={description}
+              onChange={descriptionOnChange}
+            />
+          </label>
+        </p>
+        <p>
+          <label className="text-md">
+            Amount:{" "}
+            <input
+              className="rounded-md px-4 py-2 bg-inherit border mb-6"
+              type="number"
+              value={amount}
+              onChange={amountOnChange}
+            />
+          </label>
+        </p>
+        <button
+          className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+          type="submit"
+          disabled={disabledSubmit}
+        >
           Create Post
         </button>
       </form>
