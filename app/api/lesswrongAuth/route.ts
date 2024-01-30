@@ -127,12 +127,15 @@ export async function POST(req: NextRequest) {
     }
 
     if (existingProfile?.lw_username) {
-      return new Response(JSON.stringify({ message: "Already authenticated with Lesswrong" }), {
-        status: 400,
-        headers: {
-          "Content-Type": "application/json",
+      return new Response(
+        JSON.stringify({ message: "Already authenticated with Lesswrong" }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
     }
 
     const { username, password } = await req.json();

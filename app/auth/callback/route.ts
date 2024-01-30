@@ -18,9 +18,9 @@ export async function GET(request: Request) {
 
     if (user) {
       const { data: userProfile } = await supabase
-        .from('profiles')
-        .select('lw_username')
-        .eq('user_id', user.id)
+        .from("profiles")
+        .select("lw_username")
+        .eq("user_id", user.id)
         .single();
 
       if (userProfile?.lw_username === null) {

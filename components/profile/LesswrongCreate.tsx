@@ -28,15 +28,14 @@ const LesswrongConnect = () => {
       setLoading(false);
 
       if (!response.ok) {
-        if (data.message === 'Already authenticated with Lesswrong') {
+        if (data.message === "Already authenticated with Lesswrong") {
           setError("Already authenticated with Lesswrong");
         } else {
           setError("Invaliid username/password");
         }
       } else {
-        router.push('/');
+        router.push("/");
       }
-
     } catch (err) {
       setLoading(false);
       if (err instanceof Error) {
@@ -83,11 +82,15 @@ const LesswrongConnect = () => {
           >
             {loading ? "Authenticating..." : "Authenticate"}
           </button>
-          {error && <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">{error}</p>}
+          {error && (
+            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+              {error}
+            </p>
+          )}
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default LesswrongConnect;

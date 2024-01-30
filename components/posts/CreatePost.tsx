@@ -44,7 +44,6 @@ const CreatePost: React.FC<CreatePostProps> = ({
     event.preventDefault();
     setDisableSubmit(true);
     try {
-
       const { id } = await getUser();
 
       const { data: profileData, error: profileError } = await supabase
@@ -54,7 +53,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
         .single();
 
       if (profileError || !profileData?.lw_username) {
-        router.push('/profile/create');
+        router.push("/profile/create");
         return;
       }
 
