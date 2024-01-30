@@ -40,7 +40,7 @@ export default async function Index() {
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <p className="title">Rallypoint Bounties</p>
       <p className="text-foreground">Playmoney alpha</p>
-      <div className="container row w-full flex flex-col items-center gap-8 text-foreground">
+      <div className="container row w-full flex flex-row items-center gap-8 text-foreground">
         {featureList.map((props, idx) => (
           <Feature
             key={idx}
