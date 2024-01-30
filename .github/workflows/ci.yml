@@ -6,11 +6,7 @@ on:
 jobs:
   pnpm-cache-install-build:
     runs-on: ubuntu-latest
-
-    env: 
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ env.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-      NEXT_PUBLIC_SUPABASE_URL: ${{ env.NEXT_PUBLIC_SUPABASE_URL }}
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
