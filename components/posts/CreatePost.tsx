@@ -17,15 +17,16 @@ type CreatePostProps = {
   ) => void;
   amountOnChange: (newValue: React.ChangeEvent<HTMLInputElement>) => void;
 };
+const supabase = createClientSsr();
 
 async function getUser() {
-  const supabase = createClientSsr();
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
     console.error("Not authenticated:", error);
     throw error;
   }
+
   return data.user;
 }
 
@@ -45,6 +46,18 @@ const CreatePost: React.FC<CreatePostProps> = ({
     setDisableSubmit(true);
     try {
       const { id } = await getUser();
+
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .select("lw_username")
+        .eq("user_id", id)
+        .single();
+
+      if (profileError || !profileData?.lw_username) {
+        router.push("/profile/create");
+        return;
+      }
+
       const response = await fetch("/api/create", {
         method: "POST",
         headers: {
@@ -67,7 +80,6 @@ const CreatePost: React.FC<CreatePostProps> = ({
         console.log("success");
       }
 
-      const supabase = createClientSsr();
       const { lw_username } = (
         await supabase.from("profiles").select().match({ user_id: id }).single()
       ).data;

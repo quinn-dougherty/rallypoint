@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { GetUser } from "@/utils/userData";
 
 export async function GET(request: Request) {
   // The `/auth/callback` route is required for the server-side auth flow implemented
@@ -13,8 +14,21 @@ export async function GET(request: Request) {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
     await supabase.auth.exchangeCodeForSession(code);
-  }
+    const user = await GetUser();
 
-  // URL to redirect to after sign in process completes
+    if (user) {
+      const { data: userProfile } = await supabase
+        .from("profiles")
+        .select("lw_username")
+        .eq("user_id", user.id)
+        .single();
+
+      if (userProfile?.lw_username === null) {
+        return NextResponse.redirect(`${requestUrl.origin}/profile/create`);
+      }
+
+      return NextResponse.redirect(requestUrl.origin);
+    }
+  }
   return NextResponse.redirect(requestUrl.origin);
 }
