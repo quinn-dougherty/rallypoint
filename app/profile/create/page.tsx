@@ -8,7 +8,7 @@ const CreateProfilePage = () => {
         Create Your Profile
       </h1>
       <p className="text-center mb-4">
-        Connect with LessWrong to create your profile.
+        Connect with Lesswrong to create your profile.
       </p>
       <LesswrongCreate />
     </div>

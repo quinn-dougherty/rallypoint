@@ -113,6 +113,28 @@ export async function POST(req: NextRequest) {
   const supabase = createClient(cookieStore);
 
   try {
+    // check lw status first
+    const user = await GetUser();
+
+    const { data: existingProfile, error: fetchError } = await supabase
+      .from("profiles")
+      .select("lw_username")
+      .eq("user_id", user.id)
+      .single();
+
+    if (fetchError) {
+      throw fetchError;
+    }
+
+    if (existingProfile?.lw_username) {
+      return new Response(JSON.stringify({ message: "Already authenticated with Lesswrong" }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
     const { username, password } = await req.json();
     const { token, userProfile } = await lesswrongAuth(username, password);
 
@@ -120,12 +142,14 @@ export async function POST(req: NextRequest) {
       throw new Error("Authentication failed");
     }
 
-    const user = await GetUser();
-
     const { error } = await supabase
       .from("profiles")
-      .update({ lw_username: userProfile.username })
+      .update({
+        lw_username: userProfile.username,
+        balance: 10000, // not sure if this is okay
+      })
       .match({ user_id: user.id });
+
     if (error) {
       return new Response(JSON.stringify({ error: error.message }), {
         status: 500,
