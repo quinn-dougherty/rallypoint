@@ -12,23 +12,33 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
     "unclaimed",
   ]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value,
-    );
-    setSelectedStatuses(value as Status[]);
-    onChange(value as Status[]);
+  const handleCheckboxChange = (status: Status) => {
+    const newSelectedStatuses = selectedStatuses.includes(status)
+      ? selectedStatuses.filter((s) => s !== status)
+      : [...selectedStatuses, status];
+
+    setSelectedStatuses(newSelectedStatuses);
+    onChange(newSelectedStatuses);
   };
 
   return (
-    <select multiple value={selectedStatuses} onChange={handleChange}>
+    <div className="mt-1 block w-full flex flex-row justify-start space-x-4">
       {statuses.map((status) => (
-        <option key={status} value={status}>
-          {status}
-        </option>
+        <div key={status} className="flex items-center">
+          <input
+            type="checkbox"
+            id={status}
+            value={status}
+            checked={selectedStatuses.includes(status)}
+            onChange={() => handleCheckboxChange(status)}
+            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          />
+          <label htmlFor={status} className="ml-2 block bg-inherit text-sm">
+            {status}
+          </label>
+        </div>
       ))}
-    </select>
+    </div>
   );
 };
 
