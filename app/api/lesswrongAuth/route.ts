@@ -5,12 +5,12 @@ import { GetUser } from "@/utils/userData";
 
 const lesswrongEndpoint = "https://www.lesswrong.com/graphql";
 
-interface lesswrongApiResponse<T> {
+interface LesswrongApiResponse<T> {
   data?: T;
   errors?: Array<{ message: string }>;
 }
 
-type lesswrongLoginResponse = lesswrongApiResponse<{
+type LesswrongLoginResponse = LesswrongApiResponse<{
   login: {
     token: string;
   };
@@ -85,7 +85,7 @@ const lesswrongAuth = async (
       body: JSON.stringify({ query }),
     });
 
-    const result = (await response.json()) as lesswrongLoginResponse;
+    const result = (await response.json()) as LesswrongLoginResponse;
 
     if (result.errors) {
       throw new Error(result.errors[0].message);

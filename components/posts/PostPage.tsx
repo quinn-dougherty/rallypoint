@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ProfilesModel, PostsModel } from "@/types/Models";
+import { ProfilesModel, PostsModel, ClaimsModel } from "@/types/Models";
 import ClaimCard from "@/components/claims/ClaimCard";
-import { ClaimsModel } from "@/types/Models";
 import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
 
