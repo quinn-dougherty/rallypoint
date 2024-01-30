@@ -64,10 +64,10 @@ const CreateClaim: React.FC<CreateClaimProps> = ({
       const { lw_username } = (
         await supabase.from("profiles").select().match({ user_id: id }).single()
       ).data;
-      const dbItems = await response.json();
+      const { claimData } = await response.json();
       failed = false;
       if (lw_username) {
-        const { claim_id } = dbItems[0];
+        const { claim_id } = claimData[0];
         const newUrl = `/${lw_username}/${post_id}/${claim_id}`;
         router.push(newUrl);
       } else {
@@ -80,17 +80,27 @@ const CreateClaim: React.FC<CreateClaimProps> = ({
   return failed ? (
     <div>Failed</div>
   ) : (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Description:
-          <textarea value={description} onChange={descriptionOnChange} />
-        </label>
-        <button type="submit" disabled={disabledSubmit}>
+    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+      <form
+        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground profile-form"
+        onSubmit={handleSubmit}
+      >
+        <textarea
+          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          placeholder="Evidence"
+          value={description}
+          onChange={descriptionOnChange}
+        />
+        <button
+          className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+          type="submit"
+          disabled={disabledSubmit}
+        >
           Make claim
         </button>
       </form>
     </div>
   );
 };
+
 export default CreateClaim;

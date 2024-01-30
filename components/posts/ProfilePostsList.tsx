@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { createClientSsr } from "@/utils/supabase/client";
+import { Status } from "@/types/Enums";
+import { ProfilesModel, PostsModel } from "@/types/Models";
 import PostCard from "./PostCard";
-import PostsModel from "@/types/Posts";
-import UsersModel from "@/types/Users";
+import StatusFilter from "./StatusFilter";
 
 interface ProfilePostsProps {
   lw_username: string;
@@ -11,10 +12,18 @@ interface ProfilePostsProps {
 
 function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   const supabase = createClientSsr();
-  const [posts, setPosts] = useState<PostsModel[]>([]);
-  const [user, setUser] = useState<UsersModel | null>(null);
+  const [posts, setPosts] = useState<PostsModel["Row"][]>([]);
+  const [user, setUser] = useState<ProfilesModel["Row"] | null>(null);
   const [checkedUser, setCheckStatus] = useState(false);
+  const [selectedStatuses, setSelectedStatuses] = useState<(Status | null)[]>([
+    "unclaimed",
+    "claimed",
+  ]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const handleStatusChange = (statuses: Status[]) => {
+    setSelectedStatuses(statuses);
+  };
 
   useEffect(() => {
     supabase
@@ -26,7 +35,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
         if (error) {
           console.error("Error fetching user:", error);
         } else {
-          setUser(data as UsersModel);
+          setUser(data as ProfilesModel["Row"]);
           setCheckStatus(true);
         }
       });
@@ -45,7 +54,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
           if (error) {
             console.error("Error fetching posts:", error);
           } else {
-            setPosts(data as PostsModel[]);
+            setPosts(data as PostsModel["Row"][]);
           }
           setLoading(false);
         });
@@ -57,7 +66,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
           if (error) {
             console.error("Error fetching posts:", error);
           } else {
-            setPosts(data as PostsModel[]);
+            setPosts(data as PostsModel["Row"][]);
           }
           setLoading(false);
         });
@@ -70,9 +79,14 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   if (!posts) {
     return <div>Posts not found</div>;
   }
+  const filteredPosts = posts.filter(
+    (post) =>
+      selectedStatuses.length === 0 || selectedStatuses.includes(post.status),
+  );
   return (
     <div>
-      {posts.map((post) => (
+      <StatusFilter onChange={handleStatusChange} />
+      {filteredPosts.map((post) => (
         <PostCard key={post.post_id} post={post} />
       ))}
     </div>

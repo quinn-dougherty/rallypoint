@@ -278,6 +278,7 @@ export interface Database {
           email: string | null;
           lw_username: string | null;
           profile_image_url: string | null;
+          stripe_account_id: string | null;
           update_at: string | null;
           user_id: string;
         };
@@ -292,6 +293,7 @@ export interface Database {
           email?: string | null;
           lw_username?: string | null;
           profile_image_url?: string | null;
+          stripe_account_id?: string | null;
           update_at?: string | null;
           user_id: string;
         };
@@ -306,6 +308,7 @@ export interface Database {
           email?: string | null;
           lw_username?: string | null;
           profile_image_url?: string | null;
+          stripe_account_id?: string | null;
           update_at?: string | null;
           user_id?: string;
         };

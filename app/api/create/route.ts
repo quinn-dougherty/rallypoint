@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import PostsModel from "@/types/Posts";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import { PostsModel } from "@/types/Models";
 
 export async function POST(req: NextRequest) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { owner_user_id, title, description, amount }: PostsModel =
+  const { owner_user_id, title, description, amount }: PostsModel["Row"] =
     await req.json();
 
   // Data validation

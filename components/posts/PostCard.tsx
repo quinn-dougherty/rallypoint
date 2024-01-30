@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import PostsModel from "@/types/Posts";
-import { ProfilesModel } from "@/types/Models";
+import { PostsModel, ProfilesModel } from "@/types/Models";
+import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
 
 type PostCardProps = {
-  post: PostsModel;
+  post: PostsModel["Row"];
 };
 
 function PostCard({ post }: PostCardProps) {
@@ -37,14 +37,15 @@ function PostCard({ post }: PostCardProps) {
     return <div>Loading...</div>;
   } else {
     const lw_username = lwUsername as string;
+    const post_slug = createSlug(title, post_id);
     return (
-      <div className="border">
-        <h2>
-          <a href={`/${lw_username}/${post_id}`}>{title}</a>
+      <div className="border card">
+        <h2 className="title">
+          <a href={`/${lw_username}/${post_slug}`}>{title}</a>
         </h2>
         <p>{`Filed by: ${lw_username}`}</p>
         <p>{`${status} ${post_type}`}</p>
-        <p>{`$${amount} available`}</p>
+        <p>{amount && amount > 0 ? `$${amount} still available` : ""}</p>
       </div>
     );
   }

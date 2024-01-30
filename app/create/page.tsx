@@ -18,7 +18,7 @@ export default function Create() {
     setAmount(parseFloat(e.target.value));
   }
   return (
-    <div>
+    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <CreatePost
         createPost={{ title, description, amount }}
         titleOnChange={titleOnChange}
