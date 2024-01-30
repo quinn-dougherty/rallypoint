@@ -1,5 +1,5 @@
 import React from "react";
-import LesswrongCreate from "@/components/profile/LesswrongCreate";
+import LesswrongConnect from "@/components/profile/LesswrongConnect";
 
 const CreateProfilePage = () => {
   return (
@@ -10,7 +10,7 @@ const CreateProfilePage = () => {
       <p className="text-center mb-4">
         Connect with Lesswrong to create your profile.
       </p>
-      <LesswrongCreate />
+      <LesswrongConnect />
     </div>
   );
 };
