@@ -1,4 +1,3 @@
-import Image from "next/image";
 import CaptionFadeImage from "@/components/CaptionFadeImage";
 import AllPostsList from "@/components/posts/AllPostsList";
 
