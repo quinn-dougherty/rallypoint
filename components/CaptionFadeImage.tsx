@@ -3,27 +3,28 @@ import Image from "next/image";
 
 interface CaptionFadeImageProps {
   src: string;
-  alt: string;
+  title: string;
   caption: string;
 }
 
 const CaptionFadeImage: React.FC<CaptionFadeImageProps> = ({
   src,
-  alt,
+  title,
   caption,
 }) => {
   return (
     <div className="relative inline-block">
+      <h3 className="title">{title}</h3>
       <Image
         src={src}
-        alt={alt}
+        alt={title}
         layout="responsive"
-        className="h-auto block w-full"
+        className="block rounded-full opacity-85"
         width="0"
         height="0"
       />
       <div className="absolute bottom-0 left-0 w-full text-center text-white p-2 bg-gradient-to-t from-black to-transparent">
-        {caption}
+        {`\n\n\n\n${caption}`}
       </div>
     </div>
   );

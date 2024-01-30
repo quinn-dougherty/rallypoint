@@ -37,10 +37,10 @@ export default async function Header() {
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <ul className="top-bar">
-          <li>
-            <Link href="/">Home</Link>
+          <li className="bg-green-700 hover:underline rounded-md px-4 py-2 text-foreground mb-2">
+            <Link href="/">Rallypoint</Link>
           </li>
-          <li>
+          <li className="py-2 px-4 rounded-md hover:underline bg-btn-background hover:bg-btn-background-hover">
             <Link href="/create">Create</Link>
           </li>
           {user ? (
@@ -58,28 +58,3 @@ export default async function Header() {
     </div>
   );
 }
-// <div className="flex flex-col gap-16 items-center">
-//   <div className="flex gap-8 justify-center items-center"></div>
-//   <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
-//   <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
-//     The fastest way to build apps with{" "}
-//     <a
-//       href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-//       target="_blank"
-//       className="font-bold hover:underline"
-//       rel="noreferrer"
-//     >
-//       Supabase
-//     </a>{" "}
-//     and{" "}
-//     <a
-//       href="https://nextjs.org/"
-//       target="_blank"
-//       className="font-bold hover:underline"
-//       rel="noreferrer"
-//     >
-//       Next.js
-//     </a>
-//   </p>
-//   <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
-// </div>

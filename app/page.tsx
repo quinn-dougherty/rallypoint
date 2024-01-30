@@ -9,29 +9,28 @@ interface FeatureItem {
 
 function Feature({ title, img, description }: FeatureItem) {
   return (
-    <div className="">
-      <div className="">
-        <h3 className="title">{title}</h3>
-        <CaptionFadeImage src={img} alt={title} caption={description} />
+    <div className="flex flex-row sm:flex-col items-center justify-center sm:justify-start gap-4">
+      <div className="w-1/2">
+        <CaptionFadeImage src={img} title={title} caption={description} />
       </div>
     </div>
   );
 }
 
-const featureList = [
+const featureList: FeatureItem[] = [
   {
     title: "Lean and quick funding",
     img: "/logo5.png",
-    description: "Find people to execute your ideas with no overhead",
+    description: "Find people to execute your ideas with low overhead",
   },
   {
-    title: "Write well-scoped requests and put how much you can pay for it",
+    title: "Write well-scoped requests and include what you'll pay",
     img: "/logo3.png",
     description: "Wait for a claimant to complete your request",
   },
   {
     title: "Browse projects, do the work, make a claim",
-    img: "/logo1.png",
+    img: "/logo4.png",
     description: "Get paid for your work",
   },
 ];
@@ -40,7 +39,8 @@ export default async function Index() {
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <p className="title">Rallypoint Bounties</p>
-      <div className="text-foreground">
+      <p className="text-foreground">Playmoney alpha</p>
+      <div className="container row w-full flex flex-col items-center gap-8 text-foreground">
         {featureList.map((props, idx) => (
           <Feature
             key={idx}
