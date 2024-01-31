@@ -15,6 +15,9 @@ export default function Create() {
     setDescription(e.target.value);
   }
   function amountOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value === "") {
+      return;
+    }
     setAmount(parseFloat(e.target.value));
   }
   return (

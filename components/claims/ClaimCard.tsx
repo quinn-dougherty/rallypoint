@@ -52,7 +52,7 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
   const { claim_id, post_id, description, is_resolved } = claim;
   const post_slug = createSlug(postTitle, post_id);
   return (
-    <div className="card">
+    <div className="border card">
       <h1>
         <a href={`/${poster_lw_username}/${post_slug}/${claim_id}`}>
           Claim details

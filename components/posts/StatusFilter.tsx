@@ -22,7 +22,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
   };
 
   return (
-    <div className="mt-1 block w-full flex flex-row justify-start space-x-4">
+    <div className="mt-1 w-full flex flex-row justify-start space-x-4">
       {statuses.map((status) => (
         <div key={status} className="flex items-center">
           <input
