@@ -84,11 +84,13 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
       selectedStatuses.length === 0 || selectedStatuses.includes(post.status),
   );
   return (
-    <div>
+    <div className="flex flex-col border">
       <StatusFilter onChange={handleStatusChange} />
-      {filteredPosts.map((post) => (
-        <PostCard key={post.post_id} post={post} />
-      ))}
+      <div>
+        {filteredPosts.map((post) => (
+          <PostCard key={post.post_id} post={post} />
+        ))}
+      </div>
     </div>
   );
 }

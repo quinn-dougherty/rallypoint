@@ -64,17 +64,14 @@ function PostPage({ post, claims }: PostPageProps) {
         <h2 className="title">
           <Link href={`/${lw_username}/${post_slug}`}>{title}</Link>
         </h2>
-        <p>{`Filed by: ${lw_username}`}</p>
+        <p className="text-right">{`Filed by: ${lw_username}`}</p>
         <p>{description}</p>
-        <p>{`${status} ${post_type}`}</p>
-        <p>{`$${amount} available`}</p>
-        <p>
-          <Link
-            className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
-            href={`/${lw_username}/${post_slug}/claim`}
-          >
-            Make claim
-          </Link>
+        <div className="flex flex-row">
+          <p className="border rounded-lg text-left">{`${status} ${post_type}`}</p>
+          <p className="test-right">{`$${amount} available`}</p>
+        </div>
+        <p className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2 text-center">
+          <Link href={`/${lw_username}/${post_slug}/claim`}>Make claim</Link>
         </p>
         Standing claims:
         {claims.map((claim: ClaimsModel["Row"]) => {

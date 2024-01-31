@@ -9,6 +9,7 @@ interface Profile {
   lw_username: string;
   email: string;
   display_name: string;
+  balance: number;
 }
 
 interface User {

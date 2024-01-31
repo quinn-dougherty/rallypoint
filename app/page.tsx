@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CaptionFadeImage from "@/components/CaptionFadeImage";
 import AllPostsList from "@/components/posts/AllPostsList";
 
@@ -40,7 +41,7 @@ export default async function Index() {
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <p className="title">Rallypoint Bounties</p>
       <p className="text-foreground">Playmoney alpha</p>
-      <div className="container row w-full flex flex-row items-center gap-8 text-foreground">
+      <div className="animate-in container row w-full flex flex-row items-center gap-8 text-foreground">
         {featureList.map((props, idx) => (
           <Feature
             key={idx}
@@ -56,7 +57,7 @@ export default async function Index() {
           href="https://github.com/quinn-dougherty/rallypoint"
           className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
         >
-          GitHub
+          <Image src="/github.png" alt="GitHub" height="30" width="30" />
         </a>
       </footer>
     </div>

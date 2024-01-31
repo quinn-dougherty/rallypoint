@@ -8,6 +8,7 @@ interface Profile {
   lw_username: string;
   display_name: string;
   email: string;
+  balance: number;
 }
 
 interface User {
@@ -53,8 +54,10 @@ function RenderMenuItems({ user, profile, toggleMenu }: RenderMenuItemsProps) {
       <React.Fragment>
         <div>
           <h2>{profile.display_name}</h2>
-          <hr />
           <ul>
+            <li className="hamburger_menu_item">
+              <p className="bg-btn-background rounded-md">{`Current balance: ${profile.balance}`}</p>
+            </li>
             <li className="hamburger_menu_item">
               <Link
                 className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"

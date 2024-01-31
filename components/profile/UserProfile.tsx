@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProfilePostsList from "@/components/posts/ProfilePostsList";
+import ProfileClaimsList from "@/components/claims/ProfileClaimsList";
 
 export type UserProfileProps = {
   profile: {
@@ -17,7 +18,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 }: UserProfileProps) => {
   return (
     <div>
-      <h1 className="title">{`${profile?.display_name || profile.email}'s Profile`}</h1>
+      <h1 className="title">Profile:{` ${profile.display_name}`}</h1>
       {privateView && (
         <div>
           <Link
@@ -42,9 +43,9 @@ const UserProfile: React.FC<UserProfileProps> = ({
         </a>
       </p>
       <p>Bio: {profile.bio}</p>
-      <div>
-        <h2>Posts authored:</h2>
+      <div className="flex flex-row gap-x-8">
         <ProfilePostsList lw_username={profile.lw_username} />
+        <ProfileClaimsList lw_username={profile.lw_username} />
       </div>
     </div>
   );
