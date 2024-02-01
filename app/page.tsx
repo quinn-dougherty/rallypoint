@@ -25,7 +25,7 @@ const featureList: FeatureItem[] = [
     description: "Find people to execute your ideas with low overhead",
   },
   {
-    title: "Write well-scoped requests and include what you'll pay",
+    title: "Specify your request and name your price",
     img: "/logo3.png",
     description: "Wait for a claimant to complete your request",
   },

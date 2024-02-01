@@ -32,6 +32,7 @@ const LesswrongConnect = () => {
           setError("Already authenticated with Lesswrong");
         } else {
           setError("Invalid username/password");
+          router.push("/profile/edit");
         }
       } else {
         router.push("/");
@@ -50,6 +51,8 @@ const LesswrongConnect = () => {
         <Image
           src="/lesswrong.svg"
           alt="LessWrong logo"
+          width="100"
+          height="100"
           className="mx-auto h-12 mb-6"
         />
         <form
