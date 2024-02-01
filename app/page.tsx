@@ -19,18 +19,13 @@ function Feature({ title, img, description }: FeatureItem) {
 
 const featureList: FeatureItem[] = [
   {
-    title: "Lean and quick funding",
+    title: "Lean and quick coordination of funds",
     img: "/logo5.png",
     description: "Find people to execute your ideas with low overhead",
   },
   {
-    title: "Specify your request and name your price",
-    img: "/logo3.png",
-    description: "Wait for a claimant to complete your request",
-  },
-  {
     title: "Browse projects, do the work, make a claim",
-    img: "/logo4.png",
+    img: "/logo3.png",
     description: "Get paid for your work",
   },
 ];
