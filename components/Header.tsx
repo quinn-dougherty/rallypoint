@@ -35,13 +35,13 @@ export default async function Header() {
   const user = authData.user;
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
+    <div className="fixed top-0 flex-1 w-full flex flex-col gap-20 text-xl items-center">
+      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-24">
         <ul className="top-bar">
-          <li className="bg-green-700 hover:underline rounded-md px-4 py-2 text-foreground mb-2">
+          <li className="bg-btn-background hover:underline rounded-md px-4 py-2 text-foreground mb-2">
             <Link href="/">Rallypoint</Link>
           </li>
-          <li className="py-2 px-4 rounded-md hover:underline bg-btn-background hover:bg-btn-background-hover">
+          <li className="py-2 px-4 rounded-md hover:underline bg-green-700 hover:bg-btn-background-hover">
             <Link href="/create">Create</Link>
           </li>
           {user ? (
