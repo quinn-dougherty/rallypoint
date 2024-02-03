@@ -32,10 +32,10 @@ export default async function Header() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const { data: authData } = await supabase.auth.getUser();
-  const user: User | null = authData.user !== null ? authData.user : null; 
+  const user: User | null = authData.user;
  
   return (
-    <header className="bg-blue shadow fixed top-0 inset-x-0 z-50">
+    <header className="fixed top-0 w-full z-50 bg-[hsl(var(--background))] shadow">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <div>
           <Link href="/" className="text-lg font-semibold text-gray-800 hover:text-white transition-colors">Rallypoint</Link>
