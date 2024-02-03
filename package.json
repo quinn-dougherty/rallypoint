@@ -15,11 +15,13 @@
     "gen-types": "supabase gen types typescript --project-id \"jshunewngntslipmyhub\" --schema public > types/supabase.ts"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "@supabase/gotrue-js": "^2.62.2",
     "@supabase/ssr": "0.0.10",
     "@supabase/supabase-js": "2.39.1",
     "autoprefixer": "10.4.15",
     "geist": "^1.2.1",
+    "marked": "^11.2.0",
     "next": "14.0.4",
     "postcss": "^8.4.33",
     "react": "18.2.0",
