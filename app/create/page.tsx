@@ -15,10 +15,12 @@ export default function Create() {
     setDescription(e.target.value);
   }
   function amountOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.value === "") {
-      return;
+    const val = e.target.value;
+    if (!val) {
+      setAmount(parseFloat(val));
+    } else {
+      setAmount(parseFloat(val));
     }
-    setAmount(parseFloat(e.target.value));
   }
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">

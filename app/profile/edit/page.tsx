@@ -59,7 +59,7 @@ export default async function Page() {
             defaultValue={data?.display_name}
           />
           <label className="text-md" htmlFor="lwUsername">
-            LessWrong Username
+            LessWrong Username (<em>slug in url, not display name</em>)
           </label>
           <input
             className="rounded-md px-4 py-2 bg-inherit border mb-6"

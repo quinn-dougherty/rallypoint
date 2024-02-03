@@ -1,6 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -9,7 +10,7 @@ const defaultUrl = process.env.VERCEL_URL
 export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Rallypoint",
-  description: "Outsource AI safety tasks via bounties",
+  description: "Delegate AI safety tasks through bounty initiatives",
 };
 
 export default function RootLayout({
@@ -22,7 +23,10 @@ export default function RootLayout({
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
           <Header />
-          {children}
+          <div className="pt-24 mt-16 -scroll-mt-24 scroll-pt-24">
+            {children}
+          </div>
+          <Footer />
         </main>
       </body>
     </html>

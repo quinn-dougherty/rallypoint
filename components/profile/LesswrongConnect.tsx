@@ -32,6 +32,7 @@ const LesswrongConnect = () => {
           setError("Already authenticated with Lesswrong");
         } else {
           setError("Invalid username/password");
+          router.push("/profile/edit");
         }
       } else {
         router.push("/");

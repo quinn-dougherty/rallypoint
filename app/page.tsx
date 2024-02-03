@@ -1,4 +1,3 @@
-import Image from "next/image";
 import CaptionFadeImage from "@/components/CaptionFadeImage";
 import AllPostsList from "@/components/posts/AllPostsList";
 
@@ -20,28 +19,28 @@ function Feature({ title, img, description }: FeatureItem) {
 
 const featureList: FeatureItem[] = [
   {
-    title: "Lean and quick funding",
+    title: "Lean and quick coordination of funds",
     img: "/logo5.png",
     description: "Find people to execute your ideas with low overhead",
   },
   {
-    title: "Write well-scoped requests and include what you'll pay",
-    img: "/logo3.png",
-    description: "Wait for a claimant to complete your request",
-  },
-  {
     title: "Browse projects, do the work, make a claim",
-    img: "/logo4.png",
+    img: "/logo3.png",
     description: "Get paid for your work",
   },
 ];
 
 export default async function Index() {
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <p className="title">Rallypoint Bounties</p>
-      <p className="text-foreground">Playmoney alpha</p>
-      <div className="animate-in container row w-full flex flex-row items-center gap-8 text-foreground">
+    <div
+      className="w-full flex flex-col gap-20 items-center"
+      style={{ scrollPaddingTop: "calc(100vh - 5.5rem)" }}
+    >
+      <p className="text-5xl">Rallypoint Bounties</p>
+      <p className="text-foreground">
+        <em>Early access, alpha testing with playmoney</em>
+      </p>
+      <div className="animate-in container md:row w-full flex md:flex-row sm:flex-col items-center gap-8 text-foreground">
         {featureList.map((props, idx) => (
           <Feature
             key={idx}
@@ -52,14 +51,6 @@ export default async function Index() {
         ))}
       </div>
       <AllPostsList />
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-        <a
-          href="https://github.com/quinn-dougherty/rallypoint"
-          className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-        >
-          <Image src="/github.png" alt="GitHub" height="30" width="30" />
-        </a>
-      </footer>
     </div>
   );
 }
