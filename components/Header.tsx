@@ -1,9 +1,9 @@
-"use client";
 import Link from "next/link";
-import { useEffect, useState } from 'react';
+import { createClient } from "@/utils/supabase/server";
 import { createClientSsr } from "@/utils/supabase/client";
 import HamburgerMenu from "./profile/HamburgerMenu";
 import AuthButton from "./profile/AuthButton";
+import { cookies } from "next/headers";
 
 interface Profile {
   lw_username: string;
@@ -18,27 +18,22 @@ interface User {
 
 async function renderHamburger(user: User) {
   const supabaseSsr = createClientSsr();
-  const { data: profile } = await supabaseSsr
+  const profile: Profile = (
+    await supabaseSsr
       .from("profiles")
       .select()
       .match({ user_id: user.id })
-      .single();
+      .single()
+  ).data;
   return <HamburgerMenu user={user} profile={profile} />;
 }
 
-const Header = () => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    async function checkUser() {
-      const cookieStore = cookies();
-      const supabase = createClient(cookieStore);
-      const { data: authData } = await supabase.auth.getUser();
-      setUser(authData.user);
-    }
-    checkUser();
-  }, []);
-
+export default async function Header() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { data: authData } = await supabase.auth.getUser();
+  const user: User | null = authData.user !== null ? authData.user : null; 
+ 
   return (
     <header className="bg-blue shadow fixed top-0 inset-x-0 z-50">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
@@ -47,11 +42,10 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/create" className="text-base font-medium text-gray-600 hover:text-white transition-colors">Create</Link>
-          {user ? renderHamburger(user) : <AuthButton />}
+          {user ? renderHamburger(user) : <AuthButton user={user} />}
         </div>
       </nav>
     </header>
   );
 };
 
-export default Header;
