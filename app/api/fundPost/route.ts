@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase
     .rpc("fund_post", {
-      user_id: user.id,
-      post_id: post_id,
+      userid: user.id,
+      postid: post_id,
       funding_amount: FundingAmount,
     })
     .select();

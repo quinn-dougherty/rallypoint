@@ -28,7 +28,7 @@ function PostPage({ post, claims }: PostPageProps) {
     const FundingAmount = parseFloat(fundAmount);
 
     if (isNaN(FundingAmount) || FundingAmount <= 0) {
-      alert("Please enter a valid funding amount."); // will pretty up all the css
+      alert("Please enter a valid funding amount."); // css
       return;
     }
 
