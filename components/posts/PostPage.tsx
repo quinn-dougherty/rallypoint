@@ -24,11 +24,10 @@ function PostPage({ post, claims }: PostPageProps) {
 
   const HandleFund = async () => {
     setIsFundDialogOpen(false);
-    console.log("Funding with amount: ", fundAmount);
     const FundingAmount = parseFloat(fundAmount);
 
     if (isNaN(FundingAmount) || FundingAmount <= 0) {
-      alert("Please enter a valid funding amount."); // css
+      console.error("Please enter a valid funding amount.");
       return;
     }
 
@@ -38,7 +37,6 @@ function PostPage({ post, claims }: PostPageProps) {
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify({
           post_id: post_id,
           FundingAmount: FundingAmount,
@@ -47,14 +45,11 @@ function PostPage({ post, claims }: PostPageProps) {
 
       const result = await response.json();
 
-      if (!response.ok) {
-        console.error("error funding post", result.error);
-        throw new Error("Error funding post");
-      }
+      window.location.reload();
 
       console.log("Post successfully funded:", result.message);
     } catch (error) {
-      console.error("Failed somewhere", error);
+      console.error("Error funding post");
     }
   };
 
@@ -78,6 +73,7 @@ function PostPage({ post, claims }: PostPageProps) {
       setLwUsername(profile.lw_username);
     }
   }, [profile]);
+
   useEffect(() => {
     const supabase = createClientSsr();
     supabase
@@ -100,21 +96,28 @@ function PostPage({ post, claims }: PostPageProps) {
     const lw_username = lwUsername as string;
     const post_slug = createSlug(title, post_id);
     return (
-      <div className="border">
-        <h2 className="title">
-          <Link href={`/${lw_username}/${post_slug}`}>{title}</Link>
+      <div className="border rounded-lg shadow-lg p-6 bg-background text-foreground transition-all duration-300 ease-in-out hover:shadow-xl">
+        <h2 className="text-lg font-semibold mb-4">
+          <a href={`/${lw_username}/${post_slug}`} className="hover:underline">
+            {title}
+          </a>
         </h2>
-        <p className="text-right">{`Filed by: ${lw_username}`}</p>
-        <p>{description}</p>
-        <div className="flex flex-row">
-          <p className="border rounded-lg text-left">{`${status} ${post_type}`}</p>
-          <p className="test-right">{`$${amount} available`}</p>
+        <p className="text-sm text-right mb-2">Filed by: {lw_username}</p>
+        <p className="mb-4">{description}</p>
+        <div className="flex flex-row justify-between items-center mb-4">
+          <span className="inline-block bg-btn-background hover:bg-btn-background-hover text-foreground font-medium py-1 px-3 rounded-full transition-colors duration-200">
+            {`${status?.toUpperCase()} ${post_type?.toUpperCase()}`}
+          </span>
+          <span className="font-semibold">{`$${amount} available`}</span>
         </div>
-        <p className="font-bold bg-green-700 rounded-md px-4 py-2 text-foreground mb-2 text-center">
-          <Link href={`/${lw_username}/${post_slug}/claim`}>Make claim</Link>
-        </p>
+        <a
+          href={`/${lw_username}/${post_slug}/claim`}
+          className="inline-block bg-green-700 hover:bg-green-800 text-foreground py-2 px-4 rounded-md transition-all duration-300"
+        >
+          Make claim
+        </a>
         <button
-          className="font-bold bg-green-700 rounded-md px-4 py-2 text-foreground mb-2 text-center"
+          className="ml-4 bg-green-700 hover:bg-green-800 text-foreground py-2 px-4 rounded-md transition-colors duration-300"
           onClick={() => setIsFundDialogOpen(true)}
         >
           Fund
@@ -122,36 +125,54 @@ function PostPage({ post, claims }: PostPageProps) {
         <Dialog
           open={isFundDialogOpen}
           onClose={() => setIsFundDialogOpen(false)}
-          className="fixed z-10 inset-0 overflow-y-auto"
+          className="fixed z-50 inset-0 overflow-y-auto"
         >
-          <div className="flex items-center justify-center min-h-screen">
-            <Dialog.Panel className="w-full max-w-md p-6 bg-white rounded shadow-lg">
-              <Dialog.Title>Fund Post</Dialog.Title>
-              <input
-                type="number"
-                className="mt-2 border p-2 w-full"
-                placeholder="Amount ($)"
-                value={fundAmount}
-                onChange={(e) => setFundAmount(e.target.value)}
-              />
-              <div className="flex justify-end gap-4 mt-4">
+          <div className="flex items-center justify-center min-h-screen px-4 text-center">
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+            <div className="inline-block align-middle bg-background rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+              <div className="bg-background px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg leading-6 font-medium text-foreground"
+                    >
+                      Fund Post
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <input
+                        type="number"
+                        className="border-2 border-foreground/50 rounded-md shadow-sm mt-2 p-2 w-full text-foreground bg-background focus:ring-btn-background-hover focus:border-btn-background-hover transition duration-300"
+                        placeholder="Amount ($)"
+                        value={fundAmount}
+                        onChange={(e) => setFundAmount(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-background px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
-                  className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded"
-                  onClick={() => setIsFundDialogOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm transition duration-300"
                   onClick={HandleFund}
                 >
                   Save
                 </button>
+                <button
+                  type="button"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-background text-base font-medium text-foreground hover:bg-btn-background-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-btn-background-hover sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition duration-300"
+                  onClick={() => setIsFundDialogOpen(false)}
+                >
+                  Cancel
+                </button>
               </div>
-            </Dialog.Panel>
+            </div>
           </div>
         </Dialog>
-        <p>Standing claims:</p>
+
+        <p className="mt-4 font-semibold">Standing claims:</p>
         {claims.map((claim: ClaimsModel["Row"]) => {
           return (
             <ClaimCard

@@ -1,5 +1,6 @@
 [![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
 [![Build GitHub Action](https://github.com/quinn-dougherty/rallypoint/actions/workflows/ci.yml/badge.svg)](https://github.com/quinn-dougherty/rallypoint/actions/)
+
 # Rallypoint Bounties
 
 Lean and quick funding by crowds or individuals for well-scoped items. Some dominance assurance contract / beeminder-like mechanisms a little later. I think of it like a "reverse manifund"
