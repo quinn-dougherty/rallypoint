@@ -48,13 +48,15 @@ const LesswrongConnect = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md px-6 py-8">
-        <Image
-          src="/lesswrong.svg"
-          alt="LessWrong logo"
-          width="100"
-          height="100"
-          className="mx-auto h-12 mb-6"
-        />
+        <div className="mx-auto mb-6 h-20">
+          <Image
+            src="/lesswrong.svg"
+            alt="Lesswrong Logo"
+            width={20}
+            height={20}
+            className="h-20"
+          />
+        </div>
         <form
           className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground signup-form"
           onSubmit={handleSignIn}
