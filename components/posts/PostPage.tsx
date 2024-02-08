@@ -96,28 +96,31 @@ function PostPage({ post, claims }: PostPageProps) {
     const lw_username = lwUsername as string;
     const post_slug = createSlug(title, post_id);
     return (
-      <div className="border rounded-lg shadow-lg p-6 bg-background text-foreground transition-all duration-300 ease-in-out hover:shadow-xl">
+      <div className="border rounded-lg shadow-lg p-6 bg-background text-foreground duration-300 ease-in-out hover:shadow-xl">
         <h2 className="text-lg font-semibold mb-4">
-          <a href={`/${lw_username}/${post_slug}`} className="hover:underline">
+          <Link
+            href={`/${lw_username}/${post_slug}`}
+            className="hover:underline"
+          >
             {title}
-          </a>
+          </Link>
         </h2>
         <p className="text-sm text-right mb-2">Filed by: {lw_username}</p>
         <p className="mb-4">{description}</p>
         <div className="flex flex-row justify-between items-center mb-4">
-          <span className="inline-block bg-btn-background hover:bg-btn-background-hover text-foreground font-medium py-1 px-3 rounded-full transition-colors duration-200">
+          <span className="inline-block bg-btn-background hover:bg-btn-background-hover text-foreground font-medium py-1 px-3 rounded-full">
             {`${status?.toUpperCase()} ${post_type?.toUpperCase()}`}
           </span>
           <span className="font-semibold">{`$${amount} available`}</span>
         </div>
-        <a
+        <Link
           href={`/${lw_username}/${post_slug}/claim`}
-          className="inline-block bg-green-700 hover:bg-green-800 text-foreground py-2 px-4 rounded-md transition-all duration-300"
+          className="inline-block bg-green-700 hover:bg-green-800 text-foreground py-2 px-4 rounded-md"
         >
           Make claim
-        </a>
+        </Link>
         <button
-          className="ml-4 bg-green-700 hover:bg-green-800 text-foreground py-2 px-4 rounded-md transition-colors duration-300"
+          className="ml-4 bg-green-700 hover:bg-green-800 text-foreground py-2 px-4 rounded-md"
           onClick={() => setIsFundDialogOpen(true)}
         >
           Fund
@@ -125,12 +128,12 @@ function PostPage({ post, claims }: PostPageProps) {
         <Dialog
           open={isFundDialogOpen}
           onClose={() => setIsFundDialogOpen(false)}
-          className="fixed z-50 inset-0 overflow-y-auto"
+          className="animate-in fixed z-50 inset-0 overflow-y-auto"
         >
           <div className="flex items-center justify-center min-h-screen px-4 text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
-            <div className="inline-block align-middle bg-background rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+            <div className="inline-block align-middle bg-background rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full border-2 border-foreground/50">
               <div className="bg-background px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
