@@ -41,11 +41,10 @@ export default async function Header() {
           <Link href="/" className="text-lg font-semibold text-gray-800 hover:text-white transition-colors">Rallypoint</Link>
         </div>
         <div className="flex items-center space-x-4">
-          <Link href="/create" className="text-base font-medium text-gray-600 hover:text-white transition-colors">Create</Link>
+          <Link href="/create" className="visible-button">Create</Link>
           {user ? renderHamburger(user) : <AuthButton user={user} />}
         </div>
       </nav>
     </header>
   );
 };
-

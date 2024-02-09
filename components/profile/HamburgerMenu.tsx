@@ -52,52 +52,50 @@ function RenderMenuItems({ user, profile, toggleMenu }: RenderMenuItemsProps) {
   if (user) {
     return (
       <React.Fragment>
-        <div>
-          <h2>{profile.display_name}</h2>
-          <ul>
-            <li className="hamburger_menu_item">
-              <p className="bg-btn-background rounded-md">{`Current balance: ${profile.balance}`}</p>
+        <div className="menu-popup">
+          <h2 className="menu-title">{profile.display_name}</h2>
+          <ul className="menu-list">
+            <li className="menu-item">
+              <p className="menu-balance">{`Current balance: ${profile.balance}`}</p>
             </li>
-            <li className="hamburger_menu_item">
+            <li className="menu-item">
               <Link
-                className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+                className="visible-button"
                 onClick={() => toggleMenu}
                 href={"/profile"}
               >
                 My Profile
               </Link>
             </li>
-            <li className="hamburger_menu_item">
+            <li className="menu-item">
               <Link
-                className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+                className="visible-button"
                 onClick={() => toggleMenu}
                 href={"/profile/edit"}
               >
                 Edit Profile
               </Link>
             </li>
-            <li>
-              <div className="flex items-center gap-4">
-                <form action={signOut}>
-                  <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
-                    Logout
-                  </button>
-                </form>
-              </div>
+            <li className="menu-item">
+              <form action={signOut} className="menu-logout">
+                <button className="logout-button">
+                  Logout
+                </button>
+              </form>
             </li>
           </ul>
         </div>
       </React.Fragment>
     );
   } else {
-    return <Link href="/login">Login or Sign Up</Link>;
+    return <div className="login-link"><Link href="/login">Login or Sign Up</Link></div>;
   }
 }
 
 function toggler({ ref, isOpen, toggleMenu, user, profile }: ToggleProps) {
   return (
     <div ref={ref}>
-      <button onClick={toggleMenu} className="hamburger-button">
+      <button onClick={toggleMenu} className="hamburger-button px-4 py-2">
         <svg
           style={{ filter: "invert(100%)" }}
           width="30"

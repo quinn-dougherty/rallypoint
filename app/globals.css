@@ -8,6 +8,10 @@
     --btn-background: 200 10% 91%;
     --btn-background-hover: 200 10% 89%;
     --foreground: 200 50% 3%;
+    --logout-btn-background: 0 100% 40%;
+    --logout-btn-background-hover: 0 100% 30%;
+    --visible-btn-background: 140 100% 25%;
+    --visible-btn-background-hover: 140 100% 15%;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -16,6 +20,10 @@
       --btn-background: 200 10% 9%;
       --btn-background-hover: 200 10% 12%;
       --foreground: 200 20% 96%;
+      --logout-btn-background: 0 100% 50%;
+      --logout-btn-background-hover: 0 100% 60%;
+      --visible-btn-background: 140 100% 30%;
+      --visible-btn-background-hover: 140 100% 20%;
     }
   }
 }
@@ -65,6 +73,82 @@
   padding: 0.1rem;
   font-size: 1rem;
   margin-bottom: 1rem;
+}
+
+.menu-popup {
+  background-color: hsl(var(--background));
+  outline: 1px solid hsl(var(--btn-background));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+}
+
+.menu-title {
+  color: var(--foreground);
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.visible-button {
+  display: block;
+  padding: 8px 16px;
+  background-color: hsl(var(--visible-btn-background));
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.menu-link:hover {
+  background-color: hsl(var(--visible-btn-background-hover));
+}
+
+.menu-balance {
+  background-color: hsl(var(--btn-background));
+  color: hsl(var(--foreground));
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.logout-button {
+  background-color: hsl(var(--logout-btn-background));
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: hsl(var(--logout-btn-background-hover));
+}
+
+.login-link {
+  display: block;
+  padding: 8px 16px;
+  background-color: hsl(var(--btn-visible));
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  background-color: hsl(var(--btn-visible-hover));
 }
 
 .page {
