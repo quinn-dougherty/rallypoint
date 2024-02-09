@@ -6,6 +6,7 @@ import { ProfilesModel, PostsModel, ClaimsModel } from "@/types/Models";
 import ClaimCard from "@/components/claims/ClaimCard";
 import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 type PostPageProps = {
   post: PostsModel["Row"];
@@ -21,6 +22,7 @@ function PostPage({ post, claims }: PostPageProps) {
   const [fundAmount, setFundAmount] = useState("");
 
   const supabase = createClientSsr();
+  const router = useRouter();
 
   const HandleFund = async () => {
     setIsFundDialogOpen(false);
@@ -44,8 +46,7 @@ function PostPage({ post, claims }: PostPageProps) {
       });
 
       const result = await response.json();
-
-      window.location.reload();
+      router.refresh();
 
       console.log("Post successfully funded:", result.message);
     } catch (error) {
