@@ -15,9 +15,10 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   const [posts, setPosts] = useState<PostsModel["Row"][]>([]);
   const [user, setUser] = useState<ProfilesModel["Row"] | null>(null);
   const [checkedUser, setCheckStatus] = useState(false);
-  const [selectedStatuses, setSelectedStatuses] = useState<(Status | null)[]>([
+  const [selectedStatuses, setSelectedStatuses] = useState<Status[]>([
     "unclaimed",
     "claimed",
+    "finished",
   ]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -45,6 +46,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
     if (!checkedUser) {
       return;
     }
+  
     if (user) {
       supabase
         .from("posts")
@@ -54,6 +56,8 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
           if (error) {
             console.error("Error fetching posts:", error);
           } else {
+            console.log("Posts:", data);
+            console.log("Status values:", data.map((post) => post.status));
             setPosts(data as PostsModel["Row"][]);
           }
           setLoading(false);
@@ -76,16 +80,23 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   if (loading) {
     return <div>Loading...</div>;
   }
+
   if (!posts) {
     return <div>Posts not found</div>;
   }
+
   const filteredPosts = posts.filter(
     (post) =>
-      selectedStatuses.length === 0 || selectedStatuses.includes(post.status),
+      selectedStatuses.length === 0 ||
+      (post.status !== null && selectedStatuses.includes(post.status)),
   );
+
   return (
     <div className="flex flex-col border">
-      <StatusFilter onChange={handleStatusChange} />
+      <StatusFilter
+        selectedStatuses={selectedStatuses}
+        onChange={handleStatusChange}
+      />
       <div>
         {filteredPosts.map((post) => (
           <PostCard key={post.post_id} post={post} />

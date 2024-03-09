@@ -195,3 +195,35 @@
   font-weight: 500;
   margin-bottom: 1rem;
 }
+
+.statusFilterContainer {
+  background-color: hsl(var(--btn-background));
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.statusButton {
+  background-color: hsl(var(--foreground));
+  color: var(--foreground);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.statusButton:hover, .statusButton.selected {
+  background-color: hsl(var(--btn-background-hover));
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--foreground));
+}
+
+hr {
+  color: hsl(var(--foreground));
+  padding-bottom: 0.5rem;
+}
