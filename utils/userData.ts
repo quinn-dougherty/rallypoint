@@ -13,7 +13,6 @@ export async function GetUser() {
     throw "error fetching data";
   } else {
     const user = data.user;
-    console.log(user);
     return user;
   }
 }
@@ -47,5 +46,49 @@ export async function UpdateUser(user: {
     .eq(`user_id`, user.user_id);
   if (error) {
     throw error;
+  }
+}
+
+export async function InsertDeposit(deposit: {
+  stripe_payment_id: string;
+  user_id: string;
+  status: string;
+  amnt: number;
+}) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { stripe_payment_id, status, user_id, amnt } = deposit;
+  const amount = amnt / 100;
+
+  const alreadyExists = await supabase
+    .from("payments_deposit")
+    .select("deposit_id")
+    .eq("stripe_payment_id", stripe_payment_id)
+    .select();
+
+  if (alreadyExists.data!.length > 0) {
+    throw "Deposit already exists";
+  } else {
+    const error = await supabase
+      .from("payments_deposit")
+      .insert([{ user_id, amount, stripe_payment_id, status }])
+      .select();
+    if (error.error) {
+      throw error;
+    }
+
+    const userBalance = await supabase
+      .from("profiles")
+      .select("balance")
+      .eq("user_id", user_id)
+      .single();
+
+    const error2 = await supabase
+      .from("profiles")
+      .update({ balance: userBalance.data!.balance + amount })
+      .eq("user_id", user_id);
+    if (error2.error) {
+      throw error2;
+    }
   }
 }

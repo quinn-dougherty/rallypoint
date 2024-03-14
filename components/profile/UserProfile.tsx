@@ -1,9 +1,9 @@
 import Link from "next/link";
 import ProfilePostsList from "@/components/posts/ProfilePostsList";
 import ProfileClaimsList from "@/components/claims/ProfileClaimsList";
-
 export type UserProfileProps = {
   profile: {
+    balance: number;
     display_name: string;
     email: string;
     lw_username: string;
@@ -33,6 +33,15 @@ const UserProfile: React.FC<UserProfileProps> = ({
           >
             Sharelink
           </Link>
+          <p>
+            Balance: {profile.balance}
+            <Link
+              className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+              href={"/profile/deposit"}
+            >
+              Deposit
+            </Link>
+          </p>
         </div>
       )}
       <p>Email: {profile.email}</p>
