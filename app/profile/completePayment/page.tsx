@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Page() {
   const [loading, setLoading] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState<string>("");
+  const [error, setErrorMessage] = React.useState<string>("");
   const getParams = (url: string) => {
     const params = url.split("?")[1];
     if (!params) return {};
@@ -41,13 +41,7 @@ export default function Page() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div>
-          {errorMessage ? (
-            <h4> {errorMessage}</h4>
-          ) : (
-            <h4>Deposit Successful</h4>
-          )}
-        </div>
+        <div>{error ? <h4> {error}</h4> : <h4>Deposit Successful</h4>}</div>
       )}
     </div>
   );
