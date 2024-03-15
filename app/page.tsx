@@ -41,7 +41,7 @@ export default async function Index() {
         <em>Early access, alpha testing with playmoney</em>
       </p>
       <div className="animate-in container md:row w-full flex md:flex-row sm:flex-col items-center gap-8 text-foreground">
-        {featureList.map((props, idx) => (
+        {featureList.map((props: FeatureItem, idx) => (
           <Feature
             key={idx}
             title={props.title}

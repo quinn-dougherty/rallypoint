@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import {
   useStripe,
   useElements,
@@ -10,8 +10,9 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  // @ts-ignore
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (
+    event: SyntheticEvent<HTMLFormElement, SubmitEvent>,
+  ) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     event.preventDefault();
