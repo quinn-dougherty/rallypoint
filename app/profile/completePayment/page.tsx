@@ -36,6 +36,15 @@ export default function Page() {
         setLoading(false);
       });
   }, [loading]);
+
+  // redirect to profile page after 5 seconds
+  React.useEffect(() => {
+    if (!loading && error === "") {
+      setTimeout(() => {
+        window.location.href = "/profile";
+      }, 5000);
+    }
+  }, [loading, error]);
   return (
     <div>
       {loading ? (

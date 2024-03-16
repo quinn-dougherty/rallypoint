@@ -8,6 +8,7 @@ export type UserProfileProps = {
     email: string;
     lw_username: string;
     bio: string;
+    stripe_account_id: string;
   };
   privateView: boolean; // this will need to verify auth to make sense.
 }; // TODO: centralize models/ dir, issue #5
@@ -41,6 +42,32 @@ const UserProfile: React.FC<UserProfileProps> = ({
             >
               Deposit
             </Link>
+            Withdraw:
+            {profile.stripe_account_id ? (
+              <>
+                <Link
+                  className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+                  href={"/profile/withdrawStripe"}
+                >
+                  Withdraw
+                </Link>
+                <Link
+                  className={
+                    "py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+                  }
+                  href={"/profile/bank"}
+                >
+                  Bank Details
+                </Link>
+              </>
+            ) : (
+              <Link
+                className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+                href={"/profile/connectStripe"}
+              >
+                Connect
+              </Link>
+            )}
           </p>
         </div>
       )}

@@ -49,6 +49,57 @@ export async function UpdateUser(user: {
   }
 }
 
+export async function InsertUserStripeId(user: {
+  user_id: string;
+  stripe_account_id: string;
+}) {
+  const { user_id, stripe_account_id } = user;
+  const error = await supabase()
+    .from("profiles")
+    .update({ stripe_account_id })
+    .eq(`user_id`, user_id);
+  if (error.error) {
+    throw error;
+  }
+}
+export async function GetUserStripeId(user_id: string): Promise<string> {
+  const { data, error } = await supabase()
+    .from("profiles")
+    .select("stripe_account_id")
+    .eq(`user_id`, user_id)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data!.stripe_account_id;
+}
+export async function GetUserBalance(user_id: string): Promise<number> {
+  const { data, error } = await supabase()
+    .from("profiles")
+    .select("balance")
+    .eq(`user_id`, user_id)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data!.balance;
+}
+export async function UpdateUserBalance(user: {
+  user_id: string;
+  balance: number;
+}) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { user_id, balance } = user;
+  const error = await supabase
+    .from("profiles")
+    .update({ balance })
+    .eq(`user_id`, user_id);
+  if (error.error) {
+    throw error;
+  }
+}
+
 export async function InsertDeposit(deposit: {
   stripe_payment_id: string;
   user_id: string;
