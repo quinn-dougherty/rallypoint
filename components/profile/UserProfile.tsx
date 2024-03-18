@@ -1,13 +1,14 @@
 import Link from "next/link";
 import ProfilePostsList from "@/components/posts/ProfilePostsList";
 import ProfileClaimsList from "@/components/claims/ProfileClaimsList";
-
 export type UserProfileProps = {
   profile: {
+    balance: number;
     display_name: string;
     email: string;
     lw_username: string;
     bio: string;
+    stripe_account_id: string;
   };
   privateView: boolean; // this will need to verify auth to make sense.
 }; // TODO: centralize models/ dir, issue #5
@@ -33,6 +34,41 @@ const UserProfile: React.FC<UserProfileProps> = ({
           >
             Sharelink
           </Link>
+          <p>
+            Balance: {profile.balance}
+            <Link
+              className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+              href={"/profile/deposit"}
+            >
+              Deposit
+            </Link>
+            Withdraw:
+            {profile.stripe_account_id ? (
+              <>
+                <Link
+                  className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+                  href={"/profile/withdrawStripe"}
+                >
+                  Withdraw
+                </Link>
+                <Link
+                  className={
+                    "py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+                  }
+                  href={"/profile/bank"}
+                >
+                  Bank Details
+                </Link>
+              </>
+            ) : (
+              <Link
+                className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+                href={"/profile/connectStripe"}
+              >
+                Connect
+              </Link>
+            )}
+          </p>
         </div>
       )}
       <p>Email: {profile.email}</p>
