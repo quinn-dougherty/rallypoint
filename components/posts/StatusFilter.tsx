@@ -6,7 +6,10 @@ interface StatusFilterProps {
   selectedStatuses: Status[];
 }
 
-const StatusFilter: React.FC<StatusFilterProps> = ({ onChange, selectedStatuses }) => {
+const StatusFilter: React.FC<StatusFilterProps> = ({
+  onChange,
+  selectedStatuses,
+}) => {
   const statuses: Status[] = ["claimed", "unclaimed", "finished"];
 
   const toggleStatus = (status: Status) => {

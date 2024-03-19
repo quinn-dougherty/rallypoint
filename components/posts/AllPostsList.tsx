@@ -45,18 +45,21 @@ function AllPostsList() {
 
   const filteredPosts = posts.filter((post) => {
     if (selectedStatuses.length === 0) return true;
-  
+
     if (post.status === null) {
       return false;
     }
-  
+
     return selectedStatuses.includes(post.status);
   });
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
       <div className="statusFilterContainer">
-        <StatusFilter onChange={handleStatusChange} selectedStatuses={selectedStatuses} />
+        <StatusFilter
+          onChange={handleStatusChange}
+          selectedStatuses={selectedStatuses}
+        />
       </div>
       <div className="grid grid-cols-1 gap-4 mt-8">
         {filteredPosts.map((post) => (

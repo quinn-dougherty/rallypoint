@@ -46,7 +46,7 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
     if (!checkedUser) {
       return;
     }
-  
+
     if (user) {
       supabase
         .from("posts")
@@ -57,7 +57,10 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
             console.error("Error fetching posts:", error);
           } else {
             console.log("Posts:", data);
-            console.log("Status values:", data.map((post) => post.status));
+            console.log(
+              "Status values:",
+              data.map((post) => post.status),
+            );
             setPosts(data as PostsModel["Row"][]);
           }
           setLoading(false);

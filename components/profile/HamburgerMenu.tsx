@@ -78,9 +78,7 @@ function RenderMenuItems({ user, profile, toggleMenu }: RenderMenuItemsProps) {
             </li>
             <li className="menu-item">
               <form action={signOut} className="menu-logout">
-                <button className="logout-button">
-                  Logout
-                </button>
+                <button className="logout-button">Logout</button>
               </form>
             </li>
           </ul>
@@ -88,7 +86,11 @@ function RenderMenuItems({ user, profile, toggleMenu }: RenderMenuItemsProps) {
       </React.Fragment>
     );
   } else {
-    return <div className="login-link"><Link href="/login">Login or Sign Up</Link></div>;
+    return (
+      <div className="login-link">
+        <Link href="/login">Login or Sign Up</Link>
+      </div>
+    );
   }
 }
 

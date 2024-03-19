@@ -33,18 +33,25 @@ export default async function Header() {
   const supabase = createClient(cookieStore);
   const { data: authData } = await supabase.auth.getUser();
   const user: User | null = authData.user;
- 
+
   return (
     <header className="fixed top-0 w-full z-50 bg-[hsl(var(--background))] shadow">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <div>
-          <Link href="/" className="text-lg font-semibold text-gray-800 hover:text-white transition-colors">Rallypoint</Link>
+          <Link
+            href="/"
+            className="text-lg font-semibold text-gray-800 hover:text-white transition-colors"
+          >
+            Rallypoint
+          </Link>
         </div>
         <div className="flex items-center space-x-4">
-          <Link href="/create" className="visible-button">Create</Link>
+          <Link href="/create" className="visible-button">
+            Create
+          </Link>
           {user ? renderHamburger(user) : <AuthButton user={user} />}
         </div>
       </nav>
     </header>
   );
-};
+}

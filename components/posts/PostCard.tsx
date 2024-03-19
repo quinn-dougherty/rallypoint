@@ -46,7 +46,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       <div className="p-5">
         <h2 className="text-2xl font-bold text-white mb-3">
           {profile ? (
-            <Link href={`/${profile.lw_username}/${postSlug}`} className="hover:underline">
+            <Link
+              href={`/${profile.lw_username}/${postSlug}`}
+              className="hover:underline"
+            >
               {post.title}
             </Link>
           ) : (
