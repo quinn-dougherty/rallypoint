@@ -3,40 +3,37 @@ import { Status } from "@/types/Enums";
 
 interface StatusFilterProps {
   onChange: (selectedStatuses: Status[]) => void;
+  selectedStatuses: Status[];
 }
 
-const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
+const StatusFilter: React.FC<StatusFilterProps> = ({
+  onChange,
+  selectedStatuses,
+}) => {
   const statuses: Status[] = ["claimed", "unclaimed", "finished"];
-  const [selectedStatuses, setSelectedStatuses] = React.useState<Status[]>([
-    "claimed",
-    "unclaimed",
-  ]);
 
-  const handleCheckboxChange = (status: Status) => {
-    const newSelectedStatuses = selectedStatuses.includes(status)
+  const toggleStatus = (status: Status) => {
+    const isCurrentlySelected = selectedStatuses.includes(status);
+    const newSelectedStatuses = isCurrentlySelected
       ? selectedStatuses.filter((s) => s !== status)
       : [...selectedStatuses, status];
-
-    setSelectedStatuses(newSelectedStatuses);
     onChange(newSelectedStatuses);
   };
 
   return (
-    <div className="mt-1 w-full flex flex-row justify-start space-x-4">
+    <div className="flex flex-wrap justify-start gap-2 p-2">
       {statuses.map((status) => (
-        <div key={status} className="flex items-center">
-          <input
-            type="checkbox"
-            id={status}
-            value={status}
-            checked={selectedStatuses.includes(status)}
-            onChange={() => handleCheckboxChange(status)}
-            className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-          <label htmlFor={status} className="ml-2 block bg-inherit text-sm">
-            {status}
-          </label>
-        </div>
+        <button
+          key={status}
+          onClick={() => toggleStatus(status)}
+          className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${
+            selectedStatuses.includes(status)
+              ? "text-gray-800 bg-[hsl(var(--foreground))]"
+              : "border border-[hsl(var(--foreground))] text-white"
+          }`}
+        >
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </button>
       ))}
     </div>
   );

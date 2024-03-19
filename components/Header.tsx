@@ -1,9 +1,9 @@
+import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { createClientSsr } from "@/utils/supabase/client";
-import Link from "next/link";
-import { cookies } from "next/headers";
 import HamburgerMenu from "./profile/HamburgerMenu";
 import AuthButton from "./profile/AuthButton";
+import { cookies } from "next/headers";
 
 interface Profile {
   lw_username: string;
@@ -32,30 +32,26 @@ export default async function Header() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
   const { data: authData } = await supabase.auth.getUser();
-  const user = authData.user;
+  const user: User | null = authData.user;
 
   return (
-    <div className="fixed top-0 flex-1 w-full flex flex-col gap-20 text-xl items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-24">
-        <ul className="top-bar">
-          <li className="bg-btn-background hover:underline rounded-md px-4 py-2 text-foreground mb-2">
-            <Link href="/">Rallypoint</Link>
-          </li>
-          <li className="py-2 px-4 rounded-md hover:underline bg-green-700 hover:bg-btn-background-hover">
-            <Link href="/create">Create</Link>
-          </li>
-          {user ? (
-            <li>
-              {" "}
-              {await renderHamburger(user)} <div />
-            </li>
-          ) : (
-            <li>
-              <AuthButton user={user} />
-            </li>
-          )}
-        </ul>
+    <header className="fixed top-0 w-full z-50 bg-[hsl(var(--background))] shadow">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <div>
+          <Link
+            href="/"
+            className="text-lg font-semibold text-gray-800 hover:text-white transition-colors"
+          >
+            Rallypoint
+          </Link>
+        </div>
+        <div className="flex items-center space-x-4">
+          <Link href="/create" className="visible-button">
+            Create
+          </Link>
+          {user ? renderHamburger(user) : <AuthButton user={user} />}
+        </div>
       </nav>
-    </div>
+    </header>
   );
 }
