@@ -52,15 +52,20 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
   const { claim_id, post_id, description, is_resolved } = claim;
   const post_slug = createSlug(postTitle, post_id);
   return (
-    <div className="border card">
-      <h1>
-        <a href={`/${poster_lw_username}/${post_slug}/${claim_id}`}>
+    <div className="border rounded-lg shadow p-4 bg-background text-foreground transition-all duration-300 ease-in-out hover:shadow-md">
+      <h1 className="font-semibold mb-2">
+        <a
+          href={`/${poster_lw_username}/${post_slug}/${claim_id}`}
+          className="hover:underline"
+        >
           Claim details
         </a>
       </h1>
-      <p>Claimant: {claimant_lw_username}</p>
-      <p>Evidence: {description}</p>
-      <p>{is_resolved ? "Resolved" : "Unresolved"}</p>
+      <p className="text-sm mb-1">Claimant: {claimant_lw_username}</p>
+      <p className="text-sm mb-1">Evidence: {description}</p>
+      <p className="text-sm mb-1">
+        Status: {is_resolved ? "Resolved" : "Unresolved"}
+      </p>
     </div>
   );
 }

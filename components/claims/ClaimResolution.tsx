@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { createClientSsr } from "@/utils/supabase/client";
 import PercentageInput from "@/components/PercentageInput";
+import { useRouter } from "next/navigation";
 
 interface ClaimResolutionProps {
   claim_id: string;
@@ -12,6 +13,8 @@ function ClaimResolution({ claim_id, post_id }: ClaimResolutionProps) {
   const [claimantUserId, setClaimantUserId] = useState<string>("");
   const [posterUserId, setPosterUserId] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(100);
+  const router = useRouter();
+  ``;
 
   const handlePercentageChange = (newPercentage: number) => {
     setPercentage(newPercentage);
@@ -61,7 +64,7 @@ function ClaimResolution({ claim_id, post_id }: ClaimResolutionProps) {
       const data = await response.json();
       if (response.ok) {
         console.log("success:", data);
-        window.location.reload();
+        router.refresh();
       } else {
         console.error("error:", data);
       }
