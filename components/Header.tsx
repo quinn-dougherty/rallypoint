@@ -49,7 +49,7 @@ export default async function Header() {
           <Link href="/create" className="visible-button">
             Create
           </Link>
-          {user ? renderHamburger(user) : <AuthButton user={user} />}
+          {user ? await renderHamburger(user) : <AuthButton user={user} />}
         </div>
       </nav>
     </header>
