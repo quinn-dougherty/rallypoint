@@ -4,6 +4,7 @@ import { createClientSsr } from "@/utils/supabase/client";
 import HamburgerMenu from "./profile/HamburgerMenu";
 import AuthButton from "./profile/AuthButton";
 import { cookies } from "next/headers";
+import SearchBar from "@/components/Search/SearchBar";
 
 interface Profile {
   lw_username: string;
@@ -35,7 +36,7 @@ export default async function Header() {
   const user: User | null = authData.user;
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-[hsl(var(--background))] shadow">
+    <header className="fixed top-0 w-full z-50 bg-[hsl(var(--background))] header shadow">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <div>
           <Link
@@ -44,6 +45,9 @@ export default async function Header() {
           >
             Rallypoint
           </Link>
+        </div>
+        <div className={"flex items-center space-x-4"}>
+          <SearchBar />
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/create" className="visible-button">

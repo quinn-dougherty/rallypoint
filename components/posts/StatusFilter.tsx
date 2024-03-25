@@ -4,11 +4,13 @@ import { Status } from "@/types/Enums";
 interface StatusFilterProps {
   onChange: (selectedStatuses: Status[]) => void;
   selectedStatuses: Status[];
+  className?: string;
 }
 
 const StatusFilter: React.FC<StatusFilterProps> = ({
   onChange,
   selectedStatuses,
+  className,
 }) => {
   const statuses: Status[] = ["claimed", "unclaimed", "finished"];
 
@@ -21,12 +23,17 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap justify-start gap-2 p-2">
+    <div
+      className={[
+        "flex flex-wrap justify-start gap-2 p-2",
+        className ? className : "",
+      ].join(" ")}
+    >
       {statuses.map((status) => (
         <button
           key={status}
           onClick={() => toggleStatus(status)}
-          className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer ${
+          className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer button ${
             selectedStatuses.includes(status)
               ? "text-gray-800 bg-[hsl(var(--foreground))]"
               : "border border-[hsl(var(--foreground))] text-white"

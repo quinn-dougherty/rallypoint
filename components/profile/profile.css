@@ -1,0 +1,38 @@
+.profile-header {
+  margin-top: -5rem;
+  background-color: var(--background-highlight);
+  text-align: center;
+}
+.profile-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  border-bottom: 1px solid #898989;
+}
+.profile-nav a {
+  margin-right: 2em;
+  padding: 6px 0;
+}
+.profile-nav a:last-child {
+  margin-right: 0;
+}
+.profile-nav a.active {
+  color: var(--foreground);
+  font-weight: 600;
+  border-bottom: 2px solid hsl(var(--visible-btn-background));
+}
+.profile-about {
+  width: 35vw;
+  margin: 2rem auto;
+}
+.profile-projects,
+.profile-claims {
+  width: 40vw;
+  margin: 2rem auto;
+}
+.profile-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}

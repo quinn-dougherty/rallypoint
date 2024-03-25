@@ -7,13 +7,17 @@ import ClaimCard from "@/components/claims/ClaimCard";
 import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-
+interface Tag {
+  tag_id: string;
+  tag: string;
+}
 type PostPageProps = {
   post: PostsModel["Row"];
   claims: ClaimsModel["Row"][];
+  tags: Tag[];
 };
 
-function PostPage({ post, claims }: PostPageProps) {
+function PostPage({ post, claims, tags }: PostPageProps) {
   const [profile, setProfile] = useState<ProfilesModel["Row"] | null>(null);
   const [lwUsername, setLwUsername] = useState<string | null>(null);
   const { post_id, title, description, status, post_type, amount } = post;
@@ -107,12 +111,23 @@ function PostPage({ post, claims }: PostPageProps) {
           </Link>
         </h2>
         <p className="text-sm text-right mb-2">Filed by: {lw_username}</p>
-        <p className="mb-4">{description}</p>
         <div className="flex flex-row justify-between items-center mb-4">
           <span className="inline-block bg-btn-background hover:bg-btn-background-hover text-foreground font-medium py-1 px-3 rounded-full">
             {`${status?.toUpperCase()} ${post_type?.toUpperCase()}`}
           </span>
           <span className="font-semibold">{`$${amount} available`}</span>
+        </div>
+        <p className="mb-4">{description}</p>
+        <div className={"flex flex-row gap-2 py-3 tags-list"}>
+          {tags.map((tag) => (
+            <Link
+              key={tag.tag_id}
+              className="bg-btn-background hover:bg-btn-background-hover text-foreground font-medium py-1 px-3 rounded-full"
+              href={`/tags/${tag.tag}`}
+            >
+              {tag.tag}
+            </Link>
+          ))}
         </div>
         <Link
           href={`/${lw_username}/${post_slug}/claim`}

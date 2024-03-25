@@ -1,8 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
-
+import Select from "react-select";
+import "./createPost.css";
+interface Tag {
+  tag_id: string;
+  tag: string;
+}
 type CreatePostProps = {
   createPost: {
     title: string;
@@ -41,6 +46,21 @@ const CreatePost: React.FC<CreatePostProps> = ({
   const { title, description, amount } = createPost;
   let failed = false;
   const router = useRouter();
+  const [errorApi, setErrorMessage] = React.useState<string>("");
+  const [tags, setTags] = React.useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<Tag[]>([]);
+  React.useEffect(() => {
+    if (tags.length > 0) {
+      return;
+    }
+    fetch("/api/tags", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTags(data);
+      });
+  }, [tags]);
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setDisableSubmit(true);
@@ -68,9 +88,9 @@ const CreatePost: React.FC<CreatePostProps> = ({
           title,
           description,
           amount,
+          tags: selectedTags.map((tag) => tag.tag_id),
         }),
       });
-
       if (!response.ok) {
         console.log(response);
         throw new Error("Error creating post");
@@ -84,6 +104,11 @@ const CreatePost: React.FC<CreatePostProps> = ({
         await supabase.from("profiles").select().match({ user_id: id }).single()
       ).data;
       const dbItems = await response.json();
+      if (dbItems.error) {
+        setErrorMessage(dbItems.error);
+        setDisableSubmit(false);
+        return;
+      }
       failed = false;
       if (lw_username) {
         const { post_id } = dbItems[0];
@@ -95,57 +120,92 @@ const CreatePost: React.FC<CreatePostProps> = ({
       }
     } catch (error) {
       console.error("Failed somewhere:", error);
+      setErrorMessage("Failed to create post, please try again.");
+      setDisableSubmit(false);
     }
   };
+
   return failed ? (
     <div>Failed</div>
   ) : (
-    <div>
-      <form
-        className="animate-in flex-1 flex-col w-full justify-center gap-2 text-foreground flex items-center group"
-        onSubmit={handleSubmit}
-      >
-        <p>
-          <label className="text-md">
-            <input
-              className="rounded-md px-2 py-2 bg-inherit border mb-6"
-              placeholder="Title"
-              type="text"
-              value={title}
-              onChange={titleOnChange}
-            />
-          </label>
-        </p>
-        <p>
-          <label className="text-md">
-            <textarea
-              className="rounded-md px-2 py-2 bg-inherit border mb-6"
-              placeholder="Description"
-              value={description}
-              onChange={descriptionOnChange}
-            />
-          </label>
-        </p>
-        <p>
-          <label className="text-md">
-            Amount:{" "}
-            <input
-              className="rounded-md px-2 py-2 bg-inherit border mb-6"
-              type="number"
-              value={amount}
-              onChange={amountOnChange}
-            />
-          </label>
-        </p>
-        <button
-          className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
-          type="submit"
-          disabled={disabledSubmit}
-        >
-          Create Post
-        </button>
-      </form>
-    </div>
+    <>
+      {tags.length == 0 ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <h3>Create Post</h3>
+          {errorApi && <h4 className={"error-api"}>{errorApi}</h4>}
+          <form
+            className="animate-in flex-1 flex-col w-full justify-center gap-2 text-foreground flex items-center group"
+            onSubmit={handleSubmit}
+          >
+            <p>
+              <label className="text-md">
+                <input
+                  className="rounded-md px-2 py-2 bg-inherit border mb-6"
+                  placeholder="Title"
+                  type="text"
+                  value={title}
+                  onChange={titleOnChange}
+                />
+              </label>
+            </p>
+            <p>
+              <label className="text-md">
+                <textarea
+                  className="rounded-md px-2 py-2 bg-inherit border mb-6"
+                  placeholder="Description"
+                  value={description}
+                  onChange={descriptionOnChange}
+                />
+              </label>
+            </p>
+            <p>
+              <label className="text-md">
+                Amount:{" "}
+                <input
+                  className="rounded-md px-2 py-2 bg-inherit border mb-6"
+                  type="number"
+                  value={amount}
+                  onChange={amountOnChange}
+                />
+              </label>
+            </p>
+
+            <label className="text-md">
+              Tags:{" "}
+              {/*<select className="rounded-md px-2 py-2 bg-inherit border mb-6">*/}
+              {/*  {tags.map((tag) => (*/}
+              {/*    <option key={tag.tag_id} value={tag.tag_id}>*/}
+              {/*      {tag.tag}*/}
+              {/*    </option>*/}
+              {/*  ))}*/}
+              {/*</select>*/}
+              <Select
+                isMulti={true}
+                name={"tags"}
+                options={tags}
+                onChange={(selectedTags) => {
+                  const tags = selectedTags as Tag[];
+                  setSelectedTags(tags);
+                }}
+                getOptionLabel={(option: Tag) => option.tag}
+                classNamePrefix="react-select"
+                getOptionValue={(option: Tag) => option.tag_id}
+              />
+            </label>
+
+            <button
+              className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+              type="submit"
+              disabled={disabledSubmit}
+            >
+              Create Post
+            </button>
+          </form>
+        </div>
+      )}
+    </>
   );
 };
 export default CreatePost;

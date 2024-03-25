@@ -95,12 +95,13 @@ function ProfilePostsList({ lw_username }: ProfilePostsProps) {
   );
 
   return (
-    <div className="flex flex-col border">
+    <div className="flex flex-col ">
       <StatusFilter
         selectedStatuses={selectedStatuses}
         onChange={handleStatusChange}
+        className={"composite-buttons composite-buttons-3 center"}
       />
-      <div>
+      <div className={"profile-projects-grid"}>
         {filteredPosts.map((post) => (
           <PostCard key={post.post_id} post={post} />
         ))}
