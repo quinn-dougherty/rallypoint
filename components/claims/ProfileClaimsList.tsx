@@ -4,7 +4,6 @@ import { createClientSsr } from "@/utils/supabase/client";
 import { ProfilesModel, ClaimsModel } from "@/types/Models";
 import ClaimCard from "./ClaimCard";
 import ResolvednessFilter, { Status } from "./ResolvednessFilter";
-import StatusFilter from "@/components/posts/StatusFilter";
 
 interface ProfileClaimsListProps {
   lw_username: string;

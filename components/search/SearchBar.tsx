@@ -1,30 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import debounce from "lodash/debounce";
-import "./searchbar.css";
+import "./searchBar.css";
 import Link from "next/link";
 import { useOutsideClick } from "@/utils/hooks";
+import { ProfilesModel as User, PostsModel as Post } from "@/types/Models";
 
-interface Results {
-  posts: Post[];
-  tags: Tag[];
-  users: User[];
-}
-interface Post {
-  post_id: number;
-  title: string;
-  description: string;
-}
 interface Tag {
   tag_id: number;
   tag: string;
 }
-interface User {
-  user_id: number;
-  display_name: string;
-  bio: string;
-  lw_username: string;
-  profile_image_url: string;
+interface Results {
+  posts: Post["Row"][];
+  tags: Tag[];
+  users: User["Row"][];
 }
 async function searchPosts(query: string) {
   const response = await fetch("/api/search", {
@@ -122,63 +111,69 @@ export default function SearchBar() {
       </div>
       {show && (
         <div className={"search-results-container"} ref={ref}>
-          {loading && <div>Loading...</div>}
-          {!loading && (
-            <>
-              {results.posts.length > 0 && (
-                <div key={"results-posts"} className={"results"}>
-                  <p className={"results-header"}>Projects</p>
-                  {results.posts.map((post) => (
-                    <Link
-                      href={`/posts/${post.post_id}`}
-                      key={post.post_id}
-                      onClick={() => setShow(false)}
-                    >
-                      <div className={"search-entry"}>
-                        <h2>{post.title}</h2>
-                        <div>{post.description}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-              {results.tags.length > 0 && (
-                <div key={"results-tags"} className={"results"}>
-                  <p className={"results-header"}>Tags</p>
-                  {results.tags.map((tag) => (
-                    <Link
-                      href={`/tags/${tag.tag}`}
-                      key={tag.tag_id}
-                      onClick={() => setShow(false)}
-                    >
-                      <div key={tag.tag_id} className={"search-entry"}>
-                        <h2>{tag.tag}</h2>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-
-              {results.users.length > 0 && (
-                <div key={"results-users"} className={"results"}>
-                  <p className={"results-header"}>Users</p>
-                  {results.users.map((user) => (
-                    <Link
-                      href={`/${user.lw_username}`}
-                      key={user.user_id}
-                      onClick={() => setShow(false)}
-                    >
-                      <div key={user.user_id} className={"search-entry"}>
-                        <h2>{user.display_name}</h2>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
+          {loading ? <div>Loading...</div> : searchResults(results, setShow)}
         </div>
       )}
     </form>
   );
 }
+
+const searchResults = (
+  { posts, tags, users }: Results,
+  setShow: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  return (
+    <>
+      {posts.length > 0 && (
+        <div key={"results-posts"} className={"results"}>
+          <p className={"results-header"}>Projects</p>
+          {posts.map((post) => (
+            <Link
+              href={`/posts/${post.post_id}`}
+              key={post.post_id}
+              onClick={() => setShow(false)}
+            >
+              <div className={"search-entry"}>
+                <h2>{post.title}</h2>
+                <div>{post.description}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+      {tags.length > 0 && (
+        <div key={"results-tags"} className={"results"}>
+          <p className={"results-header"}>Tags</p>
+          {tags.map((tag) => (
+            <Link
+              href={`/tags/${tag.tag}`}
+              key={tag.tag_id}
+              onClick={() => setShow(false)}
+            >
+              <div key={tag.tag_id} className={"search-entry"}>
+                <h2>{tag.tag}</h2>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {users.length > 0 && (
+        <div key={"results-users"} className={"results"}>
+          <p className={"results-header"}>Users</p>
+          {users.map((user) => (
+            <Link
+              href={`/${user.lw_username}`}
+              key={user.user_id}
+              onClick={() => setShow(false)}
+            >
+              <div key={user.user_id} className={"search-entry"}>
+                <h2>{user.display_name}</h2>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </>
+  );
+};

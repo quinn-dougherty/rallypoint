@@ -44,8 +44,8 @@ export async function UpdateUser(user: {
       display_name,
       lw_username,
       bio,
-      website: website,
-      location: location,
+      website,
+      location,
     })
     .eq(`user_id`, user.user_id);
   if (error) {

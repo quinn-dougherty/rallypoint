@@ -34,6 +34,20 @@ const getTagsText = async (tags: Tag[]) => {
   }
   return data;
 };
+const getComments = async (post_id: string) => {
+  const supabase = createClientSsr();
+  const { data, error } = await supabase
+    .from("comments")
+    .select()
+    .match({ post_id, status: "public" });
+  if (error) {
+    return [];
+  }
+  if (!data) {
+    return [];
+  }
+  return data;
+};
 export default async function Page({
   params,
 }: {
@@ -55,6 +69,7 @@ export default async function Page({
   }
 
   const tags = await getTags(post_id);
+  const comments = await getComments(post_id);
   const supabase_claims = createClientSsr();
   const { data: claims, error: claims_error } = await supabase_claims
     .from("claims")
@@ -70,7 +85,7 @@ export default async function Page({
 
   return (
     <div>
-      <PostPage post={data} tags={tags} claims={claims} />
+      <PostPage post={data} tags={tags} comments={comments} claims={claims} />
     </div>
   );
 }

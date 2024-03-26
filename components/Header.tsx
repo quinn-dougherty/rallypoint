@@ -4,7 +4,7 @@ import { createClientSsr } from "@/utils/supabase/client";
 import HamburgerMenu from "./profile/HamburgerMenu";
 import AuthButton from "./profile/AuthButton";
 import { cookies } from "next/headers";
-import SearchBar from "@/components/Search/SearchBar";
+import SearchBar from "@/components/search/SearchBar";
 
 interface Profile {
   lw_username: string;

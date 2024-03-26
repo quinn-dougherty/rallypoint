@@ -11,20 +11,28 @@ interface Tag {
   tag_id: string;
   tag: string;
 }
+interface Comments {
+  comment_id: string;
+  post_id: string;
+  user_id: string;
+  contents: string;
+  created_at: string;
+}
 type PostPageProps = {
   post: PostsModel["Row"];
   claims: ClaimsModel["Row"][];
   tags: Tag[];
+  comments: Comments[];
 };
 
-function PostPage({ post, claims, tags }: PostPageProps) {
+function PostPage({ post, claims, tags, comments }: PostPageProps) {
   const [profile, setProfile] = useState<ProfilesModel["Row"] | null>(null);
   const [lwUsername, setLwUsername] = useState<string | null>(null);
   const { post_id, title, description, status, post_type, amount } = post;
   const [amountReactive, setAmount] = useState<number | null>(amount);
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
   const [fundAmount, setFundAmount] = useState("");
-
+  const [newComment, setNewComment] = useState<string>("");
   const supabase = createClientSsr();
   const router = useRouter();
 
@@ -95,13 +103,34 @@ function PostPage({ post, claims, tags }: PostPageProps) {
       });
   }, [amountReactive]);
 
+  const saveComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          post_id: post_id,
+          comment: newComment,
+        }),
+      });
+      const result = await response.json();
+      console.log("Comment posted:", result.message);
+      router.refresh();
+    } catch (error) {
+      console.error("Error posting comment");
+    }
+  };
+
   if (profile === null) {
     return <div>Loading...</div>;
   } else {
     const lw_username = lwUsername as string;
     const post_slug = createSlug(title, post_id);
     return (
-      <div className="border rounded-lg shadow-lg p-6 bg-background text-foreground duration-300 ease-in-out hover:shadow-xl">
+      <div className="border rounded-lg shadow-lg p-6 bg-background text-foreground duration-300 ease-in-out hover:shadow-xl half-page mb-6">
         <h2 className="text-lg font-semibold mb-4">
           <Link
             href={`/${lw_username}/${post_slug}`}
@@ -191,7 +220,9 @@ function PostPage({ post, claims, tags }: PostPageProps) {
           </div>
         </Dialog>
 
+        <hr className={"mt-4"} />
         <p className="mt-4 font-semibold">Standing claims:</p>
+        {claims.length === 0 && <p>No claims yet.</p>}
         {claims.map((claim: ClaimsModel["Row"]) => {
           return (
             <ClaimCard
@@ -201,6 +232,45 @@ function PostPage({ post, claims, tags }: PostPageProps) {
             />
           );
         })}
+        <hr className={"mt-4"} />
+        <p className={"mt-4 font-semibold"}>Comments:</p>
+        {comments.length === 0 && <p>Be the first one to post a comment.</p>}
+        {comments.map((comment) => {
+          return (
+            <div
+              key={comment.comment_id}
+              className="border rounded-lg p-2 mt-2"
+            >
+              <p>{comment.contents}</p>
+              <p className="text-sm text-right">
+                {new Date(comment.created_at).toLocaleDateString("en-us", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
+          );
+        })}
+        <form
+          className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground px-8 py-4"
+          onSubmit={saveComment}
+        >
+          <label className="text-md" htmlFor="comment">
+            Write a comment
+          </label>
+          <textarea
+            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            name="comment"
+            placeholder="Comment"
+            required={true}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+            Post Comment
+          </button>
+        </form>
       </div>
     );
   }

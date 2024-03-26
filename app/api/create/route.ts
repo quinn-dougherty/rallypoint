@@ -26,20 +26,16 @@ export async function POST(req: NextRequest) {
       error: error.message,
     });
   }
-  try {
-    await tags.forEach(async (tag_id) => {
-      const { error } = await supabase
-        .from("post_tags")
-        .insert({ post_id: data[0].post_id, tag_id: tag_id });
+  await tags.forEach(async (tag_id) => {
+    const { error } = await supabase
+      .from("post_tags")
+      .insert({ post_id: data[0].post_id, tag_id: tag_id });
 
-      if (error) {
-        return NextResponse.json({
-          error: error.message,
-        });
-      }
-    });
-  } catch (error) {
-    console.error("error THROW from insert tags", error);
-  }
+    if (error) {
+      return NextResponse.json({
+        error: error.message,
+      });
+    }
+  });
   return NextResponse.json(data);
 }

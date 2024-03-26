@@ -10,28 +10,25 @@ export async function POST(req: NextRequest) {
   const supabase = createClient(cookieStore);
 
   const { query }: SearchQuery = await req.json();
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("display_name, lw_username, bio, user_id, profile_image_url")
-      .like("display_name", "%" + query + "%");
 
-    if (error) {
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    }
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("display_name, lw_username, bio, user_id, profile_image_url")
+    .like("display_name", "%" + query + "%");
 
-    return new Response(JSON.stringify(data), {
-      status: 200,
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
       headers: {
         "Content-Type": "application/json",
       },
     });
-  } catch (error) {
-    console.error("error THROW from search", error);
   }
+
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
