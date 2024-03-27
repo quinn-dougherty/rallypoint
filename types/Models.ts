@@ -5,3 +5,4 @@ type Tables = Database["public"]["Tables"];
 export type ClaimsModel = Tables["claims"];
 export type PostsModel = Tables["posts"];
 export type ProfilesModel = Tables["profiles"];
+export type CommentsModel = Tables["comments"];

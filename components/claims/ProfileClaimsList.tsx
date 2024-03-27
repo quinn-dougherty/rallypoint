@@ -125,9 +125,9 @@ function ProfileClaimsList({ lw_username }: ProfileClaimsListProps) {
   });
 
   return (
-    <div className="flex flex-col border">
+    <div className="flex flex-col ">
       <ResolvednessFilter onChange={handleResolvednessChange} />
-      <div>
+      <div className={"profile-projects-grid"}>
         {filteredClaims.map((claim) => (
           <ClaimItem key={claim.claim_id} claim={claim} />
         ))}

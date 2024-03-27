@@ -12,11 +12,16 @@
     --logout-btn-background-hover: 0 100% 30%;
     --visible-btn-background: 140 100% 25%;
     --visible-btn-background-hover: 140 100% 15%;
+    --input-color: 200 10% 20%;
+    --input-background: transparent;
+    --box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
+    --border-color: rgb(181, 181, 182);
+    --background-highlight: rgb(112, 112, 112);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: 200 50% 3%;
+      --background: 200 6% 10%;
       --btn-background: 200 10% 9%;
       --btn-background-hover: 200 10% 12%;
       --foreground: 200 20% 96%;
@@ -24,6 +29,11 @@
       --logout-btn-background-hover: 0 100% 60%;
       --visible-btn-background: 140 100% 30%;
       --visible-btn-background-hover: 140 100% 20%;
+      --input-color: #d7d7d7;
+      --input-background: transparent;
+      --box-shadow: rgb(119 119 119 / 12%);
+      --border-color: rgb(58, 62, 65);
+      --background-highlight: rgb(28, 30, 31);
     }
   }
 }
@@ -235,4 +245,36 @@
 hr {
   color: hsl(var(--foreground));
   padding-bottom: 0.5rem;
+}
+.header.shadow {
+  box-shadow: 1px 11px 19px 1px var(--box-shadow);
+}
+.half-page {
+  width: 50vw;
+}
+.full-page {
+  width: 99.3vw;
+}
+.error-api {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #4b1c1c;
+}
+.composite-buttons .button:not(:last-child) {
+  border-radius: 8px 0 0 8px;
+  border-right: 1px solid hsl(var(--visible-btn-background));
+}
+.composite-buttons .button:last-child {
+  border-radius: 0 8px 8px 0;
+}
+.composite-buttons-3 .button:nth-child(2) {
+  border-radius: 0;
+}
+.composite-buttons-3 {
+  gap: 0;
+}
+
+.center {
+  text-align: center;
+  margin: auto;
 }
