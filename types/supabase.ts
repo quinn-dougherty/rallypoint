@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       claims: {
@@ -63,31 +63,28 @@ export interface Database {
       comments: {
         Row: {
           comment_id: string;
+          contents: string;
           created_at: string;
-          description: string | null;
           post_id: string | null;
           status: Database["public"]["Enums"]["comment_type"] | null;
-          title: string | null;
           updated_at: string | null;
           user_id: string;
         };
         Insert: {
           comment_id?: string;
+          contents: string;
           created_at?: string;
-          description?: string | null;
           post_id?: string | null;
           status?: Database["public"]["Enums"]["comment_type"] | null;
-          title?: string | null;
           updated_at?: string | null;
           user_id: string;
         };
         Update: {
           comment_id?: string;
+          contents?: string;
           created_at?: string;
-          description?: string | null;
           post_id?: string | null;
           status?: Database["public"]["Enums"]["comment_type"] | null;
-          title?: string | null;
           updated_at?: string | null;
           user_id?: string;
         };
@@ -197,7 +194,7 @@ export interface Database {
           amount: number;
           created_at: string | null;
           deposit_id: string;
-          status: Database["public"]["Enums"]["status_type"] | null;
+          status: string | null;
           stripe_payment_id: string | null;
           user_id: string | null;
         };
@@ -205,7 +202,7 @@ export interface Database {
           amount: number;
           created_at?: string | null;
           deposit_id?: string;
-          status?: Database["public"]["Enums"]["status_type"] | null;
+          status?: string | null;
           stripe_payment_id?: string | null;
           user_id?: string | null;
         };
@@ -213,11 +210,41 @@ export interface Database {
           amount?: number;
           created_at?: string | null;
           deposit_id?: string;
-          status?: Database["public"]["Enums"]["status_type"] | null;
+          status?: string | null;
           stripe_payment_id?: string | null;
           user_id?: string | null;
         };
         Relationships: [];
+      };
+      post_tags: {
+        Row: {
+          post_id: string;
+          tag_id: string;
+        };
+        Insert: {
+          post_id: string;
+          tag_id: string;
+        };
+        Update: {
+          post_id?: string;
+          tag_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "post_tags_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
+            referencedColumns: ["post_id"];
+          },
+          {
+            foreignKeyName: "post_tags_tag_id_fkey";
+            columns: ["tag_id"];
+            isOneToOne: false;
+            referencedRelation: "tags";
+            referencedColumns: ["tag_id"];
+          },
+        ];
       };
       posts: {
         Row: {
@@ -276,11 +303,13 @@ export interface Database {
           created_at: string;
           display_name: string | null;
           email: string | null;
+          location: string | null;
           lw_username: string | null;
           profile_image_url: string | null;
           stripe_account_id: string | null;
           update_at: string | null;
           user_id: string;
+          website: string | null;
         };
         Insert: {
           balance?: number | null;
@@ -291,11 +320,13 @@ export interface Database {
           created_at?: string;
           display_name?: string | null;
           email?: string | null;
+          location?: string | null;
           lw_username?: string | null;
           profile_image_url?: string | null;
           stripe_account_id?: string | null;
           update_at?: string | null;
           user_id: string;
+          website?: string | null;
         };
         Update: {
           balance?: number | null;
@@ -306,11 +337,13 @@ export interface Database {
           created_at?: string;
           display_name?: string | null;
           email?: string | null;
+          location?: string | null;
           lw_username?: string | null;
           profile_image_url?: string | null;
           stripe_account_id?: string | null;
           update_at?: string | null;
           user_id?: string;
+          website?: string | null;
         };
         Relationships: [
           {
@@ -325,31 +358,20 @@ export interface Database {
       tags: {
         Row: {
           created_at: string;
-          id: number;
-          post_id: string | null;
           tag: string | null;
+          tag_id: string;
         };
         Insert: {
           created_at?: string;
-          id?: number;
-          post_id?: string | null;
           tag?: string | null;
+          tag_id?: string;
         };
         Update: {
           created_at?: string;
-          id?: number;
-          post_id?: string | null;
           tag?: string | null;
+          tag_id?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "tags_post_id_fkey";
-            columns: ["post_id"];
-            isOneToOne: false;
-            referencedRelation: "posts";
-            referencedColumns: ["post_id"];
-          },
-        ];
+        Relationships: [];
       };
       users: {
         Row: {
@@ -392,6 +414,14 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      fund_post: {
+        Args: {
+          userid: string;
+          funding_amount: number;
+          postid: string;
+        };
+        Returns: undefined;
+      };
       resolve_claim: {
         Args: {
           poster_user_id: string;
@@ -411,11 +441,13 @@ export interface Database {
       [_ in never]: never;
     };
   };
-}
+};
+
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
@@ -428,10 +460,10 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-        Database["public"]["Views"])
-    ? (Database["public"]["Tables"] &
-        Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
         Row: infer R;
       }
       ? R
@@ -440,7 +472,7 @@ export type Tables<
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
@@ -451,8 +483,8 @@ export type TablesInsert<
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Insert: infer I;
       }
       ? I
@@ -461,7 +493,7 @@ export type TablesInsert<
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
@@ -472,8 +504,8 @@ export type TablesUpdate<
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-    ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Update: infer U;
       }
       ? U
@@ -482,13 +514,13 @@ export type TablesUpdate<
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-    ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never;

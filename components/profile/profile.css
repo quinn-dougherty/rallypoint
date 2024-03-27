@@ -26,6 +26,7 @@
   margin: 2rem auto;
 }
 .profile-projects,
+.profile-comments,
 .profile-claims {
   width: 40vw;
   margin: 2rem auto;
@@ -35,4 +36,12 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
+}
+.comment-quote {
+  position: absolute;
+  font-family: georgia, serif;
+  font-size: 48px;
+}
+.comment-body {
+  margin-left: 36px;
 }

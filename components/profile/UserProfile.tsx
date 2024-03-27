@@ -4,8 +4,10 @@ import Link from "next/link";
 import ProfilePostsList from "@/components/posts/ProfilePostsList";
 import ProfileClaimsList from "@/components/claims/ProfileClaimsList";
 import "./profile.css";
+import ProfileCommentsList from "@/components/comments/ProfileCommentsList";
 export type UserProfileProps = {
   profile: {
+    user_id: string;
     balance: number;
     display_name: string;
     email: string;
@@ -167,6 +169,11 @@ const UserProfile: React.FC<UserProfileProps> = ({
         {selectedTab === "claims" && (
           <div className={"profile-claims"}>
             <ProfileClaimsList lw_username={profile.lw_username} />
+          </div>
+        )}
+        {selectedTab === "comments" && (
+          <div className={"profile-comments"}>
+            <ProfileCommentsList user_id={profile.user_id} />
           </div>
         )}
       </div>

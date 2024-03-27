@@ -6,7 +6,6 @@ interface StatusFilterProps {
   onChange: (selectedStatuses: Status[]) => void;
 }
 
-
 const ResolvednessFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
   const statuses: Status[] = [true, false];
   const [selectedStatuses, setSelectedStatuses] =
