@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const { data, error } = await supabase
     .from("tags")
     .select("tag_id, tag")
-    .like("tag", "%" + query + "%");
+    .ilike("tag", "%" + query + "%");
 
   if (error) {
     return new Response(JSON.stringify({ error: error.message }), {
