@@ -6,10 +6,10 @@ import { PostsModel } from "@/types/Models";
 export async function POST(req: NextRequest) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-
+  const dataReq = await req.json();
   const { owner_user_id, title, description, amount }: PostsModel["Row"] =
-    await req.json();
-
+    dataReq;
+  const tags: string[] = dataReq.tags;
   // Data validation
   if (!owner_user_id || !title || !description || !amount) {
     return NextResponse.json({ error: "Missing required fields" });
@@ -23,9 +23,19 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     return NextResponse.json({
-      error: `DB transaction failed: ${error.message}`,
+      error: error.message,
     });
   }
+  await tags.forEach(async (tag_id) => {
+    const { error } = await supabase
+      .from("post_tags")
+      .insert({ post_id: data[0].post_id, tag_id: tag_id });
 
+    if (error) {
+      return NextResponse.json({
+        error: error.message,
+      });
+    }
+  });
   return NextResponse.json(data);
 }

@@ -18,7 +18,15 @@ export default async function Page() {
   if (!data) {
     return <div>Loading... (forever probably)</div>;
   }
-
+  let count = 0;
+  const { data: postsData, error: postsError } = await supabase
+    .from("posts")
+    .select("post_id")
+    .eq("owner_user_id", user.id);
+  if (!postsError) {
+    count = postsData.length;
+  }
+  data.postCount = count;
   return (
     <div>
       <UserProfile profile={data} privateView={true} />

@@ -33,15 +33,19 @@ export async function UpdateUser(user: {
   lw_username: string;
   display_name: string;
   bio: string;
+  website: string;
+  location: string;
 }) {
   console.log(`updateUser data`, user);
-  const { lw_username, display_name, bio } = user;
+  const { lw_username, display_name, bio, website, location } = user;
   const error = await supabase()
     .from("profiles")
     .update({
       display_name,
       lw_username,
       bio,
+      website,
+      location,
     })
     .eq(`user_id`, user.user_id);
   if (error) {

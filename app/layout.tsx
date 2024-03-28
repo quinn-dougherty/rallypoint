@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
           <Header />
-          <div className="pt-24 mt-16 -scroll-mt-24 scroll-pt-24">
+          <div className={"pt-24 mt-16 -scroll-mt-24 scroll-pt-24"}>
             {children}
           </div>
           <Footer />
