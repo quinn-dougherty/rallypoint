@@ -17,6 +17,7 @@
     --box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px 0px;
     --border-color: rgb(181, 181, 182);
     --background-highlight: rgb(112, 112, 112);
+    --color-green-highlight: #5fbd93;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -34,6 +35,7 @@
       --box-shadow: rgb(119 119 119 / 12%);
       --border-color: rgb(58, 62, 65);
       --background-highlight: rgb(28, 30, 31);
+      --color-green-highlight: #5fbd93;
     }
   }
 }
@@ -277,4 +279,7 @@ hr {
 .center {
   text-align: center;
   margin: auto;
+}
+.highlight-text {
+  color: var(--color-green-highlight);
 }

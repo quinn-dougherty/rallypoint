@@ -6,13 +6,14 @@ export async function POST(req: NextRequest) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { post_id, title, description } = await req.json();
+  const { post_id, title, description, deadline } = await req.json();
 
   const { data, error } = await supabase
     .from("posts")
     .update({
       title,
       description,
+      deadline,
     })
     .eq("post_id", post_id);
 

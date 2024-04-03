@@ -12,10 +12,10 @@ export default function EditPage() {
 
   useEffect(() => {
     const pathSegments = pathname.split("/").filter(Boolean);
-    const post_id = pathSegments[1];
+    const post_id = pathSegments[1].split("_").pop();
 
     if (!post_id) {
-      console.error("post_id is missing.");
+      console.error("post_id is missing.", post_id);
       setLoading(false);
       return;
     }
@@ -30,7 +30,7 @@ export default function EditPage() {
         .single();
 
       if (error) {
-        console.error("Error fetching post:", error);
+        console.error("Error fetching post:", error, "post_id:", post_id);
       } else {
         setPost(data);
       }

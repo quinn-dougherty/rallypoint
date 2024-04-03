@@ -111,6 +111,7 @@ export type Database = {
           amount: number;
           created_at: string | null;
           post_id: string | null;
+          status: Database["public"]["Enums"]["allocation_status"];
           user_id: string | null;
         };
         Insert: {
@@ -118,6 +119,7 @@ export type Database = {
           amount: number;
           created_at?: string | null;
           post_id?: string | null;
+          status?: Database["public"]["Enums"]["allocation_status"];
           user_id?: string | null;
         };
         Update: {
@@ -125,6 +127,7 @@ export type Database = {
           amount?: number;
           created_at?: string | null;
           post_id?: string | null;
+          status?: Database["public"]["Enums"]["allocation_status"];
           user_id?: string | null;
         };
         Relationships: [
@@ -433,9 +436,10 @@ export type Database = {
       };
     };
     Enums: {
+      allocation_status: "allocated" | "frozen" | "claimed" | "withdrawn";
       comment_type: "public" | "hidden" | "deleted";
       post_type: "bounty" | "dac";
-      status_type: "unclaimed" | "claimed" | "finished";
+      status_type: "unclaimed" | "claimed" | "finished" | "closed";
     };
     CompositeTypes: {
       [_ in never]: never;
