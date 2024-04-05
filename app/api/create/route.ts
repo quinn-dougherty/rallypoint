@@ -33,6 +33,13 @@ export async function POST(req: NextRequest) {
     .select();
 
   if (error) {
+    if (
+      error.message.includes("duplicate key value violates unique constraint")
+    ) {
+      return NextResponse.json({
+        error: "Title already exists. Please choose a different title.",
+      });
+    }
     return NextResponse.json({
       error: error.message,
     });
