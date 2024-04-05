@@ -184,6 +184,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
                   getOptionLabel={(option: Tag) => option.tag}
                   classNamePrefix="react-select"
                   getOptionValue={(option: Tag) => option.tag_id}
+                  className={"rounded-md px-2 py-2 bg-inherit border mb-6"}
                 />
                 <label className="text-md">Deadline</label>
                 <input

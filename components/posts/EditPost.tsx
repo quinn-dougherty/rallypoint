@@ -1,21 +1,40 @@
 import React, { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { PostsModel } from "@/types/Models";
+import Select from "react-select";
 
+interface Tag {
+  tag_id: string;
+  tag: string;
+}
 type EditPostProps = {
   post: PostsModel["Row"];
+  tags: Tag[];
 };
-
-const EditPost: React.FC<EditPostProps> = ({ post }) => {
+const EditPost: React.FC<EditPostProps> = ({ post, tags }) => {
   const [title, setTitle] = useState(post.title || "");
   const [description, setDescription] = useState(post.description || "");
   const [loading, setLoading] = useState(false);
   const [deadline, setDeadline] = useState(
     post.deadline || new Date().toISOString().split("T")[0],
   );
+  const [allTags, setTags] = React.useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<Tag[]>([]);
+
   const router = useRouter();
   const pathname = usePathname();
-
+  React.useEffect(() => {
+    if (allTags.length > 0) {
+      return;
+    }
+    fetch("/api/tags", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTags(data);
+      });
+  }, [allTags]);
   const updatePost = async () => {
     setLoading(true);
 
@@ -30,6 +49,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
           title,
           description,
           deadline,
+          tags: selectedTags.map((tag) => tag.tag_id),
         }),
       });
 
@@ -64,8 +84,11 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
         }
       >
         <div className={"grid grid-cols-2 gap-6"}>
-          <label className={"text-md"}>Title</label>
+          <label className={"text-md"} htmlFor={"title"}>
+            Title
+          </label>
           <input
+            id={"title"}
             type="text"
             className="rounded-md px-2 py-2 bg-inherit border mb-6"
             placeholder="Title"
@@ -76,6 +99,7 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
           <label htmlFor="description">Description</label>
           <textarea
             placeholder="Description"
+            id={"description"}
             className="rounded-md px-2 py-2 bg-inherit border mb-6"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -88,6 +112,25 @@ const EditPost: React.FC<EditPostProps> = ({ post }) => {
             id="deadline"
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
+          />
+
+          <label className="text-md" htmlFor={"tags"}>
+            Tags
+          </label>
+          <Select
+            isMulti={true}
+            name={"tags"}
+            id={"tags"}
+            options={allTags}
+            onChange={(selectedTags) => {
+              const tags = selectedTags as Tag[];
+              setSelectedTags(tags);
+            }}
+            defaultValue={tags}
+            getOptionLabel={(option: Tag) => option.tag}
+            classNamePrefix="react-select"
+            getOptionValue={(option: Tag) => option.tag_id}
+            className={"rounded-md px-2 py-2 bg-inherit border mb-6"}
           />
 
           <button
