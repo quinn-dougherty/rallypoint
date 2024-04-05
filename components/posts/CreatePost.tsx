@@ -49,6 +49,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
   const [errorApi, setErrorMessage] = React.useState<string>("");
   const [tags, setTags] = React.useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = React.useState<Tag[]>([]);
+  const [deadline, setDeadline] = React.useState<string>("");
   React.useEffect(() => {
     if (tags.length > 0) {
       return;
@@ -89,6 +90,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
           description,
           amount,
           tags: selectedTags.map((tag) => tag.tag_id),
+          deadline,
         }),
       });
       if (!response.ok) {
@@ -135,12 +137,18 @@ const CreatePost: React.FC<CreatePostProps> = ({
         <div>
           <h3>Create Post</h3>
           {errorApi && <h4 className={"error-api"}>{errorApi}</h4>}
+
           <form
             className="animate-in flex-1 flex-col w-full justify-center gap-2 text-foreground flex items-center group"
             onSubmit={handleSubmit}
           >
-            <p>
-              <label className="text-md">
+            <div
+              className={
+                "animate-in flex-1 flex-col w-full justify-center gap-2 text-foreground flex items-center group"
+              }
+            >
+              <div className={"grid grid-cols-2 gap-6"}>
+                <label className="text-md">Title</label>
                 <input
                   className="rounded-md px-2 py-2 bg-inherit border mb-6"
                   placeholder="Title"
@@ -148,60 +156,55 @@ const CreatePost: React.FC<CreatePostProps> = ({
                   value={title}
                   onChange={titleOnChange}
                 />
-              </label>
-            </p>
-            <p>
-              <label className="text-md">
+                <label className="text-md">Description</label>
                 <textarea
                   className="rounded-md px-2 py-2 bg-inherit border mb-6"
                   placeholder="Description"
                   value={description}
                   onChange={descriptionOnChange}
                 />
-              </label>
-            </p>
-            <p>
-              <label className="text-md">
-                Amount:{" "}
+
+                <label className="text-md">Amount</label>
                 <input
                   className="rounded-md px-2 py-2 bg-inherit border mb-6"
                   type="number"
                   value={amount}
                   onChange={amountOnChange}
                 />
-              </label>
-            </p>
 
-            <label className="text-md">
-              Tags:{" "}
-              {/*<select className="rounded-md px-2 py-2 bg-inherit border mb-6">*/}
-              {/*  {tags.map((tag) => (*/}
-              {/*    <option key={tag.tag_id} value={tag.tag_id}>*/}
-              {/*      {tag.tag}*/}
-              {/*    </option>*/}
-              {/*  ))}*/}
-              {/*</select>*/}
-              <Select
-                isMulti={true}
-                name={"tags"}
-                options={tags}
-                onChange={(selectedTags) => {
-                  const tags = selectedTags as Tag[];
-                  setSelectedTags(tags);
-                }}
-                getOptionLabel={(option: Tag) => option.tag}
-                classNamePrefix="react-select"
-                getOptionValue={(option: Tag) => option.tag_id}
-              />
-            </label>
-
-            <button
-              className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
-              type="submit"
-              disabled={disabledSubmit}
-            >
-              Create Post
-            </button>
+                <label className="text-md">Tags</label>
+                <Select
+                  isMulti={true}
+                  name={"tags"}
+                  options={tags}
+                  onChange={(selectedTags) => {
+                    const tags = selectedTags as Tag[];
+                    setSelectedTags(tags);
+                  }}
+                  getOptionLabel={(option: Tag) => option.tag}
+                  classNamePrefix="react-select"
+                  getOptionValue={(option: Tag) => option.tag_id}
+                  className={"rounded-md px-2 py-2 bg-inherit border mb-6"}
+                />
+                <label className="text-md">Deadline</label>
+                <input
+                  name={"deadline"}
+                  className="rounded-md px-2 py-2 bg-inherit border mb-6"
+                  type="date"
+                  min={new Date().toISOString().split("T")[0]}
+                  onChange={(e) => {
+                    setDeadline(e.target.value);
+                  }}
+                />
+                <button
+                  className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
+                  type="submit"
+                  disabled={disabledSubmit}
+                >
+                  Create Post
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       )}

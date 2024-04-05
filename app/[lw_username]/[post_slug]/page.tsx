@@ -1,5 +1,6 @@
 import { createClientSsr } from "@/utils/supabase/client";
 import PostPage from "@/components/posts/PostPage";
+import { GetUser } from "@/utils/userData";
 
 interface Tag {
   tag_id: string;
@@ -82,10 +83,22 @@ export default async function Page({
   if (!claims) {
     return <div>Loading... (forever probably)</div>;
   }
-
+  let userId = "";
+  try {
+    const user = await GetUser();
+    userId = user.id;
+  } catch (err) {
+    userId = "";
+  }
   return (
     <div>
-      <PostPage post={data} tags={tags} comments={comments} claims={claims} />
+      <PostPage
+        post={data}
+        tags={tags}
+        comments={comments}
+        claims={claims}
+        loggedInAs={userId}
+      />
     </div>
   );
 }

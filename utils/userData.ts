@@ -147,3 +147,28 @@ export async function InsertDeposit(deposit: {
     }
   }
 }
+
+export const GetUserBalanceOffered = async (
+  user_id: string,
+): Promise<number> => {
+  const { data, error } = await supabase()
+    .from("profiles")
+    .select("balance_offered")
+    .eq(`user_id`, user_id)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data!.balance_offered;
+};
+export const GetPostAmount = async (post_id: string): Promise<number> => {
+  const { data, error } = await supabase()
+    .from("posts")
+    .select("amount")
+    .eq(`post_id`, post_id)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data!.amount;
+};
