@@ -83,9 +83,13 @@ export default async function Page({
   if (!claims) {
     return <div>Loading... (forever probably)</div>;
   }
-
-  const user = await GetUser();
-
+  let userId = "";
+  try {
+    const user = await GetUser();
+    userId = user.id;
+  } catch (err) {
+    userId = "";
+  }
   return (
     <div>
       <PostPage
@@ -93,7 +97,7 @@ export default async function Page({
         tags={tags}
         comments={comments}
         claims={claims}
-        loggedInAs={user.id}
+        loggedInAs={userId}
       />
     </div>
   );
