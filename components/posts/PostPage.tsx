@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { Dialog } from "@headlessui/react";
 import {
@@ -302,7 +303,7 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                   </span>
                   <span className="font-semibold highlight-text">{`$${amount} available`}</span>
                 </div>
-                <p className="mb-4">{description}</p>
+		<ReactMarkdown className="mb-4">{post.description}</ReactMarkdown>
 
                 <hr className={"mt-4"} />
                 <p className={"mt-4 font-semibold"}>Comments:</p>
@@ -315,7 +316,7 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                       key={comment.comment_id}
                       className="border rounded-lg p-2 mt-2"
                     >
-                      <p>{comment.contents}</p>
+                      <ReactMarkdown>{comment.contents}</ReactMarkdown>
                       <p className="text-sm text-right">
                         {new Date(comment.created_at).toLocaleDateString(
                           "en-us",

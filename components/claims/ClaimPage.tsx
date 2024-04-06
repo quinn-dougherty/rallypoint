@@ -4,6 +4,7 @@ import ClaimResolution from "./ClaimResolution";
 import PostCard from "./../posts/PostCard";
 import createSlug from "@/utils/slug";
 import { GetUser } from "@/utils/userData";
+import ReactMarkdown from "react-markdown";
 
 interface ClaimsProps {
   claim: ClaimsModel["Row"];
@@ -52,7 +53,9 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
         <a href={`/${poster_lw_username}/${postSlug}`}>claim of post:</a>
       </p>
       <PostCard post={post} />
-      <p>Evidence: {description}</p>
+      <p>
+        Evidence: <ReactMarkdown className="mb-4">{description}</ReactMarkdown>
+      </p>
       <p>{is_resolved ? "Resolved" : "Unresolved"}</p>
       {isPoster && !is_resolved ? (
         <ClaimResolution claim_id={claim_id} post_id={post_id} />

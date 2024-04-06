@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
 import { ClaimsModel } from "@/types/Models";
+import ReactMarkdown from "react-markdown";
 
 type ClaimsProps = {
   claim: ClaimsModel["Row"];
@@ -13,9 +14,11 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
     null,
   );
   const [postTitle, setPostTitle] = useState<string>("");
+
   useEffect(() => {
     const { post_id } = claim;
     const supabase = createClientSsr();
+
     supabase
       .from("posts")
       .select("title")
@@ -29,9 +32,11 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
         }
       });
   }, [claim]);
+
   useEffect(() => {
     const supabase = createClientSsr();
     const { claimant_user_id } = claim;
+
     supabase
       .from("profiles")
       .select()
@@ -45,12 +50,14 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
         }
       });
   }, [claim]);
+
   if (claimant_lw_username === null) {
     return <div>Loading...</div>;
   }
 
   const { claim_id, post_id, description, is_resolved } = claim;
   const post_slug = createSlug(postTitle, post_id);
+
   return (
     <div className="border rounded-lg shadow p-4 bg-background text-foreground transition-all duration-300 ease-in-out hover:shadow-md">
       <h1 className="font-semibold mb-2">
@@ -62,7 +69,9 @@ function Claim({ claim, poster_lw_username }: ClaimsProps) {
         </a>
       </h1>
       <p className="text-sm mb-1">Claimant: {claimant_lw_username}</p>
-      <p className="text-sm mb-1">Evidence: {description}</p>
+      <p className="text-sm mb-4">
+        Evidence: <ReactMarkdown>{description}</ReactMarkdown>
+      </p>
       <p className="text-sm mb-1">
         Status: {is_resolved ? "Resolved" : "Unresolved"}
       </p>
