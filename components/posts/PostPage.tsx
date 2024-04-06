@@ -303,7 +303,7 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                   </span>
                   <span className="font-semibold highlight-text">{`$${amount} available`}</span>
                 </div>
-		<ReactMarkdown className="mb-4">{post.description}</ReactMarkdown>
+		<ReactMarkdown className="mb-4">{String(description)}</ReactMarkdown>
 
                 <hr className={"mt-4"} />
                 <p className={"mt-4 font-semibold"}>Comments:</p>
