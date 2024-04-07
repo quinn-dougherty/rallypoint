@@ -14,6 +14,7 @@ export type Database = {
           claim_id: string;
           claimant_user_id: string | null;
           claimed_at: string | null;
+          completion: number;
           deadline: string | null;
           description: string;
           is_resolved: boolean | null;
@@ -25,6 +26,7 @@ export type Database = {
           claim_id?: string;
           claimant_user_id?: string | null;
           claimed_at?: string | null;
+          completion?: number;
           deadline?: string | null;
           description: string;
           is_resolved?: boolean | null;
@@ -36,6 +38,7 @@ export type Database = {
           claim_id?: string;
           claimant_user_id?: string | null;
           claimed_at?: string | null;
+          completion?: number;
           deadline?: string | null;
           description?: string;
           is_resolved?: boolean | null;
