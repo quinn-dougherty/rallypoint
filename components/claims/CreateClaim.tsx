@@ -2,6 +2,8 @@ import { createClientSsr } from "@/utils/supabase/client";
 import { ClaimsModel } from "@/types/Models";
 import { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
+import { Range } from "react-range";
+import React from "react";
 
 type CreateClaimProps = {
   claim: ClaimsModel["Insert"];
@@ -31,6 +33,7 @@ const CreateClaim: React.FC<CreateClaimProps> = ({
   disabledSubmit,
   setDisableSubmit,
 }: CreateClaimProps) => {
+  const [values, setValues] = React.useState([100]);
   const { description } = claim;
   let failed = false;
   const router = useRouter();
@@ -48,6 +51,7 @@ const CreateClaim: React.FC<CreateClaimProps> = ({
           claimant_user_id: id,
           description,
           post_id,
+          completion: values[0],
         }),
       });
 
@@ -85,12 +89,93 @@ const CreateClaim: React.FC<CreateClaimProps> = ({
         className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground profile-form"
         onSubmit={handleSubmit}
       >
-        <textarea
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          placeholder="Evidence"
-          value={description}
-          onChange={descriptionOnChange}
-        />
+        <div
+          className={
+            "animate-in flex-1 flex-col w-full justify-center gap-2 text-foreground flex items-center group"
+          }
+        >
+          <div className={"grid grid-cols-2 gap-6"}>
+            <label className="text-md">Completion</label>
+            <Range
+              step={50}
+              min={0}
+              max={100}
+              values={values}
+              onChange={(values) => setValues(values)}
+              renderTrack={({ props, children }) => (
+                <div
+                  {...props}
+                  style={{
+                    ...props.style,
+                    height: "6px",
+                    width: "100%",
+                    backgroundColor: "#ccc",
+                  }}
+                >
+                  {children}
+                </div>
+              )}
+              renderMark={({ props, index }) => (
+                <div
+                  {...props}
+                  style={{
+                    ...props.style,
+                    height: "16px",
+                    width: "5px",
+                    backgroundColor:
+                      index * 50 < values[0] ? "#548BF4" : "#ccc",
+                  }}
+                />
+              )}
+              renderThumb={({ props, isDragged }) => (
+                <div
+                  {...props}
+                  style={{
+                    ...props.style,
+                    height: "24px",
+                    width: "24px",
+                    borderRadius: "4px",
+                    backgroundColor: "#FFF",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    boxShadow: "0px 2px 6px #AAA",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-28px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      fontFamily: "Arial,Helvetica Neue,Helvetica,sans-serif",
+                      padding: "4px",
+                      borderRadius: "4px",
+                      backgroundColor: "#548BF4",
+                    }}
+                  >
+                    {values[0].toFixed(1)}%
+                  </div>
+                  <div
+                    style={{
+                      height: "16px",
+                      width: "5px",
+                      backgroundColor: isDragged ? "#548BF4" : "#CCC",
+                    }}
+                  />
+                </div>
+              )}
+            />
+            <label className="text-md">Description</label>
+            <textarea
+              className="rounded-md px-4 py-2 bg-inherit border mb-6"
+              placeholder="Evidence"
+              value={description}
+              onChange={descriptionOnChange}
+            />
+          </div>
+        </div>
         <button
           className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
           type="submit"
