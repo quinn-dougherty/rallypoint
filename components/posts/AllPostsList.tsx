@@ -22,7 +22,10 @@ function AllPostsList() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const { data, error } = await supabase.from("posts").select();
+      const { data, error } = await supabase
+        .from("posts")
+        .select()
+        .order("created_at", { ascending: false });
       if (error) {
         console.error("Error fetching posts:", error);
         setLoading(false);

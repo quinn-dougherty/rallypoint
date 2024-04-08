@@ -1,7 +1,7 @@
 import { createClientSsr } from "@/utils/supabase/client";
 import { ClaimsModel } from "@/types/Models";
 import { Dispatch, SetStateAction } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Range } from "react-range";
 import React from "react";
 
@@ -21,6 +21,7 @@ async function getUser() {
 
   if (error) {
     console.error("Not authenticated:", error);
+    redirect("/login");
     throw error;
   }
   return data.user;
