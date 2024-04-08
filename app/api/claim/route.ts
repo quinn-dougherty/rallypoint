@@ -7,8 +7,12 @@ export async function POST(req: NextRequest) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { claimant_user_id, post_id, description }: ClaimsModel["Row"] =
-    await req.json();
+  const {
+    claimant_user_id,
+    post_id,
+    description,
+    completion,
+  }: ClaimsModel["Row"] = await req.json();
 
   // Data validation
   if (!claimant_user_id || !description || !post_id) {
@@ -18,7 +22,7 @@ export async function POST(req: NextRequest) {
   // Insert data into Supabase
   const { data, error } = await supabase
     .from("claims")
-    .insert({ claimant_user_id, post_id, description })
+    .insert({ claimant_user_id, post_id, description, completion })
     .select();
 
   if (error) {
