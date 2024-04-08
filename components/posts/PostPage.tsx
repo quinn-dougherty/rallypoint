@@ -303,7 +303,9 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                   </span>
                   <span className="font-semibold highlight-text">{`$${amount} available`}</span>
                 </div>
-		<ReactMarkdown className="mb-4">{String(description)}</ReactMarkdown>
+                <ReactMarkdown className={"mb-4 whitespace-pre-wrap"}>
+                  {String(description)}
+                </ReactMarkdown>
 
                 <hr className={"mt-4"} />
                 <p className={"mt-4 font-semibold"}>Comments:</p>
@@ -316,7 +318,9 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                       key={comment.comment_id}
                       className="border rounded-lg p-2 mt-2"
                     >
-                      <ReactMarkdown>{comment.contents}</ReactMarkdown>
+                      <ReactMarkdown className={"whitespace-pre-wrap"}>
+                        {comment.contents}
+                      </ReactMarkdown>
                       <p className="text-sm text-right">
                         {new Date(comment.created_at).toLocaleDateString(
                           "en-us",

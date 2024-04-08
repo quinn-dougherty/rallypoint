@@ -40,7 +40,11 @@ export default async function Page() {
       <UserProfile
         profile={{
           ...data,
-          bio: <ReactMarkdown>{data.bio}</ReactMarkdown>,
+          bio: (
+            <ReactMarkdown className={"whitespace-pre-wrap"}>
+              {data.bio}
+            </ReactMarkdown>
+          ),
         }}
         privateView={true}
       />

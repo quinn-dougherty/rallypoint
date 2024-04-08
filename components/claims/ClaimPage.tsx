@@ -54,7 +54,10 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       </p>
       <PostCard post={post} />
       <p>
-        Evidence: <ReactMarkdown className="mb-4">{description}</ReactMarkdown>
+        Evidence:{" "}
+        <ReactMarkdown className={"mb-4 whitespace-pre-wrap"}>
+          {description}
+        </ReactMarkdown>
       </p>
       <p>{is_resolved ? "Resolved" : "Unresolved"}</p>
       {isPoster && !is_resolved ? (

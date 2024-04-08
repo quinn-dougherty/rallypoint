@@ -1,5 +1,6 @@
 import { createClientSsr } from "@/utils/supabase/client";
 import UserProfile from "@/components/profile/UserProfile";
+import ReactMarkdown from "react-markdown";
 
 export default async function Page({
   params,
@@ -27,7 +28,17 @@ export default async function Page({
 
   return (
     <div>
-      <UserProfile profile={data} privateView={false} />
+      <UserProfile
+        profile={{
+          ...data,
+          bio: (
+            <ReactMarkdown className={"whitespace-pre-wrap"}>
+              {data.bio}
+            </ReactMarkdown>
+          ),
+        }}
+        privateView={false}
+      />
     </div>
   );
 }
