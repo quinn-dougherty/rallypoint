@@ -36,6 +36,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   }
 
   const postSlug = createSlug(post.title, post.post_id);
+  const uri = profile ? `/${profile.lw_username}/${postSlug}` : "#";
   const statusClass =
     post.status === "unclaimed"
       ? "text-[hsl(var(--logout-btn-background))]"
@@ -43,34 +44,38 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <div className="border shadow-lg rounded-lg overflow-hidden w-full my-5">
-      <div className="p-5">
-        <h2 className="text-2xl font-bold text-white mb-3">
+      <Link href={`${uri}`} className="hover:none">
+        <div className="p-5">
+          <h2 className="text-2xl font-bold text-white mb-3">{post.title}</h2>
+          <hr />
           {profile ? (
-            <Link
-              href={`/${profile.lw_username}/${postSlug}`}
-              className="hover:underline"
-            >
-              {post.title}
-            </Link>
+            <p className="text-gray-600">{`Filed by: ${profile.lw_username}`}</p>
           ) : (
-            post.title
+            <p className="text-gray-600">Filed by: Loading...</p>
           )}
-        </h2>
-        <hr />
-        {profile ? (
-          <p className="text-gray-600">{`Filed by: ${profile.lw_username}`}</p>
-        ) : (
-          <p className="text-gray-600">Filed by: Loading...</p>
-        )}
-        <p className={`${statusClass} font-semibold`}>
-          {`${post.status.charAt(0).toUpperCase() + post.status.slice(1)} | ${
-            post.post_type.charAt(0).toUpperCase() + post.post_type.slice(1)
-          }`}
-        </p>
-        {post.amount !== null && post.amount > 0 && (
-          <p className="text-white font-semibold">{`$${post.amount} Available`}</p>
-        )}
-      </div>
+          <p className={`${statusClass} font-semibold`}>
+            {`${post.status.charAt(0).toUpperCase() + post.status.slice(1)} | ${
+              post.post_type.charAt(0).toUpperCase() + post.post_type.slice(1)
+            }`}
+          </p>
+          {post.amount !== null && post.amount > 0 && (
+            <p className="text-white font-semibold">{`$${post.amount} Available`}</p>
+          )}
+          <p className="text-white">{post.description!.substring(0, 150)}</p>
+          <div className="grid grid-cols-2">
+            <div></div>
+            <span className={`text-sm font-normal mt-2 ml-auto`}>
+              {" "}
+              {new Date(post.created_at!).toLocaleDateString("en-us", {
+                weekday: "long",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}{" "}
+            </span>
+          </div>
+        </div>
+      </Link>
     </div>
   );
 };
