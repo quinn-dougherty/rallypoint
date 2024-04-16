@@ -59,6 +59,23 @@
 .col-page {
   display: flex;
 }
+.col-page-column {
+  flex-direction: column;
+}
 .remove-contribution {
   transform: rotate(180deg);
+}
+@media (max-width: 768px) {
+  .post-sidebar {
+    width: 100%;
+  }
+  .actions-left {
+    padding-left: 2vw;
+  }
+  .actions-right {
+    padding-right: 2vw;
+  }
+  .post-nav a {
+    margin-right: 1em;
+  }
 }

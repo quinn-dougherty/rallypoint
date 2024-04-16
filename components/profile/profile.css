@@ -45,3 +45,13 @@
 .comment-body {
   margin-left: 36px;
 }
+
+@media (max-width: 768px) {
+  .profile-about,
+  .profile-projects,
+  .profile-comments,
+  .profile-claims {
+    width: 80vw;
+    overflow-wrap: break-word;
+  }
+}

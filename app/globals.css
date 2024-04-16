@@ -283,3 +283,6 @@ hr {
 .highlight-text {
   color: var(--color-green-highlight);
 }
+.triquarter {
+  width: 75vw;
+}
