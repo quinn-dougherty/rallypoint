@@ -5,6 +5,7 @@ import HamburgerMenu from "./profile/HamburgerMenu";
 import AuthButton from "./profile/AuthButton";
 import { cookies } from "next/headers";
 import SearchBar from "@/components/search/SearchBar";
+import "./header.css";
 
 interface Profile {
   lw_username: string;
@@ -34,11 +35,10 @@ export default async function Header() {
   const supabase = createClient(cookieStore);
   const { data: authData } = await supabase.auth.getUser();
   const user: User | null = authData.user;
-
   return (
     <header className="fixed top-0 w-full z-50 bg-[hsl(var(--background))] header shadow">
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <div>
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center nav-header">
+        <div className={"nav-collapsable"}>
           <Link
             href="/"
             className="text-lg font-semibold text-gray-800 hover:text-white transition-colors"
@@ -46,10 +46,10 @@ export default async function Header() {
             Rallypoint
           </Link>
         </div>
-        <div className={"flex items-center space-x-4"}>
+        <div className={"flex items-center space-x-4 nav-expandable"}>
           <SearchBar />
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 nav-collapsable">
           <Link href="/create" className="visible-button">
             Create
           </Link>

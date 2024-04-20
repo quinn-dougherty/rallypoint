@@ -5,6 +5,7 @@ import { PostsModel } from "@/types/Models";
 import { Status } from "@/types/Enums";
 import PostCard from "./PostCard";
 import StatusFilter from "./StatusFilter";
+import useIsMobile from "@/utils/isMobile";
 
 function AllPostsList() {
   const supabase = createClientSsr();
@@ -15,6 +16,7 @@ function AllPostsList() {
     "claimed",
   ]);
 
+  const mobile = useIsMobile();
   const handleStatusChange = (statuses: Status[]) => {
     console.log("Selected statuses:", statuses);
     setSelectedStatuses(statuses);
@@ -64,7 +66,12 @@ function AllPostsList() {
           selectedStatuses={selectedStatuses}
         />
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-8">
+      <div
+        className={[
+          "grid gap-4 mt-8",
+          mobile ? "grid-cols-1" : "grid-cols-3",
+        ].join(" ")}
+      >
         {filteredPosts.map((post) => (
           <PostCard key={post.post_id} post={post} />
         ))}

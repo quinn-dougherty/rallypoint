@@ -5,6 +5,7 @@ import "./searchBar.css";
 import Link from "next/link";
 import { useOutsideClick } from "@/utils/hooks";
 import { ProfilesModel as User, PostsModel as Post } from "@/types/Models";
+import useIsMobile from "@/utils/isMobile";
 
 interface Tag {
   tag_id: number;
@@ -57,6 +58,8 @@ export default function SearchBar() {
   const ref = useOutsideClick(() => {
     setShow(false);
   });
+  const mobile = useIsMobile();
+  const [expanded, setExpanded] = useState<boolean>(false);
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     if (query.length < 1) {
@@ -86,35 +89,87 @@ export default function SearchBar() {
     };
   });
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <div className={"searchbar-container"}>
-        <svg
-          id={"search"}
-          className={"search-icon"}
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          viewBox="0 0 16 16"
+    <>
+      {mobile && !expanded && (
+        <div
+          className="search-icon bordered-icon"
+          onClick={() => setExpanded(!expanded)}
         >
-          <path
-            fillRule="evenodd"
-            d="M10.5 6a4.5 4.5 0 1 0-1 1l3.793 3.793a1 1 0 0 0 1.414-1.414L10.5 6z"
-          />
-        </svg>
-        <input
-          className={"searchbar"}
-          type="text"
-          onChange={debouncedResults}
-          placeholder={"Search posts, tags, and users"}
-        />
-      </div>
-      {show && (
-        <div className={"search-results-container"} ref={ref}>
-          {loading ? <div>Loading...</div> : searchResults(results, setShow)}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
         </div>
       )}
-    </form>
+      {(!mobile || expanded) && (
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className={"searchbar-container"}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              id={"search"}
+              className={"search-icon"}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              className={"searchbar"}
+              type="text"
+              onChange={debouncedResults}
+              placeholder={"Search posts, tags, and users"}
+            />
+          </div>
+          {show && (
+            <div className={"search-results-container"} ref={ref}>
+              {loading ? (
+                <div>Loading...</div>
+              ) : (
+                searchResults(results, setShow)
+              )}
+            </div>
+          )}
+        </form>
+      )}
+      {mobile && expanded && (
+        <div
+          className="search-icon bordered-icon"
+          onClick={() => setExpanded(!expanded)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+      )}
+    </>
   );
 }
 

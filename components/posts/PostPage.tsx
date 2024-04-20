@@ -14,6 +14,7 @@ import createSlug from "@/utils/slug";
 import { createClientSsr } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import "./postPage.css";
+import useIsMobile from "@/utils/isMobile";
 interface Tag {
   tag_id: string;
   tag: string;
@@ -46,6 +47,7 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
   const [contributors, setContributors] = useState<Contributors[]>([]);
   const [selectedTab, setSelectedTab] = useState("Bounty");
   const [terminateLoading, setTerminateLoading] = useState(false);
+  const mobile = useIsMobile();
   const supabase = createClientSsr();
   const router = useRouter();
   const tabs = ["Bounty", "Claims"];
@@ -267,14 +269,56 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
           </div>
         </div>
 
-        <div className="border rounded-lg shadow-lg p-6 bg-background text-foreground duration-300 ease-in-out hover:shadow-xl half-page post-body col-page">
-          <div className={"post-contents"}>
+        <div
+          className={[
+            "border rounded-lg shadow-lg p-6 bg-background text-foreground duration-300 ease-in-out hover:shadow-xl  post-body col-page",
+            mobile ? "triquarter col-page-column" : "half-page",
+          ].join(" ")}
+        >
+          <div className={mobile ? "" : "post-contents"}>
             {selectedTab === "Bounty" && (
               <div className="" id={"post-details"} key={"post-details"}>
                 <p className="text-sm text-right mb-2">
                   Filed by: {lw_username}
                 </p>
-                <div className="flex flex-row justify-between items-center mb-4">
+                <div
+                  className={[
+                    mobile ? "" : "flex flex-row",
+                    " justify-between items-center mb-4",
+                  ].join(" ")}
+                >
+                  {!mobile && (
+                    <span className="text-sm">
+                      Created:{" "}
+                      {new Date(post.created_at!).toLocaleDateString("en-us", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      <br />
+                      Due:{" "}
+                      {new Date(post.deadline!).toLocaleDateString("en-us", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                  )}
+                  <span
+                    className={[
+                      "inline-block bg-btn-background  text-foreground font-medium py-1 px-3 rounded-full",
+                      status == "claimed" ? "bg-green-800" : "",
+                      status == "closed" || isPastDeadline ? "bg-red-950" : "",
+                    ].join(" ")}
+                  >
+                    {`${status?.toUpperCase()} ${post_type?.toUpperCase()}`}
+                  </span>
+                  {mobile && <br />}
+                  <span className="font-semibold highlight-text">{`$${amount} available`}</span>
+                </div>
+                {mobile && (
                   <span className="text-sm">
                     Created:{" "}
                     {new Date(post.created_at!).toLocaleDateString("en-us", {
@@ -292,17 +336,7 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                       day: "numeric",
                     })}
                   </span>
-                  <span
-                    className={[
-                      "inline-block bg-btn-background  text-foreground font-medium py-1 px-3 rounded-full",
-                      status == "claimed" ? "bg-green-800" : "",
-                      status == "closed" || isPastDeadline ? "bg-red-950" : "",
-                    ].join(" ")}
-                  >
-                    {`${status?.toUpperCase()} ${post_type?.toUpperCase()}`}
-                  </span>
-                  <span className="font-semibold highlight-text">{`$${amount} available`}</span>
-                </div>
+                )}
                 <ReactMarkdown className={"mb-4 whitespace-pre-wrap"}>
                   {String(description)}
                 </ReactMarkdown>
@@ -336,7 +370,10 @@ function PostPage({ post, claims, tags, comments, loggedInAs }: PostPageProps) {
                   );
                 })}
                 <form
-                  className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground px-8 py-4"
+                  className={[
+                    "animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground py-4",
+                    mobile ? "" : "px-8",
+                  ].join(" ")}
                   onSubmit={saveComment}
                 >
                   <label className="text-md" htmlFor="comment">
