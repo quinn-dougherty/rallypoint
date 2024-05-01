@@ -14,6 +14,7 @@ const Feature: React.FC<FeatureItem> = ({ title, img, description }) => {
       style={{
         outline: "1px solid hsl(var(--foreground))",
         outlineOffset: "-1px",
+	background: "hsl(var(--btn-background))",
       }}
     >
       <h3 className="text-xl font-semibold mt-0 mb-2">{title}</h3>
@@ -58,10 +59,10 @@ const Index: React.FC = () => {
       style={{ scrollPaddingTop: "calc(100vh - 5.5rem)" }}
     >
       <div className="text-center">
-        <p className="text-5xl font-bold text-[var(--foreground)]">
+        <p className="text-5xl font-bold">
           Rallypoint Bounties
         </p>
-        <p className="text-xl text-[var(--foreground)] mt-4">
+        <p className="text-xl mt-4">
           <em>Early access, alpha testing with playmoney</em>
         </p>
       </div>

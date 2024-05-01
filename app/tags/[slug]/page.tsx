@@ -5,6 +5,8 @@ import { PostsModel } from "@/types/Models";
 import { Status } from "@/types/Enums";
 import PostCard from "@/components/posts/PostCard";
 import StatusFilter from "@/components/posts/StatusFilter";
+import useIsMobile from "@/utils/isMobile";
+
 export default function Page() {
   const supabase = createClientSsr();
   const [posts, setPosts] = useState<PostsModel["Row"][]>([]);
@@ -16,12 +18,14 @@ export default function Page() {
     "claimed",
   ]);
 
+  const mobile = useIsMobile();
+
   const handleStatusChange = (statuses: Status[]) => {
     console.log("Selected statuses:", statuses);
     setSelectedStatuses(statuses);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (tagID !== "") return;
     const tagText = window.location.pathname.split("/").pop();
     const fetchTagID = async () => {
@@ -40,7 +44,7 @@ export default function Page() {
     fetchTagID();
   }, [tagID]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (tagID === "") return;
     const fetchPostIDs = async () => {
       const { data, error } = await supabase
@@ -97,13 +101,17 @@ export default function Page() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
-      <div className="statusFilterContainer">
+      <div className="statusFilterContainer border">
         <StatusFilter
           onChange={handleStatusChange}
           selectedStatuses={selectedStatuses}
         />
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-8">
+      <div className={[
+          "grid gap-4 mt-8",
+          mobile ? "grid-cols-1" : "grid-cols-3",
+        ].join(" ")}
+      >
         {filteredPosts.map((post) => (
           <PostCard key={post.post_id} post={post} />
         ))}
