@@ -52,13 +52,13 @@ async function Claim({ claim, poster_lw_username }: ClaimsProps) {
       <p>
         <a href={`/${poster_lw_username}/${postSlug}`}>claim of post:</a>
       </p>
-      <PostCard post={post} />
-      <p>
+      <PostCard post={post} className="claim-postcard" />
+      <div>
         Evidence:{" "}
         <ReactMarkdown className={"mb-4 whitespace-pre-wrap"}>
           {description}
         </ReactMarkdown>
-      </p>
+      </div>
       <p>{is_resolved ? "Resolved" : "Unresolved"}</p>
       {isPoster && !is_resolved ? (
         <ClaimResolution claim_id={claim_id} post_id={post_id} />

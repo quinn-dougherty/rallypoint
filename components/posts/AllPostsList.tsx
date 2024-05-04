@@ -60,7 +60,7 @@ function AllPostsList() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
-      <div className="statusFilterContainer">
+      <div className="statusFilterContainer border">
         <StatusFilter
           onChange={handleStatusChange}
           selectedStatuses={selectedStatuses}
