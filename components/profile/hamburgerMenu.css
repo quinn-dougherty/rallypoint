@@ -1,0 +1,90 @@
+.hamburger_menu_items {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 100%;
+}
+.hamburger-menu {
+  animation: animateIn 0.3s ease-in-out forwards;
+}
+@media screen and (max-width: 1600px) {
+  .hamburger_menu_items {
+    left: auto;
+    right: 0;
+    transform: translateX(-25%);
+  }
+}
+@media screen and (max-width: 768px) {
+  .hamburger_menu_items {
+    left: auto;
+    right: 0;
+    transform: translateX(0%);
+  }
+}
+.hamburger_menu_item {
+  padding: 0.1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.menu-popup {
+  background-color: hsl(var(--background));
+  outline: 1px solid hsl(var(--btn-background));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 200px;
+}
+.menu-title,
+.menu-item,
+.visible-button,
+.menu-balance,
+.logout-button,
+.login-link {
+  font-size: 1rem;
+}
+.visible-button,
+.menu-balance,
+.logout-button,
+.login-link {
+  padding: 0.5rem 1rem;
+}
+.menu-item:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+.menu-title {
+  color: var(--foreground);
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+.visible-button {
+  display: block;
+  background-color: hsl(var(--visible-btn-background));
+  color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+.menu-link:hover {
+  background-color: hsl(var(--visible-btn-background-hover));
+}
+.menu-balance {
+  background-color: hsl(var(--btn-background));
+  color: hsl(var(--foreground));
+  border-radius: 8px;
+  text-align: center;
+}
+.logout-button {
+  background-color: hsl(var(--logout-btn-background));
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.logout-button:hover {
+  background-color: hsl(var(--logout-btn-background-hover));
+}

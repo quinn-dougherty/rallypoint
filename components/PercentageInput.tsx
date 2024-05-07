@@ -8,9 +8,7 @@ interface PercentageInputProps {
 
 function PercentageInput({ value, onChange }: PercentageInputProps) {
   const handleChange = (number: number) => {
-    // Ensure the value is between 0 and 100
     const newValue = Math.max(0, Math.min(number, 100));
-
     onChange(newValue);
   };
 

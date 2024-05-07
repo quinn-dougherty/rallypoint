@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import signOut from "@/utils/signOut";
 import { useOutsideClick } from "@/utils/hooks";
+import "./hamburgerMenu.css";
 
 interface Profile {
   lw_username: string;
@@ -52,11 +53,12 @@ function RenderMenuItems({ user, profile, toggleMenu }: RenderMenuItemsProps) {
   if (user) {
     return (
       <React.Fragment>
-        <div className="menu-popup">
+        <div className="menu-popup border">
           <h2 className="menu-title">{profile.display_name}</h2>
+          <hr />
           <ul className="menu-list">
             <li className="menu-item">
-              <p className="menu-balance">{`Current balance: ${profile.balance}`}</p>
+              <p className="menu-balance border">{`Current balance: ${profile.balance}`}</p>
             </li>
             <li className="menu-item">
               <Link

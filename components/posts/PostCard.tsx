@@ -4,12 +4,15 @@ import Link from "next/link";
 import { createClientSsr } from "@/utils/supabase/client";
 import { PostsModel, ProfilesModel } from "@/types/Models";
 import createSlug from "@/utils/slug";
+import "./postCard.css";
 
 type PostCardProps = {
   post: PostsModel["Row"];
+  className?: string;
+  style?: React.CSSProperties;
 };
 
-const PostCard: React.FC<PostCardProps> = ({ post }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, className = "", style = {} }) => {
   const [profile, setProfile] = useState<ProfilesModel["Row"] | null>(null);
   const supabase = createClientSsr();
 
@@ -43,9 +46,9 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       : "text-[hsl(var(--visible-btn-background))]";
 
   return (
-    <div className="border shadow-lg rounded-lg overflow-hidden w-full my-5">
+    <div className={`postcard border shadow-lg rounded-lg overflow-hidden w-full my-5 relative ${className}`} style={style}>
       <Link href={`${uri}`} className="hover:none">
-        <div className="p-5">
+        <div className="p-5 relative">
           <h2 className="text-2xl font-bold text-white mb-3">{post.title}</h2>
           <hr />
           {profile ? (
@@ -61,21 +64,29 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {post.amount !== null && post.amount > 0 && (
             <p className="text-white font-semibold">{`$${post.amount} Available`}</p>
           )}
-          <p className="text-white">{post.description!.substring(0, 150)}</p>
-          <div className="grid grid-cols-2">
-            <div></div>
-            <span className={`text-sm font-normal mt-2 ml-auto`}>
-              {" "}
-              {new Date(post.created_at!).toLocaleDateString("en-us", {
-                weekday: "long",
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              })}{" "}
-            </span>
+          <div className="text-white relative overflow-hidden">
+            <p className="description">{post.description!.substring(0, 50)}</p>
+            <div
+              className="fade-out"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to top, hsl(var(--btn-background)), transparent)",
+              }}
+            ></div>
           </div>
         </div>
       </Link>
+      <div className="absolute bottom-0 right-0">
+        <span className={`text-sm font-normal p-2 pt-8 pb-8 text-gray-600`}>
+          Closes{" "}
+          {new Date(post.created_at!).toLocaleDateString("en-us", {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </span>
+      </div>
     </div>
   );
 };

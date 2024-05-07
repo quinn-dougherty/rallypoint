@@ -35,8 +35,8 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
           onClick={() => toggleStatus(status)}
           className={`px-3 py-1 rounded-full text-sm font-medium cursor-pointer button ${
             selectedStatuses.includes(status)
-              ? "text-gray-800 bg-[hsl(var(--foreground))]"
-              : "border border-[hsl(var(--foreground))] text-white"
+              ? "text-gray-800 bg-[hsl(var(--foreground))] border"
+              : "border text-white"
           }`}
         >
           {status.charAt(0).toUpperCase() + status.slice(1)}

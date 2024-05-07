@@ -1,0 +1,14 @@
+.claim-postcard {
+  min-width: 25vw;
+}
+.postcard {
+  background-color: hsl(var(--btn-background));
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+.postcard:hover {
+  border-color: #ffffff;
+}
